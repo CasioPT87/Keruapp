@@ -1,0 +1,50 @@
+
+
+<div class="container">
+    <div *ngIf="error">
+      <p>This error happened: {{error}}</p>
+    </div>
+  <div *ngIf="!authorised">
+    <div>
+      <h1>Log in</h1>
+      <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" id="username"
+                  required
+                  [(ngModel)]="username" name="username"
+                  #usernameInput="ngModel">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="text" class="form-control" id="password"
+                  required
+                  [(ngModel)]="password" name="password"
+                  #passwordInput="ngModel">
+        </div>
+    
+        <button type="submit" class="btn btn-success" (click)="login()" [disabled]="!userForm.form.valid">log in</button>
+      </form>
+    </div>
+
+    <div>
+      <h1>Log in with google</h1>
+      <form (ngSubmit)="onSubmit()" #oathForm="ngForm">
+        <button type="submit" class="btn btn-success" (click)="googleLogin()" [disabled]="!oathForm.form.valid">Log in with google</button>
+      </form>
+    </div>
+
+  </div>
+
+  <div *ngIf="authorised">
+    <div>
+      <h1>Logout</h1>
+      <form (ngSubmit)="onSubmit()" #logoutForm="ngForm">
+        <button type="submit" class="btn btn-success" (click)="logout()" [disabled]="!logoutForm.form.valid">Log out</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+

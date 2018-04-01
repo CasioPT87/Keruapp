@@ -1,0 +1,17 @@
+
+
+<div *ngIf="user">
+  <div>{{user.username}}</div>
+  <div>{{user.description}}</div>
+  <div>{{user.url}}</div>
+  <div>{{user.likes}}</div>
+  <div>{{user.dateCreated}}</div>
+</div>
+<div *ngIf="posts">
+  <div *ngFor="let post of posts" class="default-box">
+    <div>{{post.title}}</div>
+    <div>{{post.description}}</div>
+    <a routerLink="/post/{{post.idNumber}}">Go to post</a>
+  </div>
+</div>
+ 

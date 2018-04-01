@@ -1,0 +1,36 @@
+
+
+<div>
+    <h1>Look for posts</h1>
+
+    <div *ngIf="authorised">
+        <a class="default-box" routerLink="/postcreate">Create new post</a>
+        <a class="default-box" routerLink="/userlogin">Log out</a>
+    </div>
+
+    <div *ngIf="!authorised">
+        <a class="default-box" routerLink="/userlogin">Log in</a>
+        <a class="default-box" routerLink="/usercreate">Sign in</a>
+    </div>
+    
+    <form (ngSubmit)="onSubmit()" #listPostForm="ngForm">
+
+      <div class="form-group">
+        <label for="locationinput">Posts close to location:</label>
+        <input type="text" class="form-control" id="locationinput"
+                [(ngModel)]="locationName" name="location">
+      </div>
+       
+      <button type="button" class="btn btn-default" (click)="closestPosts()">Send location</button>
+    </form>
+  </div>
+  
+  <div #gmapListPosts style="width:500px;height:300px"></div>
+
+  <div *ngIf="listPosts">
+    <a *ngFor="let post of listPosts" class="default-box" routerLink="/post/{{post.idNumber}}">
+      <div>Title: {{post.title}}</div>
+      <div>Description: {{post.description}}</div>
+      <div>Likes: {{post.likes}}</div>
+    </a>
+  </div>
