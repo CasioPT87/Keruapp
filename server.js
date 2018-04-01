@@ -8,8 +8,8 @@ var bodyParser = require('body-parser');
 // con este require corremos el codigo del archivo
 var passportSetup = require('./config/passport-setup');
 var passport = require('passport');
-//const aws = require('aws-sdk');
-//aws.config.region = 'eu-west-1'; // let's set the region to ireland, where we have the bucket;
+var aws = require('aws-sdk');
+aws.config.region = 'eu-west-1'; // let's set the region to ireland, where we have the bucket;
 var keys = require('./config/keys');
 const cors = require('cors');
 
@@ -20,7 +20,7 @@ var heroes = require('./routes/heroes');
 var maps = require('./routes/maps');
 var posts = require('./routes/posts');
 var comments = require('./routes/comments');
-//var files = require('./routes/files');
+var files = require('./routes/files');
 
 var app = express();
 
@@ -74,7 +74,7 @@ app.use('/hero', heroes);
 app.use('/map', maps);
 app.use('/post', posts);
 app.use('/comment', comments);
-//app.use('/files', files);
+app.use('/files', files);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
