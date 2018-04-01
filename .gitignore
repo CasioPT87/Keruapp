@@ -43,9 +43,6 @@ testem.log
 .DS_Store
 Thumbs.db
 
-#credentials
-/config/keys.js
-
 # npm modules and more stuff
 /node_modules
 npm-debug.log
