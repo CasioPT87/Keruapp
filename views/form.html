@@ -41,6 +41,7 @@
 			xhr.onreadystatechange = () => {
 			if(xhr.readyState === 4){
 			    if(xhr.status === 200){
+			    	console.log(url)
 			        document.getElementById('preview').src = url;
 			        document.getElementById('avatar-url').value = url;
 			    }
