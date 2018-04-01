@@ -20,7 +20,7 @@ var heroes = require('./routes/heroes');
 var maps = require('./routes/maps');
 var posts = require('./routes/posts');
 var comments = require('./routes/comments');
-var files = require('./routes/files');
+//var files = require('./routes/files');
 
 var app = express();
 
@@ -74,7 +74,7 @@ app.use('/hero', heroes);
 app.use('/map', maps);
 app.use('/post', posts);
 app.use('/comment', comments);
-app.use('/files', files);
+//app.use('/files', files);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
