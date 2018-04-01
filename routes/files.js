@@ -3,10 +3,12 @@ var router = express.Router();
 var aws = require('aws-sdk');
 
 const S3_BUCKET = process.env.S3_BUCKET;
+console.log(S3_BUCKET)
 
 router.get('/form', (req, res) => res.render('form'));
 
-router.get('/sign-s3', (req, res) => {
+router.get('/file/sign-s3', (req, res) => {
+  console.log('hola')
   const s3 = new aws.S3();
   const fileName = req.query['file-name'];
   const fileType = req.query['file-type'];
@@ -30,6 +32,10 @@ router.get('/sign-s3', (req, res) => {
     res.write(JSON.stringify(returnData));
     res.end();
   });
+});
+
+router.post('/save-details', (req, res) => {
+  // TODO: Read POSTed form data and do something useful
 });
 
 module.exports = router;

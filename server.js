@@ -74,7 +74,7 @@ app.use('/hero', heroes);
 app.use('/map', maps);
 app.use('/post', posts);
 app.use('/comment', comments);
-app.use('/files', files);
+app.use('/file', files);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
