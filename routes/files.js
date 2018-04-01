@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-var keys = require('../config/keys');
 
-const S3_BUCKET = keys.S3_BUCKET;
+
+const S3_BUCKET = 'pepe'//keys.S3_BUCKET;
 
 router.get('/sign-s3', (req, res) => {
   const s3 = new aws.S3();
