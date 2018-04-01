@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-
-
 const S3_BUCKET = 'pepe'//keys.S3_BUCKET;
 
 router.get('/sign-s3', (req, res) => {

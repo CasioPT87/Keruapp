@@ -10,6 +10,7 @@ var passportSetup = require('./config/passport-setup');
 var passport = require('passport');
 const aws = require('aws-sdk');
 aws.config.region = 'eu-west-1'; // let's set the region to ireland, where we have the bucket;
+var keys = require('./config/keys');
 const cors = require('cors');
 
 var index = require('./routes/index');
