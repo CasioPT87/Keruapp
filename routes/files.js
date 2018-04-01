@@ -35,7 +35,7 @@ router.get('/file/sign-s3', (req, res) => {
 
 router.post('/save-details', (req, res) => {
   console.log(req.body)
-  res.render(req)
+  res.json(req.body)
 });
 
 module.exports = router;
