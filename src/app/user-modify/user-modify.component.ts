@@ -19,10 +19,12 @@ export class UserModifyComponent {
     description: "",
     url: "",
     likes: 0,
-    favoritePosts: [],
+    favoritePosts: []
   };
   error: boolean = false;
   submitted: boolean = false;
+  signedRequest: any;
+  userPhotoFile: any;
 
   constructor(
     private userService: UserService
@@ -43,18 +45,48 @@ export class UserModifyComponent {
           description: user.description || "",
           url: user.url || null,
           likes: user.likes,
-          favoritePosts: user.favoritePosts || [],
+          favoritePosts: user.favoritePosts || []
         };
-        this.error = user.error || false
+        this.error = user.error || false;
+        this.userPhotoFile = user.photo;
       });
   }
 
-  // newUser() {
-  //   return new User('User name', "", new Date(), new Date());
-  // }
-
   onSubmit() {     
      this.submitted = true;
+  }
+
+  //set photo selected
+  setPhotoFile(fileData) {
+    if (fileData.target.files && fileData.target.files[0]) {
+      this.userPhotoFile = fileData.target.files[0];
+      //now we get the signed request
+      this.getSignedRequestPhoto()
+    } else {
+      console.log('problem setting the photo selected')
+    }
+  }
+  
+  //get the signed request
+  getSignedRequestPhoto() {
+    var userPhotoFile = this.userPhotoFile;
+    this.userService.getSignedRequestPhoto(userPhotoFile)
+      .subscribe((signedRequest) => {
+        this.signedRequest = JSON.parse(signedRequest.responseText);
+        console.log(this.signedRequest)
+        //now we have the signed request. Let's upload this shit
+        this.uploadUserPhoto();
+      });
+  }
+
+  uploadUserPhoto() {
+    var file = this.userPhotoFile;
+    var signedRequest = this.signedRequest;
+
+    this.userService.uploadUserPhoto(file, signedRequest)
+      .subscribe((signedRequest) => {
+        console.log('a ver si la hemos subido bien...')
+      });
   }
 
   updateUser(): void {

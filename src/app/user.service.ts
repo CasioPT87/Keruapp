@@ -33,6 +33,18 @@ export class UserService {
     return response;
   }
 
+  getSignedRequestPhoto(file): Observable<any> {
+    var response =  this.http.get(`http://localhost:3000/file/sign-s3?file-name=${file.name}&file-type=${file.type}`, {
+      withCredentials: true  // <=========== important!
+    });
+    console.log(response)
+    return response;
+  }
+
+  uploadUserPhoto (file, signedRequest): Observable<User> {
+    return this.http.put<any>('httt', file, signedRequest.signedRequest );
+  }
+
   createUser (user): Observable<User> {
     return this.http.post<User>('http://localhost:3000/auth/createuser/', user, httpOptions);
       // .pipe(
