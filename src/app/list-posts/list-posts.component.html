@@ -1,9 +1,11 @@
 
 
 <div>
+    
     <h1>Look for posts</h1>
 
     <div *ngIf="authorised">
+        <a class="default-box" routerLink="/usermodify">Update User Profile</a>
         <a class="default-box" routerLink="/postcreate">Create new post</a>
         <a class="default-box" routerLink="/userlogin">Log out</a>
     </div>
