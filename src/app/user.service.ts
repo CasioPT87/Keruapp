@@ -42,46 +42,46 @@ export class UserService {
   }
 
   uploadUserPhoto (file, signedRequest): Observable<User> {
-    return this.http.put<any>('httt', file, signedRequest.signedRequest );
+    return this.http.put<any>(signedRequest.url, file, signedRequest.signedRequest );
   }
 
   createUser (user): Observable<User> {
-    return this.http.post<User>('http://localhost:3000/auth/createuser/', user, httpOptions);
+    return this.http.post<User>('/auth/createuser/', user, httpOptions);
       // .pipe(
       //   catchError(this.handleError('addHero', hero))
       // );
   }
 
   updateUser (user): Observable<any> {
-    return this.http.put<User>('http://localhost:3000/users/update/', user, httpOptions);
+    return this.http.put<User>('/users/update/', user, httpOptions);
       // .pipe(
       //   catchError(this.handleError('addHero', hero))
       // );
   }
 
   login (user): Observable<any> {
-    return this.http.post<User>('http://localhost:3000/auth/login/', user, httpOptions);
+    return this.http.post<User>('/auth/login/', user, httpOptions);
       // .pipe(
       //   catchError(this.handleError('addHero', hero))
       // );
   }
 
   googleLogin (): Observable<any> {
-    var response =  this.http.get('http://localhost:3000/auth/google', {
+    var response =  this.http.get('/auth/google', {
       withCredentials: true  // <=========== important!
     });
     return response;
   }
 
   logout (): Observable<any> {
-    var response =  this.http.get('http://localhost:3000/auth/logout', {
+    var response =  this.http.get('/auth/logout', {
       withCredentials: true  // <=========== important!
     });
     return response;
   }
 
   checkAuthorization (): Observable<any> {
-    var response =  this.http.get('http://localhost:3000/auth/checkauth', {
+    var response =  this.http.get('/auth/checkauth', {
       withCredentials: true  // <=========== important!
     });
     return response;
