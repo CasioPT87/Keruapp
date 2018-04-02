@@ -82,11 +82,13 @@ export class UserModifyComponent {
   uploadUserPhoto() {
     var file = this.userPhotoFile;
     var signedRequest = this.signedRequest;
-
-    this.userService.uploadUserPhoto(file, signedRequest)
-      .subscribe((signedRequest) => {
-        console.log('a ver si la hemos subido bien...')
-      });
+    console.log(signedRequest)
+    console.log(signedRequest.url)
+    console.log(signedRequest.signedRequest)
+    // this.userService.uploadUserPhoto(file, signedRequest)
+    //   .subscribe((signedRequest) => {
+    //     console.log('a ver si la hemos subido bien...')
+    //   });
   }
 
   updateUser(): void {

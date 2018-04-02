@@ -18,7 +18,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   getUser(name): Observable<any> {
-    var response =  this.http.get('http://localhost:3000/users/getuser/'+name, {
+    var response =  this.http.get('/users/getuser/'+name, {
       withCredentials: true  // <=========== important!
     });
     console.log(response)
@@ -26,7 +26,7 @@ export class UserService {
   }
 
   getCurrentUser(): Observable<any> {
-    var response =  this.http.get('http://localhost:3000/users/currentuser', {
+    var response =  this.http.get('/users/currentuser', {
       withCredentials: true  // <=========== important!
     });
     console.log(response)
@@ -34,16 +34,16 @@ export class UserService {
   }
 
   getSignedRequestPhoto(file): Observable<any> {
-    var response =  this.http.get(`http://localhost:3000/file/sign-s3?file-name=${file.name}&file-type=${file.type}`, {
+    var response =  this.http.get(`/file/sign-s3?file-name=${file.name}&file-type=${file.type}`, {
       withCredentials: true  // <=========== important!
     });
     console.log(response)
     return response;
   }
 
-  uploadUserPhoto (file, signedRequest): Observable<User> {
-    return this.http.put<any>(signedRequest.url, file, signedRequest.signedRequest );
-  }
+  // uploadUserPhoto (file, signedRequest): Observable<User> {
+  //   return this.http.put<any>(signedRequest.url, file, signedRequest.signedRequest );
+  // }
 
   createUser (user): Observable<User> {
     return this.http.post<User>('/auth/createuser/', user, httpOptions);
