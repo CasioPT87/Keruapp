@@ -30,6 +30,7 @@ function getUser(req) {
 
   	if (userId) {
   		User.findById( userId, function (err, user) {
+        console.log(user)
         if (err) {
         	reject(err)
         }

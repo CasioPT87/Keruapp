@@ -139,6 +139,8 @@ router.get('/findpost/:postNumber', AuthService.checkAuth, function(req, res, ne
   var postNumber = req.params.postNumber;
   var numLikesInPost = 0;
 
+  var objForResponse = {};
+
   findPostByIdNumber(postNumber)
     .then((post) => {
       if (res.locals.authorised && res.locals.user && res.locals.user._id ) {
@@ -149,11 +151,25 @@ router.get('/findpost/:postNumber', AuthService.checkAuth, function(req, res, ne
         else var like = true;
       }
       numLikesInPost = post.usersThatLikePost.length;
-      res.json({
-        post: post,
-        like: like,
-        numLikesInPost: numLikesInPost
-      });
+      
+      //here we remove the userID and add a username to be displayed;
+      User.findById(post.user, function(err, user) {
+        if (err) console.log(err);
+        var username = user.username;
+        objForResponse = {
+          username: username,
+          title: post.title,
+          description: post.description,  
+          location: post.location
+        }
+        console.log(objForResponse)
+
+        res.json({
+          post: objForResponse,
+          like: like,
+          numLikesInPost: numLikesInPost
+        });
+      })
     })
     .catch((err) => {
       console.log(err);

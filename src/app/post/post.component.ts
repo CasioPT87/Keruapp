@@ -40,7 +40,6 @@ export class PostComponent implements OnInit {
         this.post = post;
         this.postLiked = responsePost.like;
         this.numLikesInPost = responsePost.numLikesInPost;
-        console.log(post)
         this.longitude = post.location[0];
         this.latitude = post.location[1];
         var mapProp = {
@@ -49,8 +48,7 @@ export class PostComponent implements OnInit {
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
-        return responsePost;
-        //this.setCenter();       
+        return responsePost;     
       });
   }
 

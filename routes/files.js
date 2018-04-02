@@ -7,7 +7,6 @@ const S3_BUCKET = process.env.S3_BUCKET;
 router.get('/form', (req, res) => res.render('form'));
 
 router.get('/file/sign-s3', (req, res) => {
-  console.log('hola')
   const s3 = new aws.S3();
   const fileName = req.query['file-name'];
   const fileType = req.query['file-type'];

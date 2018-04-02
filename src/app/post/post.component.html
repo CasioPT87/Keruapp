@@ -3,10 +3,9 @@
 
 <div *ngIf="post"> 
   <div>
-      <div>User: {{post.user}}</div>
+      <a routerLink="/user/{{post.username}}">User: {{post.username}}</a>
       <div>Title: {{post.title}}</div>
-      <div>Description: {{post.description}}</div>
-      <div>Likes: {{post.likes}}</div>
+      <div>Description: {{post.description}}</div>      
       
       <form (ngSubmit)="onSubmit()" #postForm="ngForm">
         <div class="form-group">

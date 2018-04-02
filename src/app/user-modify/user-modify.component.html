@@ -1,0 +1,60 @@
+
+
+<div *ngIf="!error">
+  <div class="container">
+    <div [hidden]="submitted">
+      <h1>Modify current User</h1>
+      <p>User created: {{model.dateCreated}}</p>
+      <p>User modified: {{model.dateModified}}</p>
+      <p>Likes in user's posts: {{model.likes}}</p>
+      <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+        <div class="form-group">
+          <label for="username">Name</label>
+          <input type="text" class="form-control" id="username"
+                  [(ngModel)]="model.userName" name="username"
+                  #username="ngModel">
+          <div [hidden]="username.valid || username.pristine"
+                class="alert alert-danger">
+            User name is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Introduce new Password in case you want to change it</label>
+          <input type="text" class="form-control" id="password"
+                  [(ngModel)]="model.password" name="password"
+                  #password="ngModel">
+          <div [hidden]="password.valid || password.pristine"
+                class="alert alert-danger">
+            You must create a password for the new user
+          </div>
+        </div>
+    
+        <div class="form-group">
+          <label for="description">User description</label>
+          <input type="text" class="form-control" id="description"
+                  [(ngModel)]="model.description" name="description">
+        </div>
+    
+        <div class="form-group">
+          <label for="url">Main user URL</label>
+          <input type="text" class="form-control" id="url"
+                  [(ngModel)]="model.url" name="url">
+        </div>
+    
+        <button type="submit" class="btn btn-success" (click)="updateUser()" [disabled]="!userForm.form.valid">Submit</button>
+        <!--<button type="button" class="btn btn-default" (click)="createUser(); userForm.reset()">Reset<-->
+      </form>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="authorised">
+  <p>You are already logged</p>
+</div>
+
+<div [hidden]="!submitted">
+  <h2>You submitted data for new user: {{ model.username }}</h2>
+  <br>
+  <button class="btn btn-primary" (click)="submitted=false">Edit</button>
+</div>

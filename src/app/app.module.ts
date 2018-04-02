@@ -16,6 +16,7 @@ import { MapComponent } from './map/map.component';
 import { ListPostsComponent } from './list-posts/list-posts.component';
 import { PostComponent } from './post/post.component';
 import { UserLoginComponent } from './user-login/user-login.component';
+import { UserModifyComponent } from './user-modify/user-modify.component';
 
 
 
@@ -28,7 +29,8 @@ import { UserLoginComponent } from './user-login/user-login.component';
     MapComponent,
     ListPostsComponent,
     PostComponent,
-    UserLoginComponent
+    UserLoginComponent,
+    UserModifyComponent
   ],
   imports: [
     BrowserModule,
