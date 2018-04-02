@@ -28,6 +28,8 @@ router.get('/sign-s3', (req, res) => {
       signedRequest: data,
       url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
     };
+    console.log(returnData.signedRequest)
+    console.log(returnData.url)
     res.write(JSON.stringify(returnData));
     res.end();
   });
