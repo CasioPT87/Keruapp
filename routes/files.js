@@ -49,3 +49,6 @@ router.post('/save-details', (req, res) => {
 });
 
 module.exports = router;
+
+
+//https://s3.console.aws.amazon.com/s3/buckets/eraseunavezuntralariquevi1986/?region=us-east-2&tab=overview
