@@ -5,7 +5,7 @@ var aws = require('aws-sdk');
 const S3_BUCKET = process.env.S3_BUCKET;
 //`https://eraseunavezuntralariquevi1986.s3.amazonaws.com`
 
-router.get('/form', (req, res) => res.render('form'));
+router.get('/file/form', (req, res) => res.render('form'));
 
 router.get('/sign-s3', (req, res) => {
   console.log(`we're here in the route!!!`)

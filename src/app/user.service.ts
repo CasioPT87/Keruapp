@@ -42,6 +42,7 @@ export class UserService {
   }
 
   uploadUserPhoto (file, signedRequest): Observable<any> {
+    console.log(file)
     return this.http.put<any>(signedRequest.url, file, signedRequest.signedRequest );
   }
 
