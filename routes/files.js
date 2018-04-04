@@ -7,18 +7,7 @@ const S3_BUCKET = process.env.S3_BUCKET;
 
 router.get('/form', (req, res) => res.render('form'));
 
-router.get('/file/sign-s3', (req, res) => {
-  console.log(`we're here in the route!!!`)
-  const s3 = new aws.S3();
-  const fileName = req.query['file-name'];
-  const fileType = req.query['file-type'];
-  console.log(fileName, fileType)
-  const s3Params = {
-    Bucket: S3_BUCKET,
-    Key: fileName,
-    Expires: 60,
-    ContentType: fileType,
-    ACL: 'public-read'
+router.
   };
 
   s3.getSignedUrl('putObject', s3Params, (err, data) => {
@@ -31,12 +20,8 @@ router.get('/file/sign-s3', (req, res) => {
       signedRequest: data,
       url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
     };
-    console.log('returnData.signedRequest: ')
-    console.log(returnData.signedRequest)
-    console.log('returnData.url: ')
-    console.log(returnData.url)
-    console.log('JSON.stringify(returnData): ')
-    console.log(JSON.stringify(returnData))
+    console.log('JSON.stringify(returnData): ');
+    console.log(JSON.stringify(returnData));
     res.json(JSON.stringify(returnData));
     
     //res.end();
