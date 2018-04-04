@@ -18,7 +18,7 @@ router.get('/sign-s3', (req, res) => {
     Key: fileName,
     Expires: 60,
     ContentType: fileType,
-    ACL: 'public-read'
+    ACL: 'bucket-owner-full-control'
   };
 
   s3.getSignedUrl('putObject', s3Params, (err, data) => {
