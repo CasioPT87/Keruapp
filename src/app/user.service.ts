@@ -43,7 +43,7 @@ export class UserService {
 
   uploadUserPhoto (file, signedRequest): Observable<any> {
     console.log(file)
-    return this.http.put<any>(signedRequest.signedRequest, file, httpOptions );
+    return this.http.put<any>(signedRequest.signedRequest, file);
   }
 
   createUser (user): Observable<User> {
