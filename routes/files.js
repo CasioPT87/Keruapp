@@ -21,6 +21,7 @@ router.get('/sign-s3', (req, res) => {
 
   s3.getSignedUrl('putObject', s3Params, (err, data) => {
     if(err){
+      console.log('tenemos un error aqui, este es el error: ');
       console.log(err);
       return res.end();
     }
@@ -28,9 +29,13 @@ router.get('/sign-s3', (req, res) => {
       signedRequest: data,
       url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
     };
+    console.log('returnData.signedRequest: ')
     console.log(returnData.signedRequest)
+    console.log('returnData.url: ')
     console.log(returnData.url)
     res.write(JSON.stringify(returnData));
+    console.log('JSON.stringify(returnData): ')
+    console.log(JSON.stringify(returnData))
     res.end();
   });
 });
