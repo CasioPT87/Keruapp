@@ -39,7 +39,6 @@
 		}
 
 		function uploadFile(file, signedRequest, url){
-			console.log(file)
 			const xhr = new XMLHttpRequest();
 			xhr.open('PUT', signedRequest);
 			xhr.onreadystatechange = () => {
