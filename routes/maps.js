@@ -14,6 +14,7 @@ router.get('/:address', function(req, res, next) {
 	var address = req.params.address;
   MapService.getCoordinates(address)
     .then((result) => {
+      console.log(result)
       res.json(result);
     })
     .catch((err) => {

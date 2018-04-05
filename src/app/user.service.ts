@@ -11,6 +11,14 @@ const httpOptions = {
   withCredentials: true
 }
 
+var production = false;
+
+if (!production) {
+  var path = 'http://localhost:3000';
+} else {
+  var path = ''
+}
+
 
 @Injectable()
 export class UserService {
@@ -18,7 +26,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   getUser(name): Observable<any> {
-    var response =  this.http.get('/users/getuser/'+name, {
+    var response =  this.http.get(path + '/users/getuser/'+name, {
       withCredentials: true  // <=========== important!
     });
     console.log(response)
@@ -26,7 +34,7 @@ export class UserService {
   }
 
   getCurrentUser(): Observable<any> {
-    var response =  this.http.get('/users/currentuser', {
+    var response =  this.http.get(path + '/users/currentuser', {
       withCredentials: true  // <=========== important!
     });
     console.log(response)
@@ -34,7 +42,7 @@ export class UserService {
   }
 
   getSignedRequestPhoto(file): Observable<any> {
-    var response =  this.http.get(`/file/sign-s3?file-name=${file.name}&file-type=${file.type}`, {
+    var response =  this.http.get(path + `/file/sign-s3?file-name=${file.name}&file-type=${file.type}`, {
       withCredentials: true  // <=========== important!
     });
     console.log(response)
@@ -47,42 +55,42 @@ export class UserService {
   }
 
   createUser (user): Observable<User> {
-    return this.http.post<User>('/auth/createuser/', user, httpOptions);
+    return this.http.post<User>(path + '/auth/createuser/', user, httpOptions);
       // .pipe(
       //   catchError(this.handleError('addHero', hero))
       // );
   }
 
   updateUser (user): Observable<any> {
-    return this.http.put<User>('/users/update/', user, httpOptions);
+    return this.http.put<User>(path + '/users/update/', user, httpOptions);
       // .pipe(
       //   catchError(this.handleError('addHero', hero))
       // );
   }
 
   login (user): Observable<any> {
-    return this.http.post<User>('/auth/login/', user, httpOptions);
+    return this.http.post<User>(path + '/auth/login/', user, httpOptions);
       // .pipe(
       //   catchError(this.handleError('addHero', hero))
       // );
   }
 
   googleLogin (): Observable<any> {
-    var response =  this.http.get('/auth/google', {
+    var response =  this.http.get(path + '/auth/google', {
       withCredentials: true  // <=========== important!
     });
     return response;
   }
 
   logout (): Observable<any> {
-    var response =  this.http.get('/auth/logout', {
+    var response =  this.http.get(path + '/auth/logout', {
       withCredentials: true  // <=========== important!
     });
     return response;
   }
 
   checkAuthorization (): Observable<any> {
-    var response =  this.http.get('/auth/checkauth', {
+    var response =  this.http.get(path + '/auth/checkauth', {
       withCredentials: true  // <=========== important!
     });
     return response;

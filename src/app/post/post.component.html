@@ -4,6 +4,7 @@
 <div *ngIf="post"> 
   <div>
       <a routerLink="/user/{{post.username}}">User: {{post.username}}</a>
+      <img src="http://www.countryflags.io/"{{post.countryCode}}"/shiny/64.png">
       <div>Title: {{post.title}}</div>
       <div>Description: {{post.description}}</div>      
       

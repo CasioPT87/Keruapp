@@ -7,7 +7,7 @@ var AuthService = require('../services/authService');
 
 /* GET users listing. */
 router.post('/createpost', AuthService.checkAuth, function(req, res, next) {
-  console.log('hola don jose')
+
   if (res.locals.authorised && res.locals.user) {
 
     var userId = res.locals.user._id;
@@ -185,7 +185,9 @@ function createNewPost(req, userId) {
     description: req.body.description,
     location: [ req.body.longitude, req.body.latitude ],
     url: req.body.url,
-    dateCreated: Date.now()
+    dateCreated: Date.now(),
+    codeCountry:  req.body.codeCountry,
+    formatedAddress:  req.body.formatedAddress
   }
 
   return new Promise((resolve, reject) => {

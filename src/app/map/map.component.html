@@ -29,6 +29,10 @@
     <button type="button" class="btn btn-default" (click)="createPost()">Create Post</button>
   </form>
 </div>
+
+<div *ngIf="formatedAddress">{{formatedAddress}}</div>
+<img *ngIf="codeCountry" src="http://www.countryflags.io/{{codeCountry}}/shiny/64.png">
+
 <div #gmap style="width:500px;height:300px"></div>
 
 <div *ngIf="!authorised">

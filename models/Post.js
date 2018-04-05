@@ -16,6 +16,8 @@ var PostSchema = Schema({
     },
     title: String,
     description: String,
+    codeCountry: String,
+    formatedAddress: String,
     location: {
       type: [Number],  // [<longitude>, <latitude>]
       index: '2d'      // create the geospatial index

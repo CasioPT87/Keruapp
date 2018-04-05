@@ -26,6 +26,8 @@ export class MapComponent implements OnInit {
   user: string;
   title: string;
   description: string;
+  codeCountry: string;
+  formatedAddress: string;
   likes: number;
   url: string;
   comments: string[];
@@ -71,6 +73,8 @@ export class MapComponent implements OnInit {
       .subscribe((coord) => {
         this.latitude = coord.lat;
         this.longitude = coord.lng;
+        this.codeCountry = coord.codeCountry;
+        this.formatedAddress = coord.formatedAddress;
         this.setCenter();
       });
   }
@@ -81,7 +85,9 @@ export class MapComponent implements OnInit {
       description: this.description,
       url: this.url,
       latitude: this.latitude,
-      longitude: this.longitude
+      longitude: this.longitude,
+      codeCountry: this.codeCountry,
+      formatedAddress: this.formatedAddress
     }
     this.mapService.createPost(post)
       .subscribe((response) => {
