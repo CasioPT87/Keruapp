@@ -1,38 +1,49 @@
 
+ 
 
-<div>
-    
-    <h1>Look for posts</h1>
+  <div class="container">
 
-    <div *ngIf="authorised">
-        <a class="default-box" routerLink="/usermodify">Update User Profile</a>
-        <a class="default-box" routerLink="/postcreate">Create new post</a>
-        <a class="default-box" routerLink="/userlogin">Log out</a>
-    </div>
+    <h3 class="text-center">Busca lugares o crea los tuyos propios</h3>
 
-    <div *ngIf="!authorised">
-        <a class="default-box" routerLink="/userlogin">Log in</a>
-        <a class="default-box" routerLink="/usercreate">Sign in</a>
-    </div>
-    
-    <form (ngSubmit)="onSubmit()" #listPostForm="ngForm">
-
-      <div class="form-group">
-        <label for="locationinput">Posts close to location:</label>
-        <input type="text" class="form-control" id="locationinput"
-                [(ngModel)]="locationName" name="location">
+    <div class="row w-100"></div>
+      <div *ngIf="!authorised" class="w-100">
+        <div class="float-right">
+          <button  type="button" class="btn" routerLink="/userlogin">Log in</button>
+          <button  type="button" class="btn ml-2" routerLink="/usercreate">Sign in</button>
+        </div>
+      </div> 
+      <div *ngIf="authorised" class="w-100">
+        <div class="float-left">
+          <button  type="button" class="btn" routerLink="/usermodify">User Profile</button>
+          <button  type="button" class="btn ml-2" routerLink="/postcreate">Create new post</button>
+        </div>
+        <div  class="float-right">
+          <button  type="button" class="btn ml-2" routerLink="/userlogin">Log out</button>
+        </div>
+      </div> 
+      <div class="row w-100">
+        <nav class="navbar navbar-expand-sm w-100">
+          <form  (ngSubmit)="onSubmit()" #listPostForm="ngForm" class="form-inline mx-auto w-100">
+            <div class="input-group w-100">
+              <input type="text" class="form-control" placeholder="ej: plaza quevedo madrid"  [(ngModel)]="locationName" name="location">
+              <div class="input-group-prepend">
+                <button class="input-group-text rounded-right" (click)="closestPosts()">Buscar</button>
+              </div>
+            </div>    
+          </form>
+        </nav>
       </div>
-       
-      <button type="button" class="btn btn-default" (click)="closestPosts()">Send location</button>
-    </form>
-  </div>
-  
-  <div #gmapListPosts style="width:500px;height:300px"></div>
 
-  <div *ngIf="listPosts">
-    <a *ngFor="let post of listPosts" class="default-box" routerLink="/post/{{post.idNumber}}">
-      <div>Title: {{post.title}}</div>
-      <div>Description: {{post.description}}</div>
-      <div>Likes: {{post.likes}}</div>
-    </a>
-  </div>
+    <div #gmapListPosts style="width:500px;height:300px"></div>
+
+    <div *ngIf="listPosts">
+      <a *ngFor="let post of listPosts" class="default-box" routerLink="/post/{{post.idNumber}}">
+        <div>Title: {{post.title}}</div>
+        <div>Description: {{post.description}}</div>
+        <div>Likes: {{post.likes}}</div>
+      </a>
+    </div>
+
+</div>
+       
+     
