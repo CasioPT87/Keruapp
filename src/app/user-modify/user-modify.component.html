@@ -7,6 +7,7 @@
       <p>User created: {{model.dateCreated}}</p>
       <p>User modified: {{model.dateModified}}</p>
       <p>Likes in user's posts: {{model.likes}}</p>
+      
       <form (ngSubmit)="onSubmit()" #userForm="ngForm">
         <div class="form-group">
           <label for="username">Name</label>
