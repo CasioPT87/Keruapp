@@ -82,22 +82,6 @@ export class MapComponent implements OnInit {
       });
   }
 
-  createPost(): void {
-    var post = {
-      title: this.title,
-      description: this.description,
-      url: this.url,
-      latitude: this.latitude,
-      longitude: this.longitude,
-      codeCountry: this.codeCountry,
-      formatedAddress: this.formatedAddress
-    }
-    this.mapService.createPost(post)
-      .subscribe((response) => {
-        this.error =  response.error;        
-      });
-  }
-
   //set photo selected
   setPhotoFile(fileData) {
     if (fileData.target.files && fileData.target.files[0]) {
@@ -117,19 +101,45 @@ export class MapComponent implements OnInit {
         this.signedRequest = JSON.parse(signedRequest);
         console.log(this.signedRequest)
         //now we have the signed request. Let's upload this shit
-        this.uploadUserPhoto();
       });
   }
 
   uploadUserPhoto() {
     var file = this.userPhotoFile;
     var signedRequest = this.signedRequest;
-    this.userService.uploadUserPhoto(file, signedRequest)
+    return this.userService.uploadUserPhoto(file, signedRequest)
       .subscribe((signedRequest) => {
-        console.log('a ver si la hemos subido bien...')
+        return signedRequest;
       });
+  }
+
+  createPost(): any {
+    var post = {
+      title: this.title,
+      description: this.description,
+      url: this.url,
+      latitude: this.latitude,
+      longitude: this.longitude,
+      codeCountry: this.codeCountry,
+      formatedAddress: this.formatedAddress
+    }
+    new Promise((resolve, reject) => {
+      var responseUploadPhoto = this.uploadUserPhoto();
+      if (responseUploadPhoto) resolve(responseUploadPhoto);
+      else reject(new Error('Problema subiendo la foto'))
+    })  
+      .then((responseUploadPhoto) => {
+          this.mapService.createPost(post)
+        .subscribe((response) => {
+          this.error =  response.error;
+        });   
+      }) 
+      .catch((error) => {
+        console.log(error);
+      })    
   }
 
   onSubmit(): void {
   }
 }
+ 

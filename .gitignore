@@ -46,4 +46,6 @@ Thumbs.db
 # npm modules and more stuff
 /node_modules
 npm-debug.log
-/*.env
+
+#ignore credentials
+*.env
