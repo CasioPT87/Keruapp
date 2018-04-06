@@ -22,7 +22,7 @@ var PostSchema = Schema({
       type: [Number],  // [<longitude>, <latitude>]
       index: '2d'      // create the geospatial index
 	  },
-    url: String,
+    imageURL: String,
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
     usersThatLikePost: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     dateCreated: Date,

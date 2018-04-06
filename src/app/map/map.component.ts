@@ -36,6 +36,7 @@ export class MapComponent implements OnInit {
 
   signedRequest: any;
   userPhotoFile: any;
+  imageURL: string;
 
   constructor(
     private mapService: MapService,
@@ -99,7 +100,9 @@ export class MapComponent implements OnInit {
     this.userService.getSignedRequestPhoto(userPhotoFile)
       .subscribe((signedRequest) => {
         this.signedRequest = JSON.parse(signedRequest);
+        this.imageURL = this.signedRequest.url;
         console.log(this.signedRequest)
+        console.log(this.imageURL)
         //now we have the signed request. Let's upload this shit
         //this.uploadUserPhoto()
       });
@@ -128,7 +131,8 @@ export class MapComponent implements OnInit {
       latitude: this.latitude,
       longitude: this.longitude,
       codeCountry: this.codeCountry,
-      formatedAddress: this.formatedAddress
+      formatedAddress: this.formatedAddress,
+      imageURL: this.imageURL
     }
     // new Promise((resolve, reject) => {
     //   var responseUploadPhoto = this.uploadUserPhoto();

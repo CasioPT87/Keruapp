@@ -160,8 +160,12 @@ router.get('/findpost/:postNumber', AuthService.checkAuth, function(req, res, ne
           username: username,
           title: post.title,
           description: post.description,  
-          location: post.location
+          location: post.location,
+          imageURL: post.imageURL,
+          codeCountry: post.codeCountry,
+          formatedAddress: post.formatedAddress
         }
+        console.log('objForResponse: ')
         console.log(objForResponse)
 
         res.json({
@@ -179,6 +183,9 @@ router.get('/findpost/:postNumber', AuthService.checkAuth, function(req, res, ne
 
 function createNewPost(req, userId) {
 
+  console.log('req: ')
+  console.log(req)
+
   var post = {
     user: userId,
     title: req.body.title,
@@ -187,8 +194,11 @@ function createNewPost(req, userId) {
     url: req.body.url,
     dateCreated: Date.now(),
     codeCountry:  req.body.codeCountry,
-    formatedAddress:  req.body.formatedAddress
+    formatedAddress:  req.body.formatedAddress,
+    imageURL: req.body.imageURL
   }
+  console.log('post object:')
+  console.log(post)
 
   return new Promise((resolve, reject) => {
     Post.create(post, function (error, post) {

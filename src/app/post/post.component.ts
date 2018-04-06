@@ -25,6 +25,9 @@ export class PostComponent implements OnInit {
   comments: any[];
   postLiked: boolean = false;
   numLikesInPost: number = 0;
+  imageURL: string;
+  codeCountry: string = 'pollas';
+  formatedAddress: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,13 +37,16 @@ export class PostComponent implements OnInit {
   ngOnInit() {
     this.postNumber = +this.route.snapshot.paramMap.get('postNumber');
     this.mapService.getPost(this.postNumber)
-      .subscribe((responsePost) => {
+      .subscribe((responsePost) => {        
         var post = responsePost.post;
         this.post = post;
         this.postLiked = responsePost.like;
         this.numLikesInPost = responsePost.numLikesInPost;
         this.longitude = post.location[0];
         this.latitude = post.location[1];
+        this.imageURL = post.imageURL;
+        this.codeCountry = post.codeCountry;
+        this.formatedAddress = post.formatedAddress;
         var mapProp = {
           center: new google.maps.LatLng(this.latitude, this.longitude),
           zoom: 15,
@@ -56,7 +62,6 @@ export class PostComponent implements OnInit {
       comment: this.valueComment,
       postNumber: this.postNumber
     }
-    console.log(data)
     this.mapService.addComment(data)
       .subscribe((comments) => {
         this.comments = comments;       
