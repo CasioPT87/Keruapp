@@ -27,8 +27,6 @@ var files = require('./routes/files');
 
 var app = express();
 
-console.log(process.env)
-
 // view engine setup
 app.engine('html', require('ejs').renderFile);
 app.set('views', path.join(__dirname, 'views'));

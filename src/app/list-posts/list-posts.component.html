@@ -33,14 +33,21 @@
     </div> 
   </div>
 
-  <div #gmapListPosts style="width:100%; padding-bottom:50%;"></div>    
+  <div #gmapListPosts class="mb-3" style="width:100%; padding-bottom:50%;"></div>    
 
-  <div *ngIf="listPosts">
-    <a *ngFor="let post of listPosts" class="default-box" routerLink="/post/{{post.idNumber}}">
-      <div>Title: {{post.title}}</div>
-      <div>Description: {{post.description}}</div>
-      <div>Likes: {{post.likes}}</div>
-    </a>
+
+  <div *ngIf="listPosts" class="row w-100 justify-content-around">
+    <div *ngFor="let post of listPosts">
+      <div class="card mb-2" style="width: 18rem;">   
+        <img src="http://www.countryflags.io/{{post.codeCountry}}/flat/32.png" alt={{codeCountry}} style="position: absolute;">     
+        <img class="card-img-top" src={{post.imageURL}} alt={{post.title}}>
+        <div class="card-body">
+          <h5 class="card-title">{{post.title}}</h5>
+          <p class="card-text">{{post.formatedAddress}}  Likes: {{post.usersThatLikePost.length}}</p>
+          <a routerLink="/post/{{post.idNumber}}" class="btn btn-primary">Ir al post</a>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>

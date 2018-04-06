@@ -165,8 +165,6 @@ router.get('/findpost/:postNumber', AuthService.checkAuth, function(req, res, ne
           codeCountry: post.codeCountry,
           formatedAddress: post.formatedAddress
         }
-        console.log('objForResponse: ')
-        console.log(objForResponse)
 
         res.json({
           post: objForResponse,
@@ -179,6 +177,12 @@ router.get('/findpost/:postNumber', AuthService.checkAuth, function(req, res, ne
       console.log(err);
       res.json(err)
     });
+});
+
+router.get('/findlastsposts', AuthService.checkAuth, function(req, res, next) {
+
+  findLastPosts();
+
 });
 
 function createNewPost(req, userId) {
@@ -244,6 +248,32 @@ function findClosestsPosts(pointCoords) {
     });
 
   })
+}
+
+function findLastPosts() {
+
+  var limit = 30;
+
+  Post.find()
+    .slice('idNumber', 20).exec(function(err, posts) {
+      console.log(posts)
+    });
+  
+  // // find a location
+  // return new Promise((resolve, reject) => {
+  //   Post.find({
+  //     location: {
+  //       $near: coords,
+  //       $maxDistance: maxDistance
+  //     }
+  //   }).limit(limit).exec(function(err, posts) {
+  //     if (err) {
+  //       reject(err);
+  //     }
+  //     resolve(posts);
+  //   });
+
+  // })
 }
 
 function findPostByIdNumber(postNumber) {
