@@ -101,6 +101,7 @@ export class MapComponent implements OnInit {
         this.signedRequest = JSON.parse(signedRequest);
         console.log(this.signedRequest)
         //now we have the signed request. Let's upload this shit
+        //this.uploadUserPhoto()
       });
   }
 
@@ -108,8 +109,14 @@ export class MapComponent implements OnInit {
     var file = this.userPhotoFile;
     var signedRequest = this.signedRequest;
     return this.userService.uploadUserPhoto(file, signedRequest)
-      .subscribe((signedRequest) => {
-        return signedRequest;
+      .subscribe((response) => {
+        console.log(response)
+        if (response === null) this.createPost();
+        else {
+          var error = new Error(`error: ${response}`);
+          console.log(error)
+        }
+        
       });
   }
 
@@ -123,20 +130,20 @@ export class MapComponent implements OnInit {
       codeCountry: this.codeCountry,
       formatedAddress: this.formatedAddress
     }
-    new Promise((resolve, reject) => {
-      var responseUploadPhoto = this.uploadUserPhoto();
-      if (responseUploadPhoto) resolve(responseUploadPhoto);
-      else reject(new Error('Problema subiendo la foto'))
-    })  
-      .then((responseUploadPhoto) => {
-          this.mapService.createPost(post)
-        .subscribe((response) => {
-          this.error =  response.error;
-        });   
-      }) 
-      .catch((error) => {
-        console.log(error);
-      })    
+    // new Promise((resolve, reject) => {
+    //   var responseUploadPhoto = this.uploadUserPhoto();
+    //   if (responseUploadPhoto) resolve(responseUploadPhoto);
+    //   else reject(new Error('Problema subiendo la foto'))
+    // })  
+    //   .then((responseUploadPhoto) => {
+    this.mapService.createPost(post)
+      .subscribe((response) => {
+        this.error =  response.error;
+      });   
+      // }) 
+      // .catch((error) => {
+      //   console.log(error);
+      // })    
   }
 
   onSubmit(): void {

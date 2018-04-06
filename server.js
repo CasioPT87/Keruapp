@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').load();
+}
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -23,6 +26,8 @@ var comments = require('./routes/comments');
 var files = require('./routes/files');
 
 var app = express();
+
+console.log(process.env)
 
 // view engine setup
 app.engine('html', require('ejs').renderFile);

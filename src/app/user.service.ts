@@ -50,8 +50,9 @@ export class UserService {
   }
 
   uploadUserPhoto (file, signedRequest): Observable<any> {
-    console.log(file)
-    return this.http.put<any>(signedRequest.signedRequest, file);
+    var serch = this.http.put<any>(signedRequest.signedRequest, file);
+    console.log(serch)
+    return serch;
   }
 
   createUser (user): Observable<User> {
