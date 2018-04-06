@@ -2,6 +2,7 @@
 <div *ngIf="error">{{error}}</div>
 <div *ngIf="authorised">
   <h1>Create Post</h1>
+  
   <form (ngSubmit)="onSubmit()" #mapForm="ngForm">
     
     <div class="form-group">
@@ -14,6 +15,14 @@
       <input type="text" class="form-control" id="locationinput"
               [(ngModel)]="locationName" name="location" on-focusout="getCoordinates()">
     </div>
+
+    <div class="form-group">
+      <label for="userPhotoId">Photo</label>
+       <input type="file" id="userPhotoId"
+              [(ngModel)]="userPhoto" name="userPhotoModel"
+              (change)="setPhotoFile($event)">         
+    </div>
+
     <div class="form-group">
       <label for="descriptioninput">Description</label>
       <input type="text" class="form-control" id="descriptioninput"

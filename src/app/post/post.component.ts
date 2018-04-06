@@ -35,7 +35,6 @@ export class PostComponent implements OnInit {
     this.postNumber = +this.route.snapshot.paramMap.get('postNumber');
     this.mapService.getPost(this.postNumber)
       .subscribe((responsePost) => {
-        console.log(responsePost)
         var post = responsePost.post;
         this.post = post;
         this.postLiked = responsePost.like;

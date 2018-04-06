@@ -34,6 +34,9 @@ export class MapComponent implements OnInit {
   dateCreated: Date;
   dateModified: Date;
 
+  signedRequest: any;
+  userPhotoFile: any;
+
   constructor(
     private mapService: MapService,
     private userService: UserService
@@ -92,6 +95,38 @@ export class MapComponent implements OnInit {
     this.mapService.createPost(post)
       .subscribe((response) => {
         this.error =  response.error;        
+      });
+  }
+
+  //set photo selected
+  setPhotoFile(fileData) {
+    if (fileData.target.files && fileData.target.files[0]) {
+      this.userPhotoFile = fileData.target.files[0];
+      //now we get the signed request
+      this.getSignedRequestPhoto()
+    } else {
+      console.log('problem setting the photo selected')
+    }
+  }
+  
+  //get the signed request
+  getSignedRequestPhoto() {
+    var userPhotoFile = this.userPhotoFile;
+    this.userService.getSignedRequestPhoto(userPhotoFile)
+      .subscribe((signedRequest) => {
+        this.signedRequest = JSON.parse(signedRequest);
+        console.log(this.signedRequest)
+        //now we have the signed request. Let's upload this shit
+        this.uploadUserPhoto();
+      });
+  }
+
+  uploadUserPhoto() {
+    var file = this.userPhotoFile;
+    var signedRequest = this.signedRequest;
+    this.userService.uploadUserPhoto(file, signedRequest)
+      .subscribe((signedRequest) => {
+        console.log('a ver si la hemos subido bien...')
       });
   }
 

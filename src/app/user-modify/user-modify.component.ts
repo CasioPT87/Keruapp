@@ -70,12 +70,8 @@ export class UserModifyComponent {
   //get the signed request
   getSignedRequestPhoto() {
     var userPhotoFile = this.userPhotoFile;
-    console.log('userPhotoFile: ')
-    console.log(userPhotoFile)
     this.userService.getSignedRequestPhoto(userPhotoFile)
       .subscribe((signedRequest) => {
-        console.log('signedRequest: ')
-        console.log(signedRequest)
         this.signedRequest = JSON.parse(signedRequest);
         console.log(this.signedRequest)
         //now we have the signed request. Let's upload this shit
@@ -86,9 +82,6 @@ export class UserModifyComponent {
   uploadUserPhoto() {
     var file = this.userPhotoFile;
     var signedRequest = this.signedRequest;
-    console.log(signedRequest)
-    console.log(signedRequest.url)
-    console.log(signedRequest.signedRequest)
     this.userService.uploadUserPhoto(file, signedRequest)
       .subscribe((signedRequest) => {
         console.log('a ver si la hemos subido bien...')

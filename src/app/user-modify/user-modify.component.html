@@ -19,16 +19,12 @@
           </div>
         </div>
 
-
         <div class="form-group">
           <label for="userPhoto">Photo</label>
           <input type="file" id="userPhoto"
                   [(ngModel)]="model.userPhoto" name="userPhoto"
                   #userPhoto="ngModel" (change)="setPhotoFile($event)">         
         </div>
-
-
-
 
         <div class="form-group">
           <label for="password">Introduce new Password in case you want to change it</label>
