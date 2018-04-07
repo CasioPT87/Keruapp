@@ -3,10 +3,10 @@
 <div *ngIf="!authorised">
   <div class="container">
     <div [hidden]="submitted">
-      <h1>Create new User</h1>
+      <h1>Crear nuevo usuario</h1>
       <form (ngSubmit)="onSubmit()" #userForm="ngForm">
         <div class="form-group">
-          <label for="username">Name</label>
+          <label for="username">Nombre de usuario <span class="text-danger">*campo necesario</span></label>
           <input type="text" class="form-control" id="username"
                   required
                   [(ngModel)]="model.username" name="username"
@@ -18,7 +18,7 @@
         </div>
 
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password">Password <span class="text-danger">*campo necesario</span></label>
           <input type="text" class="form-control" id="password"
                   required
                   [(ngModel)]="model.password" name="password"
@@ -30,13 +30,13 @@
         </div>
     
         <div class="form-group">
-          <label for="description">User description</label>
+          <label for="description">Descripcion <span class="text-primary">*campo no necesario</span></label>
           <input type="text" class="form-control" id="description"
                   [(ngModel)]="model.description" name="description">
         </div>
     
         <div class="form-group">
-          <label for="url">Main user URL</label>
+          <label for="url">pagina web del usuario <span class="text-primary">*campo no necesario</span></label>
           <input type="text" class="form-control" id="url"
                   [(ngModel)]="model.url" name="url">
         </div>

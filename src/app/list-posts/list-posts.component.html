@@ -8,16 +8,16 @@
   <div class="row w-100 mx-auto mt-4">
     <div *ngIf="!authorised" class="row w-100 mx-auto mb-2">
       <div class="float-right">
-        <button  type="button" class="btn" routerLink="/userlogin">Log in</button>
-        <button  type="button" class="btn ml-2" routerLink="/usercreate">Sign in</button>
+        <button  type="button" class="btn" routerLink="/userlogin">Entrar</button>
+        <button  type="button" class="btn ml-2" routerLink="/usercreate">Registrarse</button>
       </div>
     </div> 
     <div *ngIf="authorised" class="row w-100 mx-auto mb-2">
-      <button  type="button" class="btn col-sm-2" routerLink="/usermodify">User Profile</button>
+      <button  type="button" class="btn col-sm-2" routerLink="/usermodify">Perfil</button>
       <div class="col-sm-1"></div>
-      <button  type="button" class="btn col-sm-6" routerLink="/postcreate">Create new post</button>
+      <button  type="button" class="btn col-sm-6" routerLink="/postcreate">Crear nuevo post</button>
       <div class="col-sm-1"></div>
-      <button  type="button" class="col-sm-2 btn" routerLink="/userlogin">Log out</button>
+      <button  type="button" class="col-sm-2 btn" routerLink="/userlogin">Salir</button>
     </div>
     <div class="row w-100 mx-auto mb-2">
       <nav class="navbar navbar-expand-sm col-12">

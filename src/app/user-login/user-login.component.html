@@ -6,10 +6,10 @@
     </div>
   <div *ngIf="!authorised">
     <div>
-      <h1>Log in</h1>
+      <h3>Entrar usando nombre de usuario y clave</h3>
       <form (ngSubmit)="onSubmit()" #userForm="ngForm">
         <div class="form-group">
-          <label for="username">Username</label>
+          <label for="username">Nombre de usuario</label>
           <input type="text" class="form-control" id="username"
                   required
                   [(ngModel)]="username" name="username"
@@ -29,7 +29,7 @@
     </div>
 
     <div>
-      <h1>Log in with google</h1>
+      <h3 class="mt-4 mb-3">Entrar usando cuenta de Google</h3>
       <form (ngSubmit)="onSubmit()" #oathForm="ngForm">
         <button type="submit" class="btn btn-success" (click)="googleLogin()" [disabled]="!oathForm.form.valid">Log in with google</button>
       </form>
@@ -39,9 +39,9 @@
 
   <div *ngIf="authorised">
     <div>
-      <h1>Logout</h1>
+      <h1 class="mb-3">Pulsar para salir</h1>
       <form (ngSubmit)="onSubmit()" #logoutForm="ngForm">
-        <button type="submit" class="btn btn-success" (click)="logout()" [disabled]="!logoutForm.form.valid">Log out</button>
+        <button type="submit" class="btn btn-success" (click)="logout()" [disabled]="!logoutForm.form.valid">Salir</button>
       </form>
     </div>
   </div>
