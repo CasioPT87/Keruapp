@@ -180,15 +180,25 @@ router.get('/findpost/:postNumber', AuthService.checkAuth, function(req, res, ne
 });
 
 router.get('/findlastsposts', AuthService.checkAuth, function(req, res, next) {
-
-  findLastPosts();
+  
+  findLastPosts()
+    .then((posts) => {
+      res.send({
+        posts: posts,
+        error: false
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send({
+        posts: null,
+        error: "error retrieving posts"
+      })
+    });
 
 });
 
 function createNewPost(req, userId) {
-
-  console.log('req: ')
-  console.log(req)
 
   var post = {
     user: userId,
@@ -201,8 +211,6 @@ function createNewPost(req, userId) {
     formatedAddress:  req.body.formatedAddress,
     imageURL: req.body.imageURL
   }
-  console.log('post object:')
-  console.log(post)
 
   return new Promise((resolve, reject) => {
     Post.create(post, function (error, post) {
@@ -220,7 +228,7 @@ function createNewPost(req, userId) {
 
 function findClosestsPosts(pointCoords) {
 
-  var limit = 10;
+  var limit = 100;
   // get the max distance or set it to 20000000 meters (almost max)
   var maxDistance = 20000000;
   // we need to convert the distance to radians
@@ -252,28 +260,24 @@ function findClosestsPosts(pointCoords) {
 
 function findLastPosts() {
 
-  var limit = 30;
+  var skip = 0;
+  var limit = 100;
 
-  Post.find()
-    .slice('idNumber', 20).exec(function(err, posts) {
-      console.log(posts)
-    });
-  
-  // // find a location
-  // return new Promise((resolve, reject) => {
-  //   Post.find({
-  //     location: {
-  //       $near: coords,
-  //       $maxDistance: maxDistance
-  //     }
-  //   }).limit(limit).exec(function(err, posts) {
-  //     if (err) {
-  //       reject(err);
-  //     }
-  //     resolve(posts);
-  //   });
-
-  // })
+  return new Promise((resolve, reject) => {
+    Post.find({},
+      null, // Columns to Return
+      {
+        skip: skip, // Starting Row
+        limit: limit, // Ending Row
+        sort:{
+            dateCreated: -1 //Sort by Date Added DESC
+        }
+      },
+      function(err, posts){
+        if (err) reject(new Error(err))
+        else resolve(posts); // Do something with the array of 10 objects
+      });
+  })
 }
 
 function findPostByIdNumber(postNumber) {

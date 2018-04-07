@@ -24,6 +24,8 @@ export class ListPostsComponent implements OnInit {
   locationName: string;
   listPosts: object[];
 
+  firstSearchNotDoneYet: boolean = true;
+
   constructor(
     private mapService: MapService,
     private userService: UserService
@@ -39,10 +41,12 @@ export class ListPostsComponent implements OnInit {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
-    this.checkAuthorization();
+    this.checkAuthorization()
+    this.lastestsPosts();
   }
 
-  checkAuthorization() {
+  checkAuthorization(): any {
+    console.log('checkAuthorization')
     this.userService.checkAuthorization()
       .subscribe((authorised) => {
         console.log(authorised)
@@ -61,7 +65,6 @@ export class ListPostsComponent implements OnInit {
   }
 
   closestPosts(): void {
-    console.log('getcoord!!')
     var locationName = this.locationName;
     this.mapService.getClosestPosts(locationName)
       .subscribe((response) => {
@@ -70,8 +73,16 @@ export class ListPostsComponent implements OnInit {
         this.latitude = response.searchLocation.latitude;
         this.longitude = response.searchLocation.longitude;
         this.error = response.error;
+        if (!this.error) this.firstSearchNotDoneYet = false;
         this.setCenter();
-        //return response
+      });
+  }
+
+  lastestsPosts(): void {
+    this.mapService.getLastestsPosts()
+      .subscribe((response) => {
+        this.listPosts = response.posts; 
+        this.error = response.error;
       });
   }
 

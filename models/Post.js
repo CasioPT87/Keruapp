@@ -12,7 +12,8 @@ var PostSchema = Schema({
     idNumber: {
     	type: Number,
     	required: true,
-    	default: 0
+    	default: 0,
+      unique: true
     },
     title: String,
     description: String,

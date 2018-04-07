@@ -11,14 +11,13 @@ const httpOptions = {
   withCredentials: true
 }
 
-var production = true;
+var production = false;
 
 if (!production) {
   var path = 'http://localhost:3000';
 } else {
   var path = ''
 }
-
 
 @Injectable()
 export class UserService {

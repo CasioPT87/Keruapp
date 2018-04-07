@@ -8,7 +8,7 @@ const httpOptions ={
   withCredentials: true
 }
 
-var production = true;
+var production = false;
 
 if (!production) {
   var path = 'http://localhost:3000';
@@ -44,6 +44,13 @@ export class MapService {
 
   getClosestPosts(location): Observable<any> {
     var response =  this.http.get(path + '/post/findposts/'+location, {
+      withCredentials: true  // <=========== important!
+    });
+    return response;
+  }
+
+  getLastestsPosts(): Observable<any> {
+    var response =  this.http.get(path + '/post/findlastsposts/', {
       withCredentials: true  // <=========== important!
     });
     return response;

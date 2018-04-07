@@ -35,6 +35,8 @@
 
   <div #gmapListPosts class="mb-3" style="width:100%; padding-bottom:50%;"></div>    
 
+  <h5 *ngIf="firstSearchNotDoneYet" class="text-center mb-3">Ultimos posts publicados</h5>
+  <h5 *ngIf="!firstSearchNotDoneYet" class="text-center mb-3">Posts ordenados por proximidad</h5>
 
   <div *ngIf="listPosts" class="row w-100 justify-content-around">
     <div *ngFor="let post of listPosts">
