@@ -1,13 +1,35 @@
 
-<div #gmap style="width:500px;height:300px"></div>
+
 
 <div *ngIf="post"> 
-  <div>
-      <a routerLink="/user/{{post.username}}">User: {{post.username}}</a>
-      <img src="http://www.countryflags.io/{{codeCountry}}/shiny/64.png">
-      <p>{{formatedAddress}}</p>
-      <img src={{imageURL}}>
-      <div>Title: {{post.title}}</div>
+  <div class="container">
+
+    <div class="row w-100 mb-1/">
+      <blockquote class="blockquote">
+        <h3>{{post.title}}</h3>
+        <footer class="blockquote-footer"> <img src="http://www.countryflags.io/{{codeCountry}}/flat/64.png"> {{formatedAddress}}</footer>
+      </blockquote>  
+    </div>
+    <div class="row">
+      <img class="img-fluid" src={{imageURL}}>
+    </div>
+    <div class="row w-100">
+      <div class="card w-50">
+          <a class="card-body" routerLink="/user/{{post.username}}">User: {{post.username}}</a>  
+      </div>
+    </div>
+    <div class="row w-100">
+        <div class="card w-50">
+            <div class="card-body" routerLink="/user/{{post.username}}">
+              <p>{{post.description}}</p>
+            </div>  
+        </div>
+      </div>
+    
+      
+      
+      
+      
       <div>Description: {{post.description}}</div>      
       
       <form (ngSubmit)="onSubmit()" #postForm="ngForm">
