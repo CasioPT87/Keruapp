@@ -1,5 +1,7 @@
 'use strict'
 
+var PostService = require('../services/postService');
+
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
@@ -30,20 +32,40 @@ var PostSchema = Schema({
     dateModified: Date
 });
 
-var Post = mongoose.model('Post', PostSchema);
+//this is the model
+var post = mongoose.model('Post', PostSchema);
 
 PostSchema.pre('save', function (next) {
 
-  // Only increment when the document is new
-  if (this.isNew) {
-    Post.count().then(res => {
-      this.idNumber = res; // Increment count
+  new Promise((resolve, reject) => {
+    var lastIdNumberInPosts = PostService.lastIdNumberInPosts(post);
+    resolve(lastIdNumberInPosts);
+    })
+    .then((lastIdNumberInPosts) => {
+      console.log(lastIdNumberInPosts)
+      var newIdNumber = Number(lastIdNumberInPosts) + 1;
+      console.log(newIdNumber)
+      this.idNumber = newIdNumber;
       next();
-    });
-  } else {
-    next();
-  }
+    })
+    .catch((err) => {
+      console.log(err)
+      throw new Error(err);
+      next();
+    })
+
+  // // Only increment when the document is new
+  // if (this.isNew) {
+  //   Post.count().then(res => {
+  //     this.idNumber = res; // Increment count
+  //     next();
+  //   });
+  // } else {
+  //   next();
+  // }
+
+
 });
 
-module.exports = Post;
+module.exports = post;
 
