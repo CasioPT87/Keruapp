@@ -4,41 +4,54 @@
 <div *ngIf="post"> 
   <div class="container">
 
-    <div class="row w-100 mb-1/">
-      <blockquote class="blockquote">
-        <h3>{{post.title}}</h3>
-        <footer class="blockquote-footer"> <img src="http://www.countryflags.io/{{codeCountry}}/flat/64.png"> {{formatedAddress}}</footer>
-      </blockquote>  
+    <div class="row w-100 mb-1 mx-auto">    
+      <h3 class="mx-auto">{{post.title}}</h3>
     </div>
-    <div class="row">
-      <img class="img-fluid" src={{imageURL}}>
+    <div class="row w-100 mb-1 mx-auto">    
+      <h5 class="mx-auto">{{formatedAddress}}</h5> 
     </div>
-    <div class="row w-100">
-      <div class="card w-50">
-          <a class="card-body" routerLink="/user/{{post.username}}">User: {{post.username}}</a>  
+    <div class="row w-100 mx-auto">    
+      <img class="mx-auto" src="http://www.countryflags.io/{{codeCountry}}/flat/32.png"> 
+    </div>
+    <div class="row w-100 mt-2 mx-auto">
+      <div class="col-12 p-0 mx-auto">
+          <a class="mx-auto" routerLink="/user/{{post.username}}">Autor del post: {{post.username}}</a>  
       </div>
     </div>
-    <div class="row w-100">
-        <div class="card w-50">
-            <div class="card-body" routerLink="/user/{{post.username}}">
-              <p>{{post.description}}</p>
-            </div>  
+    <div class="row w-100 mt-3 mb-3 mx-auto">
+      <img class="img-fluid mx-auto" src={{imageURL}}>
+    </div>
+    <div class="row w-100 mt-3 mb-3 mx-auto">
+      <p class="mx-auto m-0">Descripcion del autor:</p>
+    </div>
+    <div class="card mx-auto" style="width: 100%;">
+      <div class="card-header">
+        {{post.description}}
+      </div>
+    </div>
+
+    <div *ngIf="comments">
+      <div class="row w-100 mt-3 mb-3 mx-auto">
+        <p class="mx-auto m-0">Comentarios:</p>
+      </div>
+  
+      <div class="row w-100 mt-3 mb-3 mx-auto">
+        <div class="card  w-100 mx-auto" style="width: 50%;">
+          <ul *ngFor="let comment of comments" class="list-group list-group-flush">
+            <li class="list-group-item">{{comment.text}}</li>
+          </ul>
         </div>
       </div>
-    
+    </div>    
       
-      
-      
-      
-      <div>Description: {{post.description}}</div>      
-      
-      <form (ngSubmit)="onSubmit()" #postForm="ngForm">
-        <div class="form-group">
-          <label for="commentinput">Comment text</label>
-          <input type="text" class="form-control" id="commentinput" [(ngModel)]="valueComment" name="comment">
-        </div>
-        <button type="button" class="btn btn-default" (click)="addComment()">Add Comment</button>
-      </form>
+    <form (ngSubmit)="onSubmit()" #postForm="ngForm">
+      <div class="form-group">
+        <label for="commentinput">Comment text</label>
+        <textarea type="text" class="form-control" id="commentinput" [(ngModel)]="valueComment" name="comment"></textarea>
+      </div>
+      <button type="button" class="btn btn-default" (click)="addComment()">Add Comment</button>
+    </form>
+
   </div>
 
 

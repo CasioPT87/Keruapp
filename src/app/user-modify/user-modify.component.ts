@@ -11,7 +11,7 @@ import { User }    from '../user';
 })
 export class UserModifyComponent {
 
-  model: object = {
+  model: any = {
     userName: "",
     password: "",
     dateCreated: Date,
@@ -19,12 +19,13 @@ export class UserModifyComponent {
     description: "",
     url: "",
     likes: 0,
-    favoritePosts: []
+    favoritePosts: [],
+    imageURL: ""
   };
   error: boolean = false;
   submitted: boolean = false;
   signedRequest: any;
-  userPhotoFile: any;
+  userPhotoFile: any = null;
 
   constructor(
     private userService: UserService
@@ -45,9 +46,10 @@ export class UserModifyComponent {
           description: user.description || "",
           url: user.url || null,
           likes: user.likes,
-          favoritePosts: user.favoritePosts || []
+          favoritePosts: user.favoritePosts || [],
+          imageURL: user.imageURL || ""
         };
-        this.error = user.error || false;
+        this.error = user.error || null;
         this.userPhotoFile = user.photo;
       });
   }
@@ -61,7 +63,7 @@ export class UserModifyComponent {
     if (fileData.target.files && fileData.target.files[0]) {
       this.userPhotoFile = fileData.target.files[0];
       //now we get the signed request
-      this.getSignedRequestPhoto()
+      // this.getSignedRequestPhoto()
     } else {
       console.log('problem setting the photo selected')
     }
@@ -73,23 +75,40 @@ export class UserModifyComponent {
     this.userService.getSignedRequestPhoto(userPhotoFile)
       .subscribe((signedRequest) => {
         this.signedRequest = JSON.parse(signedRequest);
+        this.model.imageURL = this.signedRequest.url;
         console.log(this.signedRequest)
         //now we have the signed request. Let's upload this shit
-        this.uploadUserPhoto();
+        this.uploadUserPhoto()
       });
+  }
+
+  sendUserUpdate() {
+    console.log(this.model)
+    if (this.userPhotoFile) {
+      this.getSignedRequestPhoto();
+    } else {
+      this.updateUser();
+    }
   }
 
   uploadUserPhoto() {
     var file = this.userPhotoFile;
     var signedRequest = this.signedRequest;
-    this.userService.uploadUserPhoto(file, signedRequest)
-      .subscribe((signedRequest) => {
-        console.log('a ver si la hemos subido bien...')
+    return this.userService.uploadUserPhoto(file, signedRequest)
+      .subscribe((response) => {
+        console.log(response)
+        if (response === null) this.updateUser();
+        else {
+          var error = new Error(`error: ${response}`);
+          console.log(error)
+        }    
       });
   }
 
   updateUser(): void {
     var user = this.model;
+    console.log('updateUser')
+    console.log(this.model.imageURL)
     this.userService.updateUser(user)
       .subscribe(response => this.error = response.error);
   }

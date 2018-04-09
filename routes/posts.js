@@ -4,6 +4,7 @@ var Post = require('../models/Post');
 var User = require('../models/User');
 var MapService = require('../services/mapService');
 var AuthService = require('../services/authService');
+var CommentService = require('../services/commentService');
 
 /* GET users listing. */
 router.post('/createpost', AuthService.checkAuth, function(req, res, next) {
@@ -37,11 +38,12 @@ router.post('/createpost', AuthService.checkAuth, function(req, res, next) {
 router.put('/likepost', AuthService.checkAuth, function(req, res, next) {
 
   if (res.locals.authorised && res.locals.user) {
-
     var postNumber = req.body.postNumber;
     var likePost = false;
     var numLikesInPost = 0;
     var userId = res.locals.user._id;
+
+    console.log('postNumber: ', postNumber )
 
     Post.findOne({ idNumber: postNumber }, function(err, post) {
       if (err || !post) {
@@ -143,6 +145,17 @@ router.get('/findpost/:postNumber', AuthService.checkAuth, function(req, res, ne
 
   findPostByIdNumber(postNumber)
     .then((post) => {
+      var comments = CommentService.getCommentsByPostId(post._id);
+      return Promise.all([post, comments], (values) => {
+        var comments = values[1];
+        if (comments) return [post, comments];
+        else return [post, []];
+      }); 
+    })
+    .then((values) => {
+      var post = values[0];
+      var comments = values[1];
+
       if (res.locals.authorised && res.locals.user && res.locals.user._id ) {
         // let's chech if the user likes this post
         var userId = res.locals.user._id;
@@ -151,30 +164,31 @@ router.get('/findpost/:postNumber', AuthService.checkAuth, function(req, res, ne
         else var like = true;
       }
       numLikesInPost = post.usersThatLikePost.length;
-      
+
       //here we remove the userID and add a username to be displayed;
       User.findById(post.user, function(err, user) {
         if (err) console.log(err);
         var username = user.username;
-        objForResponse = {
+        objForResponsePost = {
           username: username,
           title: post.title,
           description: post.description,  
           location: post.location,
           imageURL: post.imageURL,
           codeCountry: post.codeCountry,
-          formatedAddress: post.formatedAddress
+          formatedAddress: post.formatedAddress,
+          comments: post.comments
         }
 
         res.json({
-          post: objForResponse,
+          post: objForResponsePost,
+          comments: comments,
           like: like,
           numLikesInPost: numLikesInPost
         });
       })
     })
     .catch((err) => {
-      console.log(err);
       res.json(err)
     });
 });
@@ -209,7 +223,8 @@ function createNewPost(req, userId) {
     dateCreated: Date.now(),
     codeCountry:  req.body.codeCountry,
     formatedAddress:  req.body.formatedAddress,
-    imageURL: req.body.imageURL
+    imageURL: req.body.imageURL,
+    isNewPost: false
   }
 
   return new Promise((resolve, reject) => {
@@ -290,10 +305,9 @@ function findPostByIdNumber(postNumber) {
       if (err) {
         reject(err);
       }
-      console.log(post)
-      resolve(post);
+      else if (!post) reject(new Error('no hemos podido encontrar el post. Sorry!!'))
+      else if (post) resolve(post);
     });
-
   })
 }
 

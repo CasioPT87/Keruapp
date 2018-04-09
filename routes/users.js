@@ -64,6 +64,7 @@ router.get('/currentuser', checkAuthService.checkAuth, function(req, res, next) 
       url: user.url,
       favoritePosts: [],
       likes: 0,
+      imageURL: user.imageURL,
       error: false
     }
 
@@ -110,6 +111,7 @@ router.put('/update', checkAuthService.checkAuth, function(req, res, next) {
     var passwordUpdateUser = req.body.password;
     var descriptionUpdateUser = req.body.description;
     var urlUpdateUser = req.body.url;
+    var imageURLUser = req.body.imageURL;
 
     User.findById(user._id, function(err, oldUser) {
       if (err) console.log(err);
@@ -117,15 +119,21 @@ router.put('/update', checkAuthService.checkAuth, function(req, res, next) {
       var passwordOldUser = oldUser.password;
       var descriptionOldUser = oldUser.description;
       var urlOldUser = oldUser.url;
+      var imageURLOldUser = oldUser.imageURL;
+
+      var dateUserModified = Date.now();
 
       var update = {
         username: usernameUpdateUser !== "" ? usernameUpdateUser : usernameOldUser,
-        password: passwordUpdateUser !== "" ? hashPassword(passwordUpdateUser) : passwordOldUser,
         description: descriptionUpdateUser !== "" ? descriptionUpdateUser : descriptionOldUser,
-        url: urlUpdateUser !== "" ? urlUpdateUser : urlOldUser
-      }    
+        url: urlUpdateUser !== "" ? urlUpdateUser : urlOldUser,
+        dateModified: dateUserModified,
+        imageURL: imageURLUser !== "" ? imageURLUser : imageURLOldUser,
+        password: ""
+      } 
+
       new Promise((resolve, reject) => {
-        if (passwordUpdateUser !== "") {
+        if (passwordUpdateUser && passwordUpdateUser !== "") {
           var hashedPassword = hashPassword(passwordUpdateUser);
           if (hashedPassword) resolve(hashedPassword);
           else reject(err);

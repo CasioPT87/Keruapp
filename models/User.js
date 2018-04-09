@@ -26,7 +26,11 @@ var UserSchema = new mongoose.Schema({
      posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
      favoriteUsers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
      dateCreated: Date,
-     dateModified: Date
+     dateModified: Date,
+     imageURL: {
+      type: String,
+      default: ""
+     }
   });
 
   //authenticate input against database

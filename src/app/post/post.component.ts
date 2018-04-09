@@ -47,6 +47,7 @@ export class PostComponent implements OnInit {
         this.imageURL = post.imageURL;
         this.codeCountry = post.codeCountry;
         this.formatedAddress = post.formatedAddress;
+        this.comments = responsePost.comments;
         var mapProp = {
           center: new google.maps.LatLng(this.latitude, this.longitude),
           zoom: 15,
@@ -64,6 +65,7 @@ export class PostComponent implements OnInit {
     }
     this.mapService.addComment(data)
       .subscribe((comments) => {
+        console.log(comments)
         this.comments = comments;       
       });
   }

@@ -103,8 +103,6 @@ export class MapComponent implements OnInit {
       .subscribe((signedRequest) => {
         this.signedRequest = JSON.parse(signedRequest);
         this.imageURL = this.signedRequest.url;
-        console.log(this.signedRequest)
-        console.log(this.imageURL)
         //now we have the signed request. Let's upload this shit
         //this.uploadUserPhoto()
       });
@@ -120,8 +118,7 @@ export class MapComponent implements OnInit {
         else {
           var error = new Error(`error: ${response}`);
           console.log(error)
-        }
-        
+        }    
       });
   }
 

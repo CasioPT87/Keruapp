@@ -3,14 +3,14 @@
 <div *ngIf="!error">
   <div class="container">
     <div [hidden]="submitted">
-      <h1>Modificar perfil</h1>
-      <p>User created: {{model.dateCreated}}</p>
-      <p>User modified: {{model.dateModified}}</p>
-      <p>Likes in user's posts: {{model.likes}}</p>
+      <h1 class="mb-3">Modificar perfil</h1>
+      <p>Usuario creado: <strong>{{model.dateCreated}}</strong></p>
+      <p>Ultima vez modificado el: <strong>{{model.dateModified}}</strong></p>
+      <p>Sus posts han recibido <strong>{{model.likes}}</strong> "me gusta"</p>
       
       <form (ngSubmit)="onSubmit()" #userForm="ngForm">
         <div class="form-group">
-          <label for="username">Name</label>
+          <label for="username">Nombre</label>
           <input type="text" class="form-control" id="username"
                   [(ngModel)]="model.userName" name="username"
                   #username="ngModel">
@@ -20,15 +20,22 @@
           </div>
         </div>
 
+        <div class="row">
+          <div class="col">
+              <img class="mb-3" src={{model.imageURL}} alt='foto perfil {{model.username}}' style="max-width: 50%; height: auto">
+          </div>        
+        </div>   
+        
+
         <div class="form-group">
-          <label for="userPhoto">Photo</label>
-          <input type="file" id="userPhoto"
+          <label for="userPhoto">Foto de perfil</label>
+          <input type="file" id="userPhoto" accept="image/*" capture="environment"
                   [(ngModel)]="model.userPhoto" name="userPhoto"
                   #userPhoto="ngModel" (change)="setPhotoFile($event)">         
         </div>
 
         <div class="form-group">
-          <label for="password">Introduce new Password in case you want to change it</label>
+          <label for="password">Introduce un nuevo password si quieres cambiarlo</label>
           <input type="text" class="form-control" id="password"
                   [(ngModel)]="model.password" name="password"
                   #password="ngModel">
@@ -39,18 +46,18 @@
         </div>
     
         <div class="form-group">
-          <label for="description">User description</label>
-          <input type="text" class="form-control" id="description"
-                  [(ngModel)]="model.description" name="description">
+          <label for="description">Descripcion del usuario</label>
+          <textarea type="text" class="form-control" id="description"
+                  [(ngModel)]="model.description" name="description"></textarea>
         </div>
     
         <div class="form-group">
-          <label for="url">Main user URL</label>
+          <label for="url">Pagina web</label>
           <input type="text" class="form-control" id="url"
                   [(ngModel)]="model.url" name="url">
         </div>
     
-        <button type="submit" class="btn btn-success" (click)="updateUser()" [disabled]="!userForm.form.valid">Submit</button>
+        <button type="submit" class="btn btn-success" (click)="sendUserUpdate()" [disabled]="!userForm.form.valid">Enviar</button>
         <!--<button type="button" class="btn btn-default" (click)="createUser(); userForm.reset()">Reset<-->
       </form>
     </div>

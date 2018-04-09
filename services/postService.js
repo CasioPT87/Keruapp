@@ -53,8 +53,11 @@ function lastIdNumberInPosts(post) {
       if (err) {
         console.log(err)
         reject(new Error('error encontrando el ultimo post'));
-      } else {
+      } else if (lastPost) {
         resolve(lastPost.idNumber);
+      }
+      else if (!lastPost) {
+        resolve(0);
       }
     });
   });  
