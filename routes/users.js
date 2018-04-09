@@ -4,6 +4,7 @@ var User = require('../models/User');
 var Post = require('../models/Post');
 var checkAuthService = require('../services/authService');
 var bcrypt = require('bcrypt');
+var moment = require('moment');
 
 /* GET users listing. */
 router.get('/getuser/:username', checkAuthService.checkAuth, function(req, res, next) {
@@ -43,10 +44,22 @@ router.get('/currentuser', checkAuthService.checkAuth, function(req, res, next) 
   var authorised = res.locals.authorised;
   var user = res.locals.user;
   if (authorised && user) {
+
+    //formatting dates:
+    var dateCreated = new Date(user.dateCreated);
+    var dateModified = new Date(user.dateModified);
+
+    var dateCreatedLocale = moment(dateCreated);
+    var dateModifiedLocale = moment(dateModified);
+    moment.locale('es');
+    dateCreatedLocale.locale(false);
+    dateModifiedLocale.locale(false);
+    ///////////////////
+
     var objUserResponse = {
       username: user.username,
-      dateCreated: user.dateCreated,
-      dateModified: user.dateModified,
+      dateCreated: dateCreatedLocale.format('LLLL'),
+      dateModified: dateModifiedLocale.format('LLLL'),
       description: user.description,
       url: user.url,
       favoritePosts: [],

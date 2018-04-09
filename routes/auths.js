@@ -45,7 +45,8 @@ router.post('/createuser', AuthService.checkAuth, function (req, res, next) {
         password: req.body.password,
         description: req.body.description,
         url: req.body.url,
-        dateCreated: Date.now()
+        dateCreated: Date.now(),
+        dateModified: Date.now()
       }
       // check if there's another user with that name
       User.findOne({ username: username })
