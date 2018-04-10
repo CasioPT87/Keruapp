@@ -3,7 +3,7 @@ var User = require('../models/User');
   
 function checkAuth(req, res, next) {
 
-  console.log('checking auth')
+  console.log('authService checkAuth')
 
   res.locals = { authorised: false, user: null };
 
@@ -20,7 +20,7 @@ function checkAuth(req, res, next) {
 }
 
 function getUser(req) {
-
+  console.log('authService getUser')
   var userId = null;
   if (req.user && req.user.authenticated && req.user.id) userId = req.user.id;
   if (req.session && req.session.userId) userId = req.session.userId; 
@@ -30,7 +30,6 @@ function getUser(req) {
 
   	if (userId) {
   		User.findById( userId, function (err, user) {
-        console.log(user)
         if (err) {
         	reject(err)
         }

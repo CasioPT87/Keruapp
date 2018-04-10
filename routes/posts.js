@@ -15,7 +15,7 @@ router.post('/createpost', AuthService.checkAuth, function(req, res, next) {
 
     createNewPost(req, userId)
     .then((post) => {
-      console.log(post)
+
       res.send({
         post: post,
         error: false
@@ -37,28 +37,31 @@ router.post('/createpost', AuthService.checkAuth, function(req, res, next) {
 
 router.put('/likepost', AuthService.checkAuth, function(req, res, next) {
 
+  console.log('post /likepost')
+
   if (res.locals.authorised && res.locals.user) {
+
     var postNumber = req.body.postNumber;
     var likePost = false;
     var numLikesInPost = 0;
     var userId = res.locals.user._id;
 
-    console.log('postNumber: ', postNumber )
-
     Post.findOne({ idNumber: postNumber }, function(err, post) {
       if (err || !post) {
         console.log('Ha habido un error buscando el post')
       } else {
-        console.log(post.usersThatLikePost)
         var idPost = post._id;
         var index = post.usersThatLikePost.findIndex((userThatLikePost) => {
           return userThatLikePost.toString() == userId.toString();
         })
         if (index < 0) {
           //todavia no le gusta
-          post.usersThatLikePost.push(userId);
-          post.save(function(err, postUpdated) {
-            numLikesInPost = postUpdated.usersThatLikePost.length;
+          console.log('1')
+          var usersThatLikePost = post.usersThatLikePost;
+          usersThatLikePost.push(userId);
+          Post.update({ _id: post._id }, { usersThatLikePost: usersThatLikePost }, null, function(err, rawResponse) {
+
+            numLikesInPost = usersThatLikePost.length;
             
             res.send({
               likePost: true,
@@ -67,10 +70,11 @@ router.put('/likepost', AuthService.checkAuth, function(req, res, next) {
           })
         } else {
           // ya le gusta
-          post.usersThatLikePost.splice(index, 1);
-          post.save(function(err, postUpdated) {
-            console.log(postUpdated)
-            numLikesInPost = postUpdated.usersThatLikePost.length;
+          var usersThatLikePost = post.usersThatLikePost;
+          usersThatLikePost.splice(index, 1);
+          Post.update({ _id: post._id }, { usersThatLikePost: usersThatLikePost }, null, function(err, rawResponse) {
+
+            numLikesInPost = usersThatLikePost.length;
             
             res.send({
               likePost: false,
@@ -109,7 +113,6 @@ router.get('/findposts/:coords', function(req, res, next) {
       findClosestsPosts(pointCoords)
         .then((posts) => {
           // we dont want to send any user id in the response
-          console.log(posts)
           return res.send({
             posts: posts,
             searchLocation: {'latitude': latitude, 'longitude': longitude},
@@ -136,6 +139,8 @@ router.get('/findposts/:coords', function(req, res, next) {
 });
 
 router.get('/findpost/:postNumber', AuthService.checkAuth, function(req, res, next) {
+
+  console.log('post /findpost/:postNumber')
 
   var like = false;
   var postNumber = req.params.postNumber;
@@ -224,7 +229,6 @@ function createNewPost(req, userId) {
     codeCountry:  req.body.codeCountry,
     formatedAddress:  req.body.formatedAddress,
     imageURL: req.body.imageURL,
-    isNewPost: false
   }
 
   return new Promise((resolve, reject) => {

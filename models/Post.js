@@ -17,10 +17,6 @@ var PostSchema = Schema({
     	default: 0,
       unique: true
     },
-    isNewPost: {
-      type: Boolean,
-      default: true
-    },
     title: String,
     description: String,
     codeCountry: String,
@@ -42,13 +38,8 @@ var post = mongoose.model('Post', PostSchema);
 PostSchema.pre('save', function (next) {
 
   new Promise((resolve, reject) => {
-    if (this.isNewPost) {
       var lastIdNumberInPosts = PostService.lastIdNumberInPosts(post);
-      resolve(lastIdNumberInPosts);
-    } else {
-      next();
-    }
-    
+      resolve(lastIdNumberInPosts);    
     })
     .then((lastIdNumberInPosts) => {
       var newIdNumber = Number(lastIdNumberInPosts) + 1;
