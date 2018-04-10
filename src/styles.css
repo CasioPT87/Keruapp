@@ -6,7 +6,9 @@
 .default-box{
     border: 1px solid black;
 }
-
 .jumbotron {
     padding:0px;
+}
+.hidden {
+    display: none;
 }

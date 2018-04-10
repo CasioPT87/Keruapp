@@ -23,13 +23,16 @@ export class ListPostsComponent implements OnInit {
   longitude: any;
   locationName: string;
   listPosts: object[];
+  mapHidden: boolean;
 
   firstSearchNotDoneYet: boolean = true;
 
   constructor(
     private mapService: MapService,
     private userService: UserService
-  ) { }
+  ) {
+    this.mapHidden = true;
+   }
 
   ngOnInit() {
     this.listPosts = null;
@@ -75,6 +78,7 @@ export class ListPostsComponent implements OnInit {
         this.error = response.error;
         if (!this.error) this.firstSearchNotDoneYet = false;
         this.setCenter();
+        this.mapHidden = false;
       });
   }
 
