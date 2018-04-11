@@ -28,11 +28,14 @@ export class PostComponent implements OnInit {
   imageURL: string;
   codeCountry: string = 'pollas';
   formatedAddress: string;
+  mapShown: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private mapService: MapService
-  ) { }
+  ) {
+    this.mapShown = false;
+   }
 
   ngOnInit() {
     this.postNumber = +this.route.snapshot.paramMap.get('postNumber');
@@ -58,6 +61,26 @@ export class PostComponent implements OnInit {
       });
   }
 
+  toggleMap() {
+    if (!this.mapShown) {
+      var mapProp = {
+        center: new google.maps.LatLng(this.latitude, this.longitude),
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      let marker = new google.maps.Marker({
+        position: new google.maps.LatLng(this.latitude, this.longitude),
+        map: this.map,
+        title: 'Tu posicion!!'
+      });
+      this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+      this.mapShown = true;
+    } else {
+      this.mapShown = false;
+    }
+      
+  }
+
   addComment(): void {
     var data = {
       comment: this.valueComment,
@@ -66,6 +89,7 @@ export class PostComponent implements OnInit {
     this.mapService.addComment(data)
       .subscribe((comments) => {
         console.log(comments)
+        this.valueComment = null;
         this.comments = comments;       
       });
   }

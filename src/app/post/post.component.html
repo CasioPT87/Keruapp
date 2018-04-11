@@ -3,20 +3,27 @@
 <div *ngIf="post"> 
   <div class="container">
 
-    <div class="row w-100 mb-1 mx-auto">    
+    <div class="row mb-1">    
       <h3 class="mx-auto">{{post.title}}</h3>
     </div>
-    <div class="row w-100 mb-1 mx-auto">    
+    <div class="row mb-1">    
       <h5 class="mx-auto">{{formatedAddress}}</h5> 
     </div>
-    <div class="row w-100 mx-auto">    
+    <div class="row">    
       <img class="mx-auto" src="http://www.countryflags.io/{{codeCountry}}/flat/32.png"> 
     </div>
-    <div class="row w-100 mt-2 mx-auto">
-      <div class="col-12 p-0 mx-auto">
-          <a class="mx-auto" routerLink="/user/{{post.username}}">Autor del post: {{post.username}}</a>  
-      </div>
+    <div class="row mt-2">
+      <a class="mx-auto" routerLink="/user/{{post.username}}"><h5>Autor: {{post.username}}</h5></a>  
     </div>
+
+    <form #showMap Form="ngForm" (ngSubmit)="toggleMap()">
+      <div class="form-group mt-3">
+        <button *ngIf="!mapShown" type="submit" class="btn btn-default">Mostrar mapa</button>
+        <button *ngIf="mapShown" type="submit" class="btn btn-default">Esconder mapa</button>
+      </div>
+    </form>
+    <div [hidden]="!mapShown" #gmap style="width:100%; padding-bottom:50%" class="mb-3"></div>
+
     <div class="row w-100 mt-3 mb-3 mx-auto">
       <img class="img-fluid mx-auto" src={{imageURL}}>
     </div>
@@ -54,12 +61,14 @@
       </div>
     </div>    
       
-    <form (ngSubmit)="onSubmit()" #postForm="ngForm">
+    <form #postForm="ngForm">
       <div class="form-group">
         <label for="commentinput">Deja un comentario</label>
-        <textarea type="text" class="form-control" id="commentinput" [(ngModel)]="valueComment" name="comment"></textarea>
+        <textarea type="text" class="form-control" id="commentinput"
+          [(ngModel)]="valueComment" name="comment" required></textarea>
       </div>
-      <button type="button" class="btn btn-default" (click)="addComment()">Add Comment</button>
+      <button [disabled]="!postForm.form.valid" 
+      type="button" class="btn btn-default" (click)="addComment(); postForm.reset()" >Add Comment</button>
     </form>
 
   </div>
