@@ -6,27 +6,22 @@
       <h1 class="mb-3">Modificar perfil</h1>
       <p>Usuario creado: <strong>{{model.dateCreated}}</strong></p>
       <p>Ultima vez modificado el: <strong>{{model.dateModified}}</strong></p>
-      <p>Sus posts han recibido <strong>{{model.likes}}</strong> "me gusta"</p>
+      <p>Tus posts han recibido <strong>{{model.likes}}</strong> "me gusta"</p>
       
-      <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+      <form #userForm="ngForm">
         <div class="form-group">
           <label for="username">Nombre</label>
           <input type="text" class="form-control" id="username"
                   [(ngModel)]="model.userName" name="username"
                   #username="ngModel">
-          <div [hidden]="username.valid || username.pristine"
-                class="alert alert-danger">
-            User name is required
-          </div>
         </div>
 
         <div class="row">
           <div class="col">
-              <img class="mb-3" src={{model.imageURL}} alt='foto perfil {{model.username}}' style="max-width: 50%; height: auto">
+              <img class="mb-3" src={{model.imageURL}} alt='foto perfil {{model.username}}' style="max-height: 250px; max-width: 100%">
           </div>        
         </div>   
-        
-
+      
         <div class="form-group">
           <label for="userPhoto">Foto de perfil</label>
           <input type="file" id="userPhoto" accept="image/*" capture="environment"
@@ -39,14 +34,10 @@
           <input type="text" class="form-control" id="password"
                   [(ngModel)]="model.password" name="password"
                   #password="ngModel">
-          <div [hidden]="password.valid || password.pristine"
-                class="alert alert-danger">
-            You must create a password for the new user
-          </div>
         </div>
     
         <div class="form-group">
-          <label for="description">Descripcion del usuario</label>
+          <label for="description">Tu descripcion</label>
           <textarea type="text" class="form-control" id="description"
                   [(ngModel)]="model.description" name="description"></textarea>
         </div>
@@ -57,62 +48,14 @@
                   [(ngModel)]="model.url" name="url">
         </div>
     
-        <button type="submit" class="btn btn-success" (click)="sendUserUpdate()" [disabled]="!userForm.form.valid">Enviar</button>
-        <!--<button type="button" class="btn btn-default" (click)="createUser(); userForm.reset()">Reset<-->
+        <button type="submit" class="btn btn-success" (click)="sendUserUpdate()">Enviar y modificar</button>
       </form>
     </div>
   </div>
 </div>
 
-<!-- document.getElementById("file-input").onchange = () => {
-			const files = document.getElementById('file-input').files;
-			const file = files[0];
-			if(file == null){
-			  return alert('No file selected.');
-			}
-			getSignedRequest(file);
-		};
-
-		function getSignedRequest(file){
-			const xhr = new XMLHttpRequest();
-			xhr.open('GET', `file/sign-s3?file-name=${file.name}&file-type=${file.type}`);
-			xhr.onreadystatechange = () => {
-			if(xhr.readyState === 4){
-				if(xhr.status === 200){
-					const response = JSON.parse(xhr.responseText);
-					uploadFile(file, response.signedRequest, response.url);
-				}
-				else{
-					alert('Could not get signed URL.');
-				}
-			}
-			};
-			xhr.send();
-		}
-
-		function uploadFile(file, signedRequest, url){
-			const xhr = new XMLHttpRequest();
-			xhr.open('PUT', signedRequest);
-			xhr.onreadystatechange = () => {
-			if(xhr.readyState === 4){
-			    if(xhr.status === 200){
-			        document.getElementById('preview').src = url;
-			        document.getElementById('avatar-url').value = url;
-			    }
-			    else{
-			        alert('Could not upload file.');
-			    }
-			}
-			};
-			xhr.send(file);
-		} -->
-
-<div *ngIf="authorised">
-  <p>You are already logged</p>
-</div>
-
-<div [hidden]="!submitted">
-  <h2>You submitted data for new user: {{ model.username }}</h2>
-  <br>
-  <button class="btn btn-primary" (click)="submitted=false">Edit</button>
+<div *ngIf="!authorised">
+  <div class="row row-centered">
+    <a class="btn btn-success mx-auto" routerLink="/">Inicia sesion o registrate para iniciar sesion</a>
+  </div>  
 </div>

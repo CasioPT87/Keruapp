@@ -23,13 +23,15 @@ export class UserModifyComponent {
     imageURL: ""
   };
   error: boolean = false;
-  submitted: boolean = false;
   signedRequest: any;
   userPhotoFile: any = null;
+  authorised: boolean;
 
   constructor(
     private userService: UserService
-  ) { }
+  ) { 
+    this.authorised = false;
+  }
 
   ngOnInit() {
     this.getCurrentUser();
@@ -38,32 +40,34 @@ export class UserModifyComponent {
   getCurrentUser() {
     this.userService.getCurrentUser()
       .subscribe((user) => { 
-
-        this.model = {
-          userName: user.username || "",
-          dateCreated: user.dateCreated || null,
-          dateModified: user.dateModified || null,
-          description: user.description || "",
-          url: user.url || null,
-          likes: user.likes,
-          favoritePosts: user.favoritePosts || [],
-          imageURL: user.imageURL || ""
-        };
         this.error = user.error || null;
+        if (!this.error) {
+          this.model = {
+            userName: user.username || "",
+            dateCreated: user.dateCreated || null,
+            dateModified: user.dateModified || null,
+            description: user.description || "",
+            url: user.url || null,
+            likes: user.likes,
+            favoritePosts: user.favoritePosts || [],
+            imageURL: user.imageURL || ""
+          };
         this.userPhotoFile = user.photo;
+        this.authorised = true;
+        }
       });
-  }
-
-  onSubmit() {     
-     this.submitted = true;
   }
 
   //set photo selected
   setPhotoFile(fileData) {
     if (fileData.target.files && fileData.target.files[0]) {
       this.userPhotoFile = fileData.target.files[0];
-      //now we get the signed request
-      // this.getSignedRequestPhoto()
+      //para que veamos la imagen antes de que la enviemos al servidor
+      var reader = new FileReader();
+      reader.onload = (event: any) => {
+        this.model.imageURL = event.target.result;
+      }
+      reader.readAsDataURL(fileData.target.files[0]);
     } else {
       console.log('problem setting the photo selected')
     }
@@ -82,15 +86,6 @@ export class UserModifyComponent {
       });
   }
 
-  sendUserUpdate() {
-    console.log(this.model)
-    if (this.userPhotoFile) {
-      this.getSignedRequestPhoto();
-    } else {
-      this.updateUser();
-    }
-  }
-
   uploadUserPhoto() {
     var file = this.userPhotoFile;
     var signedRequest = this.signedRequest;
@@ -103,6 +98,15 @@ export class UserModifyComponent {
           console.log(error)
         }    
       });
+  }
+
+  sendUserUpdate() {
+    console.log(this.model)
+    if (this.userPhotoFile) {
+      this.getSignedRequestPhoto();
+    } else {
+      this.updateUser();
+    }
   }
 
   updateUser(): void {
