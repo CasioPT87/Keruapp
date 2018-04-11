@@ -1,17 +1,65 @@
 
+<div *ngIf="!error">
+  <div class="container">
+    <h1 class="mb-3">Usuario: <strong>{{username}}</strong></h1>
+    <p>Usuario creado: <strong>{{dateCreated}}</strong></p>
+    <p>Tus posts han recibido <strong>{{likes}}</strong> "me gusta"</p>
 
-<div *ngIf="user">
-  <div>{{user.username}}</div>
-  <div>{{user.description}}</div>
-  <div>{{user.url}}</div>
-  <div>{{user.likes}}</div>
-  <div>{{user.dateCreated}}</div>
-</div>
-<div *ngIf="posts">
-  <div *ngFor="let post of posts" class="default-box">
-    <div>{{post.title}}</div>
-    <div>{{post.description}}</div>
-    <a routerLink="/post/{{post.idNumber}}">Go to post</a>
+    <div class="row">
+      <div class="col">
+        <img class="mb-3" src={{imageURL}} alt='foto perfil {{username}}' style="max-height: 250px; max-width: 100%">
+      </div>        
+    </div>   
+
+    <div class="row row-centered">
+      <div class="col">
+        <p><strong>Descripcion</strong></p>  
+      </div>     
+    </div>
+    <div class="row row-centered">
+      <div class="col">
+        <p>{{description}}</p>   
+      </div>       
+    </div>
+
+    <div class="row row-centered">
+      <div class="col">
+        <p><strong>Pagina web:      </strong><a target="_blank" (click)="toLink()">{{url}}</a></p>  
+      </div>          
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div *ngIf="posts" class="card-columns">
+          <div *ngFor="let post of posts">
+            <div class="card">
+              <img src="http://www.countryflags.io/{{post.codeCountry}}/flat/32.png" alt={{codeCountry}} style="position: absolute;">
+              <img class="card-img-top" src={{post.imageURL}} alt={{post.title}}>
+              <div class="card-body">
+                <h4 class="card-title">{{post.title}}  <small>Likes: {{post.usersThatLikePost.length}}</small></h4>
+                <p class="card-text">{{post.formatedAddress}}</p>
+                <a routerLink="/post/{{post.idNumber}}" class="btn btn-primary">Ir al post</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
+
 </div>
- 
+
+<div *ngIf="error">
+  <div class="row row-centered">
+    <p class="mx-auto mt-3 bg-danger" style="color:white">Se ha producido un error</p>
+  </div>  
+  <div class="row row-centered mb-3">
+    <button class="btn btn-success mx-auto" (click)="refresh()">Volver a cargar</button>
+  </div>
+  <div class="row row-centered">
+    <a class="btn btn-success mx-auto" routerLink="/">Ir a pagina principal</a>
+  </div>    
+</div>
+
+

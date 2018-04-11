@@ -4,6 +4,7 @@
   <div class="container">
     <div [hidden]="submitted">
       <h1>Crear nuevo usuario</h1>
+
       <form (ngSubmit)="onSubmit()" #userForm="ngForm">
         <div class="form-group">
           <label for="username">Nombre de usuario <span class="text-danger">*campo necesario</span></label>
@@ -13,7 +14,7 @@
                   #username="ngModel">
           <div [hidden]="username.valid || username.pristine"
                 class="alert alert-danger">
-            User name is required
+            El nombre de usuario es necesario
           </div>
         </div>
 
@@ -25,7 +26,7 @@
                   #password="ngModel">
           <div [hidden]="password.valid || password.pristine"
                 class="alert alert-danger">
-            You must create a password for the new user
+            El password necesita un password
           </div>
         </div>
     
@@ -41,19 +42,18 @@
                   [(ngModel)]="model.url" name="url">
         </div>
     
-        <button type="submit" class="btn btn-success" (click)="createUser()" [disabled]="!userForm.form.valid">Submit</button>
-        <button type="button" class="btn btn-default" (click)="createUser(); userForm.reset()">Reset</button>
+        <button type="submit" class="btn btn-success" (click)="createUser()" [disabled]="!userForm.form.valid">Crear usuario</button>
+        <button type="button" class="btn btn-default" (click)="createUser(); userForm.reset()">Borrar todo</button>
       </form>
     </div>
   </div>
 </div>
 
 <div *ngIf="authorised">
-  <p>You are already logged</p>
-</div>
-
-<div [hidden]="!submitted">
-  <h2>You submitted data for new user: {{ model.username }}</h2>
-  <br>
-  <button class="btn btn-primary" (click)="submitted=false">Edit</button>
+  <div class="row row-centered">
+    <a class="btn btn-success mx-auto" routerLink="/">Ir a pagina principal</a>
+  </div> 
+  <div class="row row-centered">
+    <p class="mx-auto mt-3">Estas en una sesion con el usuario: <strong>{{model.username}}</strong></p>
+  </div>  
 </div>

@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import 'rxjs/add/operator/map';
+//import 'rxjs/add/operator/map';
 
 import { UserService } from '../user.service';
 
@@ -15,15 +15,26 @@ import { UserService } from '../user.service';
 })
 export class UserProfileComponent implements OnInit {
 
-  user: Object;
   authorised: Object;
+  error: boolean;
+
+  username: any;
+  dateCreated: Date;
+  description: string;
+  url: string;
+  likes: number;
+  imageURL: string;
   posts: any[];
+  ownProfile: boolean;
 
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
     private location: Location
-  ) { }
+  ) {
+    this.error = true;
+    this.ownProfile = false;
+   }
 
   ngOnInit() {
     this.getUser();
@@ -37,10 +48,26 @@ export class UserProfileComponent implements OnInit {
     this.userService.getUser(name)
       .subscribe((dataUserResponse) => {
         console.log(dataUserResponse)
-        this.user = dataUserResponse.user || null;
+        this.error = dataUserResponse.error;
+        this.username= dataUserResponse.user.username;
+        this.dateCreated =  dataUserResponse.user.dateCreated;
+        this.description = dataUserResponse.user.description;
+        this.url = dataUserResponse.user.url;
+        this.likes = dataUserResponse.likes;
+        this.imageURL = dataUserResponse.user.imageURL;
+        this.ownProfile = dataUserResponse.user.ownProfile;
         this.authorised = dataUserResponse.authorised || false;
         this.posts = dataUserResponse.posts || null;
       });
+  }
+
+  refresh() {
+    window.location.reload();
+  }
+
+  toLink() {
+    console.log(this.url.toString())
+    window.location.href = this.url;
   }
 
 }

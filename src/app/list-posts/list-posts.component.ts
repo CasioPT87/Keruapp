@@ -17,8 +17,9 @@ export class ListPostsComponent implements OnInit {
   map: google.maps.Map;
   
   authorised: boolean;
+  username: string;
   error: boolean = false;
-
+  
   latitude: any;
   longitude: any;
   locationName: string;
@@ -52,8 +53,10 @@ export class ListPostsComponent implements OnInit {
     console.log('checkAuthorization')
     this.userService.checkAuthorization()
       .subscribe((authorised) => {
-        console.log(authorised)
         this.authorised = authorised;
+        if (authorised) {
+          this.getUsername();
+        }
       });
   }
 
@@ -90,6 +93,12 @@ export class ListPostsComponent implements OnInit {
       });
   }
 
-  onSubmit(): void {
+  getUsername() {
+    this.userService.getCurrentUser()
+      .subscribe((currentUser) => {   
+        console.log(currentUser)    
+        this.username = currentUser.username;
+      });
   }
+
 }

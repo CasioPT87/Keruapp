@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { UserService } from '../user.service';
-
 import { User }    from '../user';
 
 @Component({
@@ -25,12 +25,11 @@ export class UserFormComponent {
   favoritePosts: string[];
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private _router: Router
   ) { }
 
   model = this.newUser();
-
-  submitted = false;
 
   ngOnInit() {
     this.checkAuthorization();
@@ -40,23 +39,29 @@ export class UserFormComponent {
     this.userService.checkAuthorization()
       .subscribe((authorised) => {       
         this.authorised = authorised;
+        if (this.authorised) {
+          this.getUsername();
+        }
+      });
+  }
+
+  getUsername() {
+    this.userService.getCurrentUser()
+      .subscribe((currentUser) => {      
+        this.model.username = currentUser.username;
       });
   }
 
   newUser() {
-    return new User('User name', "", new Date(), new Date());
-  }
-
-  onSubmit() {     
-     this.submitted = true;
+    return new User('', "", new Date(), new Date());
   }
 
   createUser(): void {
     var user = this.model;
     this.userService.createUser(user)
-      .subscribe(user => console.log(user));
+      .subscribe((user) => {
+        if (user) this._router.navigate(['']);
+      });
   }
 
-  // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.model); }
 }

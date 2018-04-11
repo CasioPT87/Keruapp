@@ -9,27 +9,53 @@ var moment = require('moment');
 /* GET users listing. */
 router.get('/getuser/:username', checkAuthService.checkAuth, function(req, res, next) {
   var username = req.params.username;
-  
+
+  var dataUserResponse = {};
+
   User.findOne({ username: username })
     .exec(function (err, user) {
       if (err) {
         console.log(err)
-          return callback(err)
+        dataUserResponse.error = true;
+        res.json(dataUserResponse);
       } else if (user) { 
-        var dataUserResponse = {
+        dataUserResponse = {
           user: user,
           authorised: res.locals.authorised,
           ownProfile: false,
-          posts: []
+          posts: [],
+          likes: 0,
+          error: false
         }
         if (res.locals.authorised) {
           var clientUsername = res.locals.user.username;
           if (clientUsername === username ) dataUserResponse.ownProfile = true;
         }
         Post.find({ user: user._id }, function(err, posts) {
-          if (err) console.log(err);
-          else {
-            console.log(posts)
+          if (err) {
+            console.log(err)
+            dataUserResponse.error = true;
+            res.json(dataUserResponse);
+          }
+          if (posts) {
+            new Promise((resolve, reject) => {
+              var numLikes = countLikesInPosts(posts);
+              if (numLikes) resolve(numLikes);
+              if (!numLikes) reject(new Error('error contando el numero de likes en los posts'));
+            })
+              .then((numLikes) => {
+                dataUserResponse.likes = numLikes;
+                dataUserResponse.posts = posts;
+                res.json(dataUserResponse);
+              })
+              .catch((err) => {
+                console.log(err)
+                dataUserResponse.likes = 0;
+                dataUserResponse.posts = posts;
+              })
+          }
+          if (!posts) {
+            dataUserResponse.likes = 0;
             dataUserResponse.posts = posts;
             res.json(dataUserResponse);
           }
@@ -161,6 +187,16 @@ router.put('/update', checkAuthService.checkAuth, function(req, res, next) {
     res.json(successResponse)
   }  
 });
+
+function countLikesInPosts(posts) {
+  var numLikes = 0;
+  for (var i = 0; i < posts.length; i++) {
+      var thisPost = posts[i];
+      var numLikesInThisPost = thisPost.usersThatLikePost.length;
+      numLikes += numLikesInThisPost;      
+  }
+  return numLikes;
+}
 
 function hashPassword(password) {
   return new Promise((resolve, reject) => {

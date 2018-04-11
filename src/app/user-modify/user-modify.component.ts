@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { UserService } from '../user.service';
-
 import { User }    from '../user';
 
 @Component({
@@ -28,7 +28,8 @@ export class UserModifyComponent {
   authorised: boolean;
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private _router: Router
   ) { 
     this.authorised = false;
   }
@@ -80,7 +81,6 @@ export class UserModifyComponent {
       .subscribe((signedRequest) => {
         this.signedRequest = JSON.parse(signedRequest);
         this.model.imageURL = this.signedRequest.url;
-        console.log(this.signedRequest)
         //now we have the signed request. Let's upload this shit
         this.uploadUserPhoto()
       });
@@ -91,17 +91,14 @@ export class UserModifyComponent {
     var signedRequest = this.signedRequest;
     return this.userService.uploadUserPhoto(file, signedRequest)
       .subscribe((response) => {
-        console.log(response)
         if (response === null) this.updateUser();
         else {
           var error = new Error(`error: ${response}`);
-          console.log(error)
         }    
       });
   }
 
   sendUserUpdate() {
-    console.log(this.model)
     if (this.userPhotoFile) {
       this.getSignedRequestPhoto();
     } else {
@@ -111,9 +108,10 @@ export class UserModifyComponent {
 
   updateUser(): void {
     var user = this.model;
-    console.log('updateUser')
-    console.log(this.model.imageURL)
     this.userService.updateUser(user)
-      .subscribe(response => this.error = response.error);
+      .subscribe((response) => {
+        this.error = response.error;
+        if (!response.error)this._router.navigate(['/user/'+this.model.userName+'']);
+      });
   }
 }

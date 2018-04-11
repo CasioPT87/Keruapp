@@ -101,18 +101,18 @@ router.post('/login', function (req, res, next) {
         console.log('error:'+ error)
         res.send({
           authorised: false,
-          error: 'There was an error in the server, please try again in some minutes'
+          error: 'Usuario o password incorrecto'
         });
       }
       else if (!user) {
         res.send({
           authorised: false,
-          error: 'Username or password not correct'
+          error: 'Usuario o password incorrecto'
         });
       }
       else if (user) {
         req.session.userId = user._id;
-        console.log(`You're logged NOW and your username is: ${user.username}`)
+        console.log(`Has iniciado sesion con el usuario: ${user.username}`)
         res.send({
           authorised: true,
           error: false
