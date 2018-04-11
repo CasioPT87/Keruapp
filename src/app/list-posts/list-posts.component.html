@@ -39,8 +39,8 @@
   <h5 *ngIf="firstSearchNotDoneYet" class="text-center mb-3">Ultimos posts publicados</h5>
   <h5 *ngIf="!firstSearchNotDoneYet" class="text-center mb-3">Posts ordenados por proximidad</h5>
 
-  <!-- <div *ngIf="listPosts" class="row w-100 justify-content-around">
-    <div class="col" *ngFor="let post of listPosts">
+  <!-- <div *ngIf="listPosts" class="card-columns">
+    <div class="" *ngFor="let post of listPosts">
       <div class="card mb-2" style="width: 18rem;">   
         <img src="http://www.countryflags.io/{{post.codeCountry}}/flat/32.png" alt={{codeCountry}} style="position: absolute;">     
         <img class="card-img-top" src={{post.imageURL}} alt={{post.title}}>
@@ -54,15 +54,17 @@
   </div> -->
 
   <!-- Start of Card Columns Layout -->
-<div *ngIf="listPosts" class="card-columns">
-  <div *ngFor="let post of listPosts">
-    <div class="card">
-      <img src="http://www.countryflags.io/{{post.codeCountry}}/flat/32.png" alt={{codeCountry}} style="position: absolute;">
-      <img class="card-img-top img-fluid" src={{post.imageURL}} alt={{post.title}}>
-      <div class="card-body">
-        <h4 class="card-title">{{post.title}}  <small>Likes: {{post.usersThatLikePost.length}}</small></h4>
-        <p class="card-text">{{post.formatedAddress}}</p>
-        <a routerLink="/post/{{post.idNumber}}" class="btn btn-primary">Ir al post</a>
+<div class="row">
+  <div *ngIf="listPosts" class="card-columns">
+    <div *ngFor="let post of listPosts">
+      <div class="card">
+        <img src="http://www.countryflags.io/{{post.codeCountry}}/flat/32.png" alt={{codeCountry}} style="position: absolute;">
+        <img class="card-img-top" src={{post.imageURL}} alt={{post.title}}>
+        <div class="card-body">
+          <h4 class="card-title">{{post.title}}  <small>Likes: {{post.usersThatLikePost.length}}</small></h4>
+          <p class="card-text">{{post.formatedAddress}}</p>
+          <a routerLink="/post/{{post.idNumber}}" class="btn btn-primary">Ir al post</a>
+        </div>
       </div>
     </div>
   </div>

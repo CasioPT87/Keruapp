@@ -2,6 +2,7 @@
 
 
 import { Component, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
 
 import { UserService } from '../user.service';
 
@@ -21,7 +22,8 @@ export class UserLoginComponent {
   password: any;
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private _router: Router
   ) { }
 
   submitted = false;
@@ -38,10 +40,6 @@ export class UserLoginComponent {
       });
   }
 
-  onSubmit() {     
-    console.log('submitting stuff')
-  }
-
   login(): void {
     var user = {
       username: this.username,
@@ -52,6 +50,9 @@ export class UserLoginComponent {
         console.log(response)
         this.authorised = response.authorised;
         this.error = response.error;
+        if (!this.error) {
+          this._router.navigate(['']);
+        }
       });
   }
 
@@ -62,7 +63,9 @@ export class UserLoginComponent {
 
   logout(): void {
     this.userService.logout()
-      .subscribe(authorised => this.authorised = authorised); // authorised will always be false
+      .subscribe((authorised) => {
+        this.authorised = authorised; // authorised will always be false
+      });
   }
 
 }
