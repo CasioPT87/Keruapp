@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { } from '@types/googlemaps';
+import { Router } from '@angular/router';
 
 import { MapService } from '../map.service';
 import { UserService } from '../user.service';
@@ -13,11 +14,12 @@ import { UserService } from '../user.service';
 })
 
 export class MapComponent implements OnInit {  
-  // No creo que necesitemos mapa aqui @ViewChild('gmap') gmapElement: any;
+  @ViewChild('gmap') gmapElement: any;
   map: google.maps.Map;
 
   authorised: boolean;
   error: boolean = false;
+  mapShown: boolean;
 
   latitude: any;
   longitude: any;
@@ -40,18 +42,13 @@ export class MapComponent implements OnInit {
 
   constructor(
     private mapService: MapService,
-    private userService: UserService
-  ) { }
+    private userService: UserService,
+    private _router: Router
+  ) { 
+    this.mapShown = false;
+  }
 
-  ngOnInit() {
-    /* No creo que necesitemos mapa aqui
-    var mapProp = {
-      center: new google.maps.LatLng(18.5793, 73.8143),
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
-    */
+  ngOnInit() {    
     this.checkAuthorization()
   }
 
@@ -64,13 +61,18 @@ export class MapComponent implements OnInit {
   }
 
   setCenter() {
-    this.map.setCenter(new google.maps.LatLng(this.latitude, this.longitude));
-    let location = new google.maps.LatLng(this.latitude, this.longitude);
+    var mapProp = {
+      center: new google.maps.LatLng(this.latitude, this.longitude),
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
     let marker = new google.maps.Marker({
-      position: location,
+      position: new google.maps.LatLng(this.latitude, this.longitude),
       map: this.map,
-      title: 'Your position!!'
+      title: 'Tu posicion!!'
     });
+    this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+    this.mapShown = true;
   }
 
   getCoordinates(): void {
@@ -90,7 +92,7 @@ export class MapComponent implements OnInit {
     if (fileData.target.files && fileData.target.files[0]) {
       this.userPhotoFile = fileData.target.files[0];
       //now we get the signed request
-      this.getSignedRequestPhoto()
+      //this.getSignedRequestPhoto()
     } else {
       console.log('problem setting the photo selected')
     }
@@ -103,8 +105,7 @@ export class MapComponent implements OnInit {
       .subscribe((signedRequest) => {
         this.signedRequest = JSON.parse(signedRequest);
         this.imageURL = this.signedRequest.url;
-        //now we have the signed request. Let's upload this shit
-        //this.uploadUserPhoto()
+        this.uploadUserPhoto()
       });
   }
 
@@ -113,7 +114,6 @@ export class MapComponent implements OnInit {
     var signedRequest = this.signedRequest;
     return this.userService.uploadUserPhoto(file, signedRequest)
       .subscribe((response) => {
-        console.log(response)
         if (response === null) this.createPost();
         else {
           var error = new Error(`error: ${response}`);
@@ -133,20 +133,11 @@ export class MapComponent implements OnInit {
       formatedAddress: this.formatedAddress,
       imageURL: this.imageURL
     }
-    // new Promise((resolve, reject) => {
-    //   var responseUploadPhoto = this.uploadUserPhoto();
-    //   if (responseUploadPhoto) resolve(responseUploadPhoto);
-    //   else reject(new Error('Problema subiendo la foto'))
-    // })  
-    //   .then((responseUploadPhoto) => {
     this.mapService.createPost(post)
       .subscribe((response) => {
         this.error =  response.error;
-      });   
-      // }) 
-      // .catch((error) => {
-      //   console.log(error);
-      // })    
+        if (!this.error) this._router.navigate(['']);
+      });     
   }
 
   onSubmit(): void {

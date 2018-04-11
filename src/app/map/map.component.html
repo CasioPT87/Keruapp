@@ -9,14 +9,19 @@
       <div class="form-group">
         <label for="titleinput">Titulo</label>
         <input type="text" class="form-control" id="titleinput"
-                [(ngModel)]="title" name="title">
+                [(ngModel)]="title" name="title" required>
       </div>
       <div class="form-group">
         <label for="locationinput">Localizacion</label>
         <input type="text" class="form-control" id="locationinput"
-                [(ngModel)]="locationName" name="location" on-focusout="getCoordinates()">
+                [(ngModel)]="locationName" name="location"
+                (keyup.enter)="getCoordinates()" on-focusout="getCoordinates()" required>
         <button type="button" class="btn btn-default mt-3" (click)="getCoordinates()">Encontrar</button>
       </div>
+      <div *ngIf="formatedAddress">{{formatedAddress}}</div>
+      <img *ngIf="codeCountry" src="http://www.countryflags.io/{{codeCountry}}/flat/32.png">
+
+      <div [hidden]="!mapShown" #gmap style="width:100%; padding-bottom:50%" class="mb-3"></div>
 
       <!-- <div class="form-group">
         <label for="userPhotoId">Tomar fotografia o anadir imagen</label>
@@ -27,15 +32,15 @@
 
       <div class="form-group">
         <label for="userPhotoId">Tomar fotografia o anadir imagen</label>
-        <input type="file" id="userPhotoId" accept="image/*" capture="environment"
+        <input type="file" class="btn btn-primary" id="userPhotoId" accept="image/*" capture="environment"
                 [(ngModel)]="userPhoto" name="userPhotoModel"
-                (change)="setPhotoFile($event)">         
+                (change)="setPhotoFile($event)" required>         
       </div>
 
       <div class="form-group">
         <label for="descriptioninput">Descripcion</label>
         <textarea  type="text" class="form-control" id="descriptioninput"
-                [(ngModel)]="description" name="description"></textarea>
+                [(ngModel)]="description" name="description" required></textarea>
       </div>
       <div class="form-group">
         <label for="urlinput">Link a articulo</label>
@@ -43,18 +48,17 @@
                 [(ngModel)]="url" name="url">
       </div>
 
-      <button type="button" class="btn btn-default" (click)="uploadUserPhoto()">Crear Post</button>
+      <button type="button" class="btn btn-success" (click)="getSignedRequestPhoto()"
+       [disabled]="!mapForm.form.valid">Crear Post</button>
     </form>
   </div>
 </div>
 
-<div *ngIf="formatedAddress">{{formatedAddress}}</div>
-<img *ngIf="codeCountry" src="http://www.countryflags.io/{{codeCountry}}/shiny/64.png">
-
-<!-- No creo que necesitemos mapa aqui <div #gmap style="width:500px;height:300px"></div> -->
-
 <div *ngIf="!authorised">
-    <a class="default-box" routerLink="/userlogin">Log in to create new post</a>
+  <div class="row row-centered">
+    <a class="btn btn-success mx-auto" routerLink="/">Inicia sesion o registrate para iniciar sesion</a>
+  </div>
+    
 </div>
 
 <!-- <script>
