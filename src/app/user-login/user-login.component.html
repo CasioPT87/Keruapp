@@ -30,7 +30,7 @@
 
     <div>
       <h3 class="mt-4 mb-3">Entrar usando cuenta de Google</h3>
-      <form #oathForm="ngForm" (ngSubmit)="onSubmit()">
+      <form #oathForm="ngForm">
         <button type="submit" class="btn btn-success" (click)="googleLogin()" [disabled]="!oathForm.form.valid">Log in with google</button>
       </form>
     </div>
@@ -40,7 +40,7 @@
   <div *ngIf="authorised">
     <div>
       <h1 class="mb-3">Pulsar para salir</h1>
-      <form (ngSubmit)="onSubmit()" #logoutForm="ngForm">
+      <form  #logoutForm="ngForm">
         <button type="submit" class="btn btn-success" (click)="logout()" [disabled]="!logoutForm.form.valid">Salir</button>
       </form>
     </div>
