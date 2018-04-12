@@ -24,7 +24,7 @@
       
         <div class="form-group">
           <label for="userPhoto">Foto de perfil</label>
-          <input type="file" id="userPhoto" accept="image/*" capture="environment"
+          <input type="file" id="userPhoto" accept="image/*" multiple
                   [(ngModel)]="model.userPhoto" name="userPhoto"
                   #userPhoto="ngModel" (change)="setPhotoFile($event)">         
         </div>
