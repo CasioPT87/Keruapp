@@ -40,7 +40,8 @@ router.get('/getuser/:username', checkAuthService.checkAuth, function(req, res, 
           if (posts) {
             new Promise((resolve, reject) => {
               var numLikes = countLikesInPosts(posts);
-              if (numLikes) resolve(numLikes);
+              numLikes = Number(numLikes);  // con esto nos aseguramos que si es null o false, nos devuelva 0
+              if (numLikes >= 0) resolve(numLikes);
               if (!numLikes) reject(new Error('error contando el numero de likes en los posts'));
             })
               .then((numLikes) => {
