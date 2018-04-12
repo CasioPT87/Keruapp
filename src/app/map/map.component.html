@@ -32,7 +32,7 @@
 
       <div class="form-group">
         <label for="userPhotoId">Tomar fotografia o anadir imagen</label>
-        <input type="file" class="btn btn-primary" id="userPhotoId" accept="image/*" capture="environment"
+        <input type="file" class="btn btn-primary" id="userPhotoId" accept="image/*" multiple
                 [(ngModel)]="userPhoto" name="userPhotoModel"
                 (change)="setPhotoFile($event)" required>         
       </div>
