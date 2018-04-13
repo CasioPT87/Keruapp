@@ -43,27 +43,28 @@ export class UserModifyComponent {
 
   getCurrentUser() {
     this.userService.getCurrentUser()
-      .subscribe((user) => { 
-        this.error = user.error || null;
+      .subscribe((objUserResponse) => { 
+        this.error = objUserResponse.error || null;
         if (!this.error) {
           this.model = {
-            userName: user.username || "",
-            dateCreated: user.dateCreated || null,
-            dateModified: user.dateModified || null,
-            description: user.description || "",
-            url: user.url || null,
-            likes: user.likes,
-            favoritePosts: user.favoritePosts || []           
+            userName: objUserResponse.username || "",
+            dateCreated: objUserResponse.dateCreated || null,
+            dateModified: objUserResponse.dateModified || null,
+            description: objUserResponse.description || "",
+            url: objUserResponse.url || null,
+            likes: objUserResponse.likes,
+            favoritePosts: objUserResponse.favoritePosts || []           
           };
+          this.authorised = objUserResponse.authorised;
           // this is for rotate correctly the image. it can go wrong if it's done with the camero of a mobile
-          var imageURL = user.imageURL;
+          var imageURL = objUserResponse.imageURL;
           if (imageURL) {
             this.imageService.getImage(imageURL)
               .subscribe((fileDataBlob) => {            
                 var reader = new FileReader();
                 this.imageService.fixImageRotationURL(reader, fileDataBlob)
                   .then((resetBase64Image) => {
-                    this.model.imageURL = resetBase64Image;
+                    this.model.imageURL = resetBase64Image;       
                   }) 
                   .catch((err) => {
                     console.log('error cargando o modificando rotacion de la imagen: '+err); 

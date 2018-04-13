@@ -92,7 +92,8 @@ router.get('/currentuser', checkAuthService.checkAuth, function(req, res, next) 
       favoritePosts: [],
       likes: 0,
       imageURL: user.imageURL,
-      error: false
+      error: false,
+      authorised: authorised
     }
 
     Post.find({ usersThatLikePost: user._id })
