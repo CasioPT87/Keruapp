@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UserService } from '../user.service';
+import { ImageService } from '../image.service';
 import { User }    from '../user';
 import { reject } from 'q';
 
@@ -30,6 +31,7 @@ export class UserModifyComponent {
 
   constructor(
     private userService: UserService,
+    private imageService: ImageService,
     private _router: Router
   ) { 
     this.authorised = false;
@@ -52,10 +54,22 @@ export class UserModifyComponent {
             url: user.url || null,
             likes: user.likes,
             favoritePosts: user.favoritePosts || [],
-            imageURL: user.imageURL || ""
+            //imageURL: user.imageURL || ""
           };
-        this.userPhotoFile = user.photo;
-        this.authorised = true;
+          var imageURL = user.imageURL;
+          this.model.imageURL = user.imageURL;
+          //this.imageService.getImage(imageURL)
+          //   .then((resetBase64Image) => {
+          //     this.userPhotoFile = user.photo;
+          //     this.authorised = true;
+          //     this.model.imageURL = resetBase64Image ? resetBase64Image : '';
+          //   })  
+          //   .catch((err) => {
+          //     console.log('error cargando o modificando rotacion de la imagen: '+err);
+          //     this.userPhotoFile = null;
+          //     this.authorised = true;
+          //     this.model.imageURL = '';
+          //   })
         }
       });
   }
@@ -66,116 +80,17 @@ export class UserModifyComponent {
       this.userPhotoFile = fileData.target.files[0];
 
       var reader = new FileReader();
-      reader.onload = (event: any) => {
-        var srcBase64 = event.target.result;  
-        this.getOrientation(srcBase64)
-          .then((orientation) => {
-            var orientation = orientation;
-            return new Promise((resolve, reject) => {
-              var reader2 = new FileReader();
-              reader2.onload = (event: any) => {
-                var originalImage = event.target.result;              
-                resolve( this.resetOrientation(originalImage, orientation) );  
-              }
-              reader2.readAsDataURL(fileData.target.files[0]);
-            })  
-          })
-          .then((resetBase64Image) => {
-            this.model.imageURL = resetBase64Image;
-          })
-      }
-      reader.readAsArrayBuffer(fileData.target.files[0].slice(0, 64 * 1024));
+      this.imageService.fixImageRotationInput(reader, fileData)
+        .then((resetBase64Image) => {
+          this.model.imageURL = resetBase64Image;
+        }) 
+        .catch((err) => {
+          console.log('error cargando o modificando rotacion de la imagen: '+err);
+          this.model.imageURL = '';
+        })    
     }
   }
 
-  getOrientation(srcBase64) {
-
-    return new Promise((resolve, reject) => {
-      var view = new DataView(srcBase64);
-      if (view.getUint16(0, false) != 0xFFD8){
-        console.log('1')
-        resolve( -2 );
-      } 
-      var length = view.byteLength,
-          offset = 2;
-  
-      while (offset < length) {
-        var marker = view.getUint16(offset, false);
-        offset += 2;
-  
-        if (marker == 0xFFE1) {
-          if (view.getUint32(offset += 2, false) != 0x45786966) {
-            console.log('2')
-            resolve( -1 );
-          }
-          var little = view.getUint16(offset += 6, false) == 0x4949;
-          offset += view.getUint32(offset + 4, little);
-          var tags = view.getUint16(offset, little);
-          offset += 2;
-  
-          for (var i = 0; i < tags; i++)
-            if (view.getUint16(offset + (i * 12), little) == 0x0112){
-              console.log('3')
-              resolve( view.getUint16(offset + (i * 12) + 8, little) );
-            }           
-        }
-        else if ((marker & 0xFF00) != 0xFF00) {
-          console.log('4')
-          break;
-        }
-        else {
-          console.log('5')
-          offset += view.getUint16(offset, false);
-        }
-      }
-      console.log('6')
-      resolve( -1 );
-    })
-  };
-  
-
-  resetOrientation(srcBase64, srcOrientation) {
-
-    return new Promise((resolve, reject) => {
-      var img = new Image();	
-      img.onload = () => {
-        var width = img.width,
-            height = img.height,
-            canvas = document.createElement('canvas'),
-            ctx = canvas.getContext("2d");
-            console.log(height, width)
-        
-        // set proper canvas dimensions before transform & export
-        if (4 < srcOrientation && srcOrientation < 9) {
-          canvas.width = height;
-          canvas.height = width;
-        } else {
-          canvas.width = width;
-          canvas.height = height;
-        }
-        console.log(13)
-      
-        // transform context before drawing image
-        switch (srcOrientation) {
-          case 2: ctx.transform(-1, 0, 0, 1, width, 0); break;
-          case 3: ctx.transform(-1, 0, 0, -1, width, height ); break;
-          case 4: ctx.transform(1, 0, 0, -1, 0, height ); break;
-          case 5: ctx.transform(0, 1, 1, 0, 0, 0); break;
-          case 6: ctx.transform(0, 1, -1, 0, height , 0); break;
-          case 7: ctx.transform(0, -1, -1, 0, height , width); break;
-          case 8: ctx.transform(0, -1, 1, 0, 0, width); break;
-          default: break;
-        }
-    
-        // draw image
-        ctx.drawImage(img, 0, 0);
-        // export base64
-        resolve( canvas.toDataURL() );
-      };  
-      img.src = srcBase64;   
-    }) 
-  }
-  
   //get the signed request
   getSignedRequestPhoto() {
     var userPhotoFile = this.userPhotoFile;

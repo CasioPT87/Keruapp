@@ -10,6 +10,7 @@ import { UserFormComponent } from './user-form/user-form.component';
 // services
 import { UserService } from './user.service';
 import { MapService } from './map.service';
+import { ImageService } from './image.service';
 // route module
 import { AppRoutingModule } from './/app-routing.module';
 import { MapComponent } from './map/map.component';
@@ -38,7 +39,7 @@ import { UserModifyComponent } from './user-modify/user-modify.component';
     AppRoutingModule,
     FormsModule
   ],
-  providers: [UserService, MapService],
+  providers: [UserService, MapService, ImageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
