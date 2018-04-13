@@ -53,32 +53,35 @@ export class UserModifyComponent {
             description: user.description || "",
             url: user.url || null,
             likes: user.likes,
-            favoritePosts: user.favoritePosts || [],
-            //imageURL: user.imageURL || ""
+            favoritePosts: user.favoritePosts || []           
           };
+          // this is for rotate correctly the image. it can go wrong if it's done with the camero of a mobile
           var imageURL = user.imageURL;
-          this.model.imageURL = user.imageURL;
-          //this.imageService.getImage(imageURL)
-          //   .then((resetBase64Image) => {
-          //     this.userPhotoFile = user.photo;
-          //     this.authorised = true;
-          //     this.model.imageURL = resetBase64Image ? resetBase64Image : '';
-          //   })  
-          //   .catch((err) => {
-          //     console.log('error cargando o modificando rotacion de la imagen: '+err);
-          //     this.userPhotoFile = null;
-          //     this.authorised = true;
-          //     this.model.imageURL = '';
-          //   })
+          if (imageURL) {
+            this.imageService.getImage(imageURL)
+              .subscribe((fileDataBlob) => {            
+                var reader = new FileReader();
+                this.imageService.fixImageRotationURL(reader, fileDataBlob)
+                  .then((resetBase64Image) => {
+                    this.model.imageURL = resetBase64Image;
+                  }) 
+                  .catch((err) => {
+                    console.log('error cargando o modificando rotacion de la imagen: '+err); 
+                    this.model.imageURL = null;               
+                  })
+              });
+          } else {
+            this.model.imageURL = null; 
+          }       
         }
-      });
+      })          
   }
 
   //set photo selected
   setPhotoFile(fileData) {
     if (fileData.target.files && fileData.target.files[0]) {
       this.userPhotoFile = fileData.target.files[0];
-
+       // this is for rotate correctly the image. it can go wrong if it's done with the camero of a mobile
       var reader = new FileReader();
       this.imageService.fixImageRotationInput(reader, fileData)
         .then((resetBase64Image) => {

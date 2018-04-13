@@ -155,7 +155,7 @@ router.put('/update', checkAuthService.checkAuth, function(req, res, next) {
         description: descriptionUpdateUser !== "" ? descriptionUpdateUser : descriptionOldUser,
         url: urlUpdateUser !== "" ? urlUpdateUser : urlOldUser,
         dateModified: dateUserModified,
-        imageURL: imageURLUser !== "" ? imageURLUser : imageURLOldUser,
+        imageURL: imageURLUser && imageURLUser !== "" ? imageURLUser : imageURLOldUser,
         password: ""
       } 
 
