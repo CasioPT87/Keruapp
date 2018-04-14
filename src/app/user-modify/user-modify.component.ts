@@ -90,15 +90,20 @@ export class UserModifyComponent {
     if (fileData.target.files && fileData.target.files[0]) {
       this.userPhotoFile = fileData.target.files[0];
        // this is for rotate correctly the image. it can go wrong if it's done with the camero of a mobile
-      
-      this.imageService.fixImageRotationInput(fileData)
-        .then((resetBase64Image) => {
-          this.model.imageURL = resetBase64Image;
-        }) 
-        .catch((err) => {
-          console.log('error cargando o modificando rotacion de la imagen: '+err);
-          this.model.imageURL = '';
-        })    
+        var reader = new FileReader();
+        reader.onload = (event: any) => {
+          var originalImage = event.target.result;              
+          this.model.imageURL = originalImage
+          this.imageService.fixImageRotationInput(fileData)
+            .then((resetBase64Image) => {
+              this.model.imageURL = resetBase64Image;
+            }) 
+            .catch((err) => {
+              console.log('error cargando o modificando rotacion de la imagen: '+err);
+              this.model.imageURL = '';
+            }) 
+        }
+        reader.readAsDataURL(fileData.target.files[0]);     
     }
   }
 

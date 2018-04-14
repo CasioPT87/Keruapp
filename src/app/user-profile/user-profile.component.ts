@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 //import 'rxjs/add/operator/map';
 
 import { UserService } from '../user.service';
+import { ImageService } from '../image.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -30,7 +31,8 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private imageService: ImageService,
   ) {
     this.error = true;
     this.ownProfile = false;
@@ -58,7 +60,29 @@ export class UserProfileComponent implements OnInit {
         this.ownProfile = dataUserResponse.user.ownProfile;
         this.authorised = dataUserResponse.authorised || false;
         this.posts = dataUserResponse.posts || null;
+        this.rotateImage(this.imageURL)     
       });
+  }
+
+  rotateImage(imageURL) {
+    setTimeout(() => {
+      if (imageURL) {
+        this.imageService.getImage(imageURL)
+          .subscribe((fileDataBlob) => {            
+            var reader = new FileReader();
+            this.imageService.fixImageRotationURL(reader, fileDataBlob)
+              .then((resetBase64Image) => {
+                this.imageURL = resetBase64Image;       
+              }) 
+              .catch((err) => {
+                console.log('error cargando o modificando rotacion de la imagen: '+err); 
+                this.imageURL = null;               
+              })
+          });
+      } else {
+        this.imageURL = null; 
+      }
+    }, 0);       
   }
 
   refresh() {
