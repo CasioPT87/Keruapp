@@ -59,6 +59,7 @@ export class UserModifyComponent {
           this.authorised = objUserResponse.authorised;
           // this is for rotate correctly the image. it can go wrong if it's done with the camero of a mobile
           var imageURL = objUserResponse.imageURL;   
+          this.imageURLToDisplay = imageURL;       
           this.rotateImage(imageURL)     
         }
       })          
@@ -72,7 +73,7 @@ export class UserModifyComponent {
             var reader = new FileReader();
             this.imageService.fixImageRotationURL(reader, fileDataBlob)
               .then((resetBase64Image) => {
-                this.model.imageURL = resetBase64Image;       
+                this.imageURLToDisplay = resetBase64Image;       
               }) 
               .catch((err) => {
                 console.log('error cargando o modificando rotacion de la imagen: '+err); 
