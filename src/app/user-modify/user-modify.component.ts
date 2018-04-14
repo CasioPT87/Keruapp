@@ -28,6 +28,7 @@ export class UserModifyComponent {
   signedRequest: any;
   userPhotoFile: any = null;
   authorised: boolean;
+  imageURLToDisplay = "";
 
   constructor(
     private userService: UserService,
@@ -57,8 +58,7 @@ export class UserModifyComponent {
           };
           this.authorised = objUserResponse.authorised;
           // this is for rotate correctly the image. it can go wrong if it's done with the camero of a mobile
-          var imageURL = objUserResponse.imageURL;
-          this.model.imageURL = imageURL;   
+          var imageURL = objUserResponse.imageURL;   
           this.rotateImage(imageURL)     
         }
       })          
@@ -76,11 +76,11 @@ export class UserModifyComponent {
               }) 
               .catch((err) => {
                 console.log('error cargando o modificando rotacion de la imagen: '+err); 
-                this.model.imageURL = null;               
+                this.imageURLToDisplay = null;               
               })
           });
       } else {
-        this.model.imageURL = null; 
+        this.imageURLToDisplay = null; 
       }
     }, 0);       
   }
@@ -93,14 +93,14 @@ export class UserModifyComponent {
         var reader = new FileReader();
         reader.onload = (event: any) => {
           var originalImage = event.target.result;              
-          this.model.imageURL = originalImage
+          this.imageURLToDisplay = originalImage
           this.imageService.fixImageRotationInput(fileData)
             .then((resetBase64Image) => {
-              this.model.imageURL = resetBase64Image;
+              this.imageURLToDisplay = resetBase64Image;
             }) 
             .catch((err) => {
               console.log('error cargando o modificando rotacion de la imagen: '+err);
-              this.model.imageURL = '';
+              this.imageURLToDisplay = '';
             }) 
         }
         reader.readAsDataURL(fileData.target.files[0]);     
