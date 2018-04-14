@@ -20,8 +20,8 @@ export class ImageService {
     return response;
   }
 
-  fixImageRotationInput(reader, fileData): any {
-
+  fixImageRotationInput( fileData): any {
+    var reader = new FileReader();
     return new Promise((resolve, reject) => {
       reader.readAsArrayBuffer(fileData.target.files[0].slice(0, 64 * 1024));
       reader.onload = (event: any) => {

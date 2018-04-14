@@ -30,9 +30,6 @@ export class MapService {
 
   createPost (post): Observable<any> {
     return this.http.post<any>(path + '/post/createpost/', post, httpOptions);
-      // .pipe(
-      //   catchError(this.handleError('addHero', hero))
-      // );
   }
 
   getPost(postNumber): Observable<any> {
