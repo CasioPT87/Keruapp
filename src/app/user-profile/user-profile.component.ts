@@ -52,7 +52,7 @@ export class UserProfileComponent implements OnInit {
         console.log(dataUserResponse)
         this.error = dataUserResponse.error;
         this.username= dataUserResponse.user.username;
-        this.dateCreated =  dataUserResponse.user.dateCreated;
+        this.dateCreated =  dataUserResponse.dateCreated;
         this.description = dataUserResponse.user.description;
         this.url = dataUserResponse.user.url;
         this.likes = dataUserResponse.likes;

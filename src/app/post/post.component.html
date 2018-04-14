@@ -24,9 +24,12 @@
     </form>
     <div [hidden]="!mapShown" #gmap style="width:100%; padding-bottom:50%" class="mb-3"></div>
 
-    <div class="row w-100 mt-3 mb-3 mx-auto">
-      <img class="img-fluid mx-auto" src={{imageURL}}>
-    </div>
+    <div class="row">
+      <div class="col text-center">
+          <img class="mb-3 mx-auto" src={{imageURL}} alt='foto post {{formatedAddress}}' style="max-height: 250px; max-width: 100%">
+      </div>        
+    </div>  
+    
     <div *ngIf="post.description" class="row w-100 mt-3 mb-3 mx-auto">
       <p class="mx-auto m-0">Descripcion del autor:</p>
     </div>

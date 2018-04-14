@@ -19,12 +19,17 @@ router.get('/getuser/:username', checkAuthService.checkAuth, function(req, res, 
         dataUserResponse.error = true;
         res.json(dataUserResponse);
       } else if (user) { 
+        var dateCreatedLocale = moment(user.dateCreated);
+        moment.locale('es');
+        dateCreatedLocale.locale(false);
+
         dataUserResponse = {
           user: user,
           authorised: res.locals.authorised,
           ownProfile: false,
           posts: [],
           likes: 0,
+          dateCreated: dateCreatedLocale.format('LLLL'),
           error: false
         }
         if (res.locals.authorised) {
