@@ -22,7 +22,7 @@
     </div>
     <div class="row w-100 mx-auto mb-2">
       <nav class="navbar navbar-expand-sm col-12">
-        <form  (ngSubmit)="onSubmit()" #listPostForm="ngForm" class="form-inline mx-auto w-100">
+        <form #listPostForm="ngForm" class="form-inline mx-auto w-100">
           <div class="input-group w-100">
             <input type="text" class="form-control" placeholder="ej: plaza quevedo madrid" 
               [(ngModel)]="locationName" name="location">
@@ -39,6 +39,7 @@
 
   <h5 *ngIf="firstSearchNotDoneYet" class="text-center mb-3">Ultimos posts publicados</h5>
   <h5 *ngIf="!firstSearchNotDoneYet" class="text-center mb-3">Posts ordenados por proximidad</h5>
+  <h5 *ngIf="errorLoadingPosts" class="text-center mb-3">{{errorLoadingPosts}}</h5>
 
   <!-- <div *ngIf="listPosts" class="card-columns">
     <div class="" *ngFor="let post of listPosts">
@@ -55,23 +56,21 @@
   </div> -->
 
   <!-- Start of Card Columns Layout -->
-<div class="row">
-  <div *ngIf="listPosts" class="card-columns">
-    <div *ngFor="let post of listPosts">
-      <div class="card">
-        <img src="http://www.countryflags.io/{{post.codeCountry}}/flat/32.png" alt={{codeCountry}} style="position: absolute;">
-        <img class="card-img-top" src={{post.imageURL}} alt={{post.title}}>
-        <div class="card-body">
-          <h4 class="card-title">{{post.title}}  <small>Likes: {{post.usersThatLikePost.length}}</small></h4>
-          <p class="card-text">{{post.formatedAddress}}</p>
-          <a routerLink="/post/{{post.idNumber}}" class="btn btn-primary">Ir al post</a>
+  <div class="row">
+    <div *ngIf="listPosts" class="card-columns">
+      <div *ngFor="let post of listPosts">
+        <div class="card">
+          <img src="http://www.countryflags.io/{{post.codeCountry}}/flat/32.png" alt={{codeCountry}} style="position: absolute;">
+          <img class="card-img-top" src={{post.imageURL}} alt={{post.title}}>
+          <div class="card-body">
+            <h4 class="card-title">{{post.title}}  <small>Likes: {{post.likes}}</small></h4>
+            <p class="card-text">{{post.formatedAddress}}</p>
+            <a routerLink="/post/{{post.idNumber}}" class="btn btn-primary">Ir al post</a>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-
-
 
 </div>
 

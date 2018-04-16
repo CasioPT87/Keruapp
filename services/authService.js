@@ -15,16 +15,17 @@ function checkAuth(req, res, next) {
 	  })
 	  .catch((err) => {
 	  	console.log(err)
+      //we write again. useless but just to be clear:
+      res.locals.authorised = false;
+      res.locals.user = null;
 	  	next();
 	  })
 }
 
 function getUser(req) {
-  console.log('authService getUser')
   var userId = null;
   if (req.user && req.user.authenticated && req.user.id) userId = req.user.id;
   if (req.session && req.session.userId) userId = req.session.userId; 
-  console.log(userId)
 
   return new Promise((resolve, reject) => {
 
@@ -34,14 +35,14 @@ function getUser(req) {
         	reject(err)
         }
         if (!user) {
-        	reject(new Error('No user found'))
+        	reject(new Error('No user found'));
         }
         if (user) {
         	resolve(user);
         }
       });
  	  } else if (!userId) {
- 	    resolve(null)
+ 	    reject(new Error('No userId found'))
  	  }
   })
 }

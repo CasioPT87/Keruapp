@@ -10,7 +10,7 @@ function getCoordinates(address) {
     return new Promise((resolve, reject) => {
 
     	googleMapsClient.geocode({ address: address }, function(err, response) {
-    		if (err) reject(err);
+    		if (err || !response) reject(new Error('Problema recogiendo coordenadas desde GoogleMaps')); 
 		    var lat = response.json.results[0].geometry.location.lat;		        
 		    var lng = response.json.results[0].geometry.location.lng; 
             var codeCountry = getCountry(response.json.results[0].address_components);

@@ -40,6 +40,12 @@ export class UserService {
     return response;
   }
 
+  getCurrentUserName(): Observable<any> {
+    var response =  this.http.get(path + '/users/currentusername', httpOptions);
+    console.log(response)
+    return response;
+  }
+
   getSignedRequestPhoto(file): Observable<any> {
     var response =  this.http.get(path + `/file/sign-s3?file-name=${file.name}&file-type=${file.type}`, {
       withCredentials: true  // <=========== important!
@@ -90,9 +96,7 @@ export class UserService {
   }
 
   checkAuthorization (): Observable<any> {
-    var response =  this.http.get(path + '/auth/checkauth', {
-      withCredentials: true  // <=========== important!
-    });
+    var response =  this.http.get(path + '/auth/checkauth', httpOptions);
     return response;
   }
   

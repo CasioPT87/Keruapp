@@ -130,6 +130,22 @@ router.get('/currentuser', checkAuthService.checkAuth, function(req, res, next) 
   }
 });
 
+router.get('/currentusername', checkAuthService.checkAuth, function(req, res, next) {
+
+  var authorised = res.locals.authorised;
+  var user = res.locals.user;
+  if (authorised && user) {
+    var objUserResponse = {
+      username: user.username,
+    }
+    res.json(objUserResponse)
+  } else {
+    res.send(null);
+  }
+
+    
+});
+
 router.put('/update', checkAuthService.checkAuth, function(req, res, next) {
 
   var authorised = res.locals.authorised;

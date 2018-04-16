@@ -103,8 +103,9 @@ router.put('/likepost', AuthService.checkAuth, function(req, res, next) {
 router.get('/findposts/:coords', function(req, res, next) {
 
   var address = req.params.coords;
-  
-  MapService.getCoordinates(address)
+
+  if (address) {
+    MapService.getCoordinates(address)
     .then((pointCoords) => {
 
       var latitude = pointCoords.lat;
@@ -113,18 +114,21 @@ router.get('/findposts/:coords', function(req, res, next) {
       findClosestsPosts(pointCoords)
         .then((posts) => {
           // we dont want to send any user id in the response
-          return res.send({
-            posts: posts,
-            searchLocation: {'latitude': latitude, 'longitude': longitude},
-            error: false
-          });
+          treatPostsToRemoveUserId(posts)
+            .then((postsTreated) => {
+              res.send({
+                posts: postsTreated,
+                searchLocation: {'latitude': latitude, 'longitude': longitude},
+                errorLoadingPosts: false
+              });
+            })              
         })
         .catch((err) => {
           console.log(err);
           res.send({
             posts: null,
             searchLocation: {'latitude': latitude, 'longitude': longitude},
-            error: "error retrieving posts"
+            errorLoadingPosts: err
           })
         });
     })      
@@ -133,9 +137,18 @@ router.get('/findposts/:coords', function(req, res, next) {
       res.send({
         posts: null,
         searchLocation: {'latitude': latitude, 'longitude': longitude},
-        error: "error with coordinates"
+        errorLoadingPosts: "No han llegado las coordenadas a la aplicacion"
       })
-    }) 
+    })
+  } else if (!address) {
+    res.json({
+            posts: null,
+            searchLocation: {'latitude': null, 'longitude': null},
+            errorLoadingPosts: "Ha habido un problema encontrando las coordenadas de esa localizacion"
+          });
+  }
+  
+   
 });
 
 router.get('/findpost/:postNumber', AuthService.checkAuth, function(req, res, next) {
@@ -202,16 +215,19 @@ router.get('/findlastsposts', AuthService.checkAuth, function(req, res, next) {
   
   findLastPosts()
     .then((posts) => {
-      res.send({
-        posts: posts,
-        error: false
-      });
+      treatPostsToRemoveUserId(posts)
+        .then((postsTreated) => {
+          res.json({
+          posts: postsTreated,
+          errorLoadingPosts: false
+        });
+      })   
     })
     .catch((err) => {
       console.log(err);
       res.send({
         posts: null,
-        error: "error retrieving posts"
+        errorLoadingPosts: "Ha habido un error recuperando los ultimos posts"
       })
     });
 
@@ -258,7 +274,6 @@ function findClosestsPosts(pointCoords) {
   var coords = [];
   coords[0] = pointCoords.lng;
   coords[1] = pointCoords.lat;
-  console.log(coords)
 
   // find a location
   return new Promise((resolve, reject) => {
@@ -268,8 +283,8 @@ function findClosestsPosts(pointCoords) {
         $maxDistance: maxDistance
       }
     }).limit(limit).exec(function(err, posts) {
-      if (err) {
-        reject(err);
+      if (err || !posts) {
+        reject(new Error('Problema recuperando los posts ordenador por cercania'));
       }
       resolve(posts);
     });
@@ -313,6 +328,27 @@ function findPostByIdNumber(postNumber) {
       else if (post) resolve(post);
     });
   })
+}
+
+function treatPostsToRemoveUserId(posts) {
+
+  return new Promise((resolve, reject) => {
+    var postTreated = posts.map((post) => {
+      console.log(post)
+      return {
+        idNumber: post.idNumber,
+        title: post.title,
+        likes: post.usersThatLikePost.length,
+        formatedAddress: post.formatedAddress,
+        imageURL: post.imageURL,
+        codeCountry: post.codeCountry
+      }
+    })
+    if (postTreated) resolve(postTreated);
+    if (!postTreated) reject(new Error('Problem treating the posts'));
+  })
+
+  
 }
 
 module.exports = router;

@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { } from '@types/googlemaps';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 import { MapService } from '../map.service';
 import { UserService } from '../user.service';
@@ -18,7 +19,7 @@ export class ListPostsComponent implements OnInit {
   
   authorised: boolean;
   username: string;
-  error: boolean = false;
+  errorLoadingPosts: boolean = false;
   
   latitude: any;
   longitude: any;
@@ -30,9 +31,11 @@ export class ListPostsComponent implements OnInit {
 
   constructor(
     private mapService: MapService,
-    private userService: UserService
+    private userService: UserService,
+    private spinnerService: Ng4LoadingSpinnerService
   ) {
     this.mapHidden = true;
+    this.spinnerService.show();
    }
 
   ngOnInit() {
@@ -46,16 +49,16 @@ export class ListPostsComponent implements OnInit {
     };
     this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
     this.checkAuthorization()
-    this.lastestsPosts();
   }
 
-  checkAuthorization(): any {
-    console.log('checkAuthorization')
+  checkAuthorization(): any {    
     this.userService.checkAuthorization()
       .subscribe((authorised) => {
         this.authorised = authorised;
         if (authorised) {
           this.getUsername();
+        } else if (!authorised) {
+          this.lastestsPosts();
         }
       });
   }
@@ -74,12 +77,12 @@ export class ListPostsComponent implements OnInit {
     var locationName = this.locationName;
     this.mapService.getClosestPosts(locationName)
       .subscribe((response) => {
-        console.log(response)
         this.listPosts = response.posts; 
         this.latitude = response.searchLocation.latitude;
         this.longitude = response.searchLocation.longitude;
-        this.error = response.error;
-        if (!this.error) this.firstSearchNotDoneYet = false;
+        this.errorLoadingPosts = response.errorLoadingPosts;
+        if (!this.errorLoadingPosts) this.firstSearchNotDoneYet = false;
+        this.errorLoadingPosts = response.errorLoadingPosts;
         this.setCenter();
         this.mapHidden = false;
       });
@@ -87,17 +90,30 @@ export class ListPostsComponent implements OnInit {
 
   lastestsPosts(): void {
     this.mapService.getLastestsPosts()
-      .subscribe((response) => {
-        this.listPosts = response.posts; 
-        this.error = response.error;
+      .subscribe((responseListPosts) => {
+        console.log(responseListPosts)
+        this.errorLoadingPosts = responseListPosts.errorLoadingPosts;
+        if (!responseListPosts.errorLoadingPosts) {
+          this.listPosts = responseListPosts.posts;
+          this.spinnerService.hide();
+        } else {
+          this.spinnerService.hide();
+        }       
       });
   }
 
   getUsername() {
-    this.userService.getCurrentUser()
-      .subscribe((currentUser) => {   
-        console.log(currentUser)    
-        this.username = currentUser.username;
+    this.userService.getCurrentUserName()
+      .subscribe((currentUser) => {  
+        if (currentUser) {
+          this.username = currentUser.username;
+          this.lastestsPosts();   
+        }
+        else {
+          this.authorised = false;
+          this.lastestsPosts();   
+        }
+        
       });
   }
 

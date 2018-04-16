@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule }   from '@angular/forms';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 //components
 import { AppComponent } from './app.component';
@@ -37,7 +38,8 @@ import { UserModifyComponent } from './user-modify/user-modify.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    Ng4LoadingSpinnerModule.forRoot()
   ],
   providers: [UserService, MapService, ImageService],
   bootstrap: [AppComponent]
