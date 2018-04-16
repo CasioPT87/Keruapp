@@ -18,7 +18,7 @@ import { ImageService } from '../image.service';
 export class UserProfileComponent implements OnInit {
 
   authorised: Object;
-  error: boolean;
+  error: any;
 
   username: any;
   dateCreated: Date;
@@ -65,9 +65,9 @@ export class UserProfileComponent implements OnInit {
           this.spinnerService.hide();
           this.rotateImage(this.imageURL); 
         } else {
+          this.error = "Parece que hay un problema de conexion a internet";
           this.spinnerService.hide();
-        }
-            
+        }       
       });
   }
 
@@ -90,6 +90,10 @@ export class UserProfileComponent implements OnInit {
         this.imageURL = null; 
       }
     }, 0);       
+  }
+
+  refresh() {
+    window.location.reload();
   }
 
   toLink() {

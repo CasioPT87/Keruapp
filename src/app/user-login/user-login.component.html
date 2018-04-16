@@ -4,7 +4,7 @@
     <div *ngIf="error">
       <p class="bg-danger" style="color:white">Ha ocurrido un error: {{error}}</p>
     </div>
-  <div *ngIf="!authorised">
+  <div *ngIf="authorised == false">
     <div>
       <h3>Entrar usando nombre de usuario y clave</h3>
       <form  #userForm="ngForm" (ngSubmit)="login()">
@@ -37,7 +37,7 @@
 
   </div>
 
-  <div *ngIf="authorised">
+  <div *ngIf="authorised == true">
     <div>
       <h1 class="mb-3">Pulsar para salir</h1>
       <form  #logoutForm="ngForm">

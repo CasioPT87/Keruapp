@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { } from '@types/googlemaps';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 import { ActivatedRoute } from '@angular/router';
 
@@ -29,35 +30,44 @@ export class PostComponent implements OnInit {
   codeCountry: string = 'pollas';
   formatedAddress: string;
   mapShown: boolean;
+  error: any;
 
   constructor(
     private route: ActivatedRoute,
-    private mapService: MapService
+    private mapService: MapService,
+    private spinnerService: Ng4LoadingSpinnerService
   ) {
     this.mapShown = false;
    }
 
   ngOnInit() {
+    this.spinnerService.show();
     this.postNumber = +this.route.snapshot.paramMap.get('postNumber');
     this.mapService.getPost(this.postNumber)
-      .subscribe((responsePost) => {        
-        var post = responsePost.post;
-        this.post = post;
-        this.postLiked = responsePost.like;
-        this.numLikesInPost = responsePost.numLikesInPost;
-        this.longitude = post.location[0];
-        this.latitude = post.location[1];
-        this.imageURL = post.imageURL;
-        this.codeCountry = post.codeCountry;
-        this.formatedAddress = post.formatedAddress;
-        this.comments = responsePost.comments;
-        var mapProp = {
-          center: new google.maps.LatLng(this.latitude, this.longitude),
-          zoom: 15,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
-        return responsePost;     
+      .subscribe((responsePost) => {  
+        this.error = responsePost.error; 
+        if (!this.error) {
+          var post = responsePost.post;
+          this.post = post;
+          this.postLiked = responsePost.like;
+          this.numLikesInPost = responsePost.numLikesInPost;
+          this.longitude = post.location[0];
+          this.latitude = post.location[1];
+          this.imageURL = post.imageURL;
+          this.codeCountry = post.codeCountry;
+          this.formatedAddress = post.formatedAddress;
+          this.comments = responsePost.comments;
+          console.log(this.comments)
+          this.spinnerService.hide();
+          // var mapProp = {
+          //   center: new google.maps.LatLng(this.latitude, this.longitude),
+          //   zoom: 15,
+          //   mapTypeId: google.maps.MapTypeId.ROADMAP
+          // };
+          // this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+        } else {
+          this.error = "No hemos podido recuperar el post. Por favor asegurate de tener conexion.";
+        }      
       });
   }
 
@@ -77,8 +87,7 @@ export class PostComponent implements OnInit {
       this.mapShown = true;
     } else {
       this.mapShown = false;
-    }
-      
+    }    
   }
 
   addComment(): void {
@@ -88,9 +97,12 @@ export class PostComponent implements OnInit {
     }
     this.mapService.addComment(data)
       .subscribe((comments) => {
-        console.log(comments)
-        this.valueComment = null;
-        this.comments = comments;       
+        if (comments) {         
+          this.valueComment = null;
+          this.comments = comments;
+        } else {
+          console.log('problema recuperando los comments');
+        }      
       });
   }
 

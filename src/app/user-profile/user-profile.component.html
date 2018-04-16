@@ -53,7 +53,11 @@
 <div *ngIf="authorised == false || error">
   <div class="row row-centered">
     <h5 class="mx-auto mt-3 mb-5">Se ha producido un error recuperando el perfil de usuario</h5>
+    <h5 *ngIf="error && error !== true" class="mx-auto mt-3 mb-5">{{error}}</h5>
   </div>  
+  <div class="row row-centered mb-3">
+    <button class="btn btn-success mx-auto" (click)="refresh()">Volver a cargar</button>
+  </div>
   <div class="row row-centered">
     <a class="btn btn-success mx-auto" routerLink="/">Ir a pagina principal</a>
   </div>    

@@ -11,7 +11,7 @@ const httpOptions = {
   withCredentials: true
 }
 
-var production = true;
+var production = false;
 
 if (!production) {
   var path = 'http://localhost:3000';
@@ -55,7 +55,7 @@ export class UserService {
     return response;
   }
 
-  createUser (user): Observable<User> {
+  createUser (user): Observable<any> {
     return this.http.post<User>(path + '/auth/createuser/', user, httpOptions);
       // .pipe(
       //   catchError(this.handleError('addHero', hero))

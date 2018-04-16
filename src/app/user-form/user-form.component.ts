@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 import { UserService } from '../user.service';
 import { User }    from '../user';
@@ -26,7 +27,8 @@ export class UserFormComponent {
 
   constructor(
     private userService: UserService,
-    private _router: Router
+    private _router: Router,
+    private spinnerService: Ng4LoadingSpinnerService
   ) { }
 
   model = this.newUser();
@@ -57,10 +59,12 @@ export class UserFormComponent {
   }
 
   createUser(): void {
+    this.spinnerService.show();
     var user = this.model;
     this.userService.createUser(user)
-      .subscribe((user) => {
-        if (user) this._router.navigate(['']);
+      .subscribe((response) => {
+        if (!response.error) this._router.navigate(['']);
+        else this.spinnerService.hide();
       });
   }
 

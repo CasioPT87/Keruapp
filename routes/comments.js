@@ -4,6 +4,7 @@ var Comment = require('../models/Comment');
 var Post = require('../models/Post');
 var User = require('../models/User');
 var AuthService = require('../services/authService');
+var CommentService = require('../services/commentService');
 
 
 router.post('/addcomment', AuthService.checkAuth, function(req, res, next) {
@@ -15,30 +16,46 @@ router.post('/addcomment', AuthService.checkAuth, function(req, res, next) {
     
     Post.findOne({idNumber: postNumber}).exec(function(err, post) {
       if (err) {
-        res.send(err)
-      }      
-      //Now we can create our new comment
-      console.log(post)
-      var comment = { 
-        user: userId,
-        post: post._id,
-        text: commentString,
-        dateCreated: Date.now()
-      }
-      Comment.create(comment, function (error, comment) {
-        if (error) {
-          console.log(error)
-          return next(error);
+        console.log(err)
+        res.send(null);
+      }   
+      else if (!post) res.send(null);
+      else if (post) {
+        //Now we can create our new comment
+        var comment = { 
+          user: userId,
+          post: post._id,
+          text: commentString,
+          dateCreated: Date.now()
         }
-        //Now we get all the comments of the post
-        Comment.find({ post: post._id }, function(err, comments) {
-          res.json(comments)
-        })            
-    });   
-  });
+        Comment.create(comment, function (err, comment) {
+          if (err) {
+            console.log(err)
+            res.send(null);
+          }
+          else if (!comment) res.send(null);
+          else if (comment) {
+            Comment.find({ post: post._id }, function(err, comments) {
+              if (err) {
+                console.log(err)
+                res.send(null);
+              }
+              else if (!comments) res.send(null);
+              else if (comments) {
+                CommentService.treatComments(comments)
+                  .then((treatedComments) => {
+                    res.json(treatedComments);
+                  });       
+              }                                         
+            });
+          }            
+        });
+      }
+    })
   }
   else {
-    console.log('user is not authorised!!!')
+    console.log('user is not authorised!!!');
+    res.send(null);
   }
 });
 

@@ -58,7 +58,9 @@
       <div class="row w-100 mt-3 mb-3 mx-auto">
         <div class="card  w-100 mx-auto" style="width: 50%;">
           <ul *ngFor="let comment of comments" class="list-group list-group-flush">
-            <li class="list-group-item">{{comment.text}}</li>
+            <p class=""><small>{{comment.dateCreated}}</small></p>
+            <a class="" routerLink="/user/{{comment.username}}">{{comment.username}}</a>
+            <p class="">{{comment.text}}</p>
           </ul>
         </div>
       </div>

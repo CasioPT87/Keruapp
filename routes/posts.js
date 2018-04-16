@@ -153,8 +153,6 @@ router.get('/findposts/:coords', function(req, res, next) {
 
 router.get('/findpost/:postNumber', AuthService.checkAuth, function(req, res, next) {
 
-  console.log('post /findpost/:postNumber')
-
   var like = false;
   var postNumber = req.params.postNumber;
   var numLikesInPost = 0;
@@ -165,6 +163,7 @@ router.get('/findpost/:postNumber', AuthService.checkAuth, function(req, res, ne
     .then((post) => {
       var comments = CommentService.getCommentsByPostId(post._id);
       return Promise.all([post, comments], (values) => {
+        console.log(values)
         var comments = values[1];
         if (comments) return [post, comments];
         else return [post, []];
@@ -185,29 +184,33 @@ router.get('/findpost/:postNumber', AuthService.checkAuth, function(req, res, ne
 
       //here we remove the userID and add a username to be displayed;
       User.findById(post.user, function(err, user) {
-        if (err) console.log(err);
-        var username = user.username;
-        objForResponsePost = {
-          username: username,
-          title: post.title,
-          description: post.description,  
-          location: post.location,
-          imageURL: post.imageURL,
-          codeCountry: post.codeCountry,
-          formatedAddress: post.formatedAddress,
-          comments: post.comments
-        }
+        if (err) res.json({ error: true });
+        else {
+          var username = user.username;
+          objForResponsePost = {
+            username: username,
+            title: post.title,
+            description: post.description,  
+            location: post.location,
+            imageURL: post.imageURL,
+            codeCountry: post.codeCountry,
+            formatedAddress: post.formatedAddress,
+            comments: post.comments
+          }
 
-        res.json({
-          post: objForResponsePost,
-          comments: comments,
-          like: like,
-          numLikesInPost: numLikesInPost
-        });
+          res.json({
+            post: objForResponsePost,
+            comments: comments,
+            like: like,
+            numLikesInPost: numLikesInPost,
+            error: false
+          });
+        }
       })
     })
     .catch((err) => {
-      res.json(err)
+      console.log(err)
+      res.json({ error: true })
     });
 });
 
@@ -347,8 +350,6 @@ function treatPostsToRemoveUserId(posts) {
     if (postTreated) resolve(postTreated);
     if (!postTreated) reject(new Error('Problem treating the posts'));
   })
-
-  
 }
 
 module.exports = router;
