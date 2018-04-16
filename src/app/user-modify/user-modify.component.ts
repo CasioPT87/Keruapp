@@ -24,7 +24,7 @@ export class UserModifyComponent {
     likes: 0,
     imageURL: ""
   };
-  error: boolean;
+  error: any;
   signedRequest: any;
   userPhotoFile: any;
   authorised: boolean;
@@ -47,7 +47,6 @@ export class UserModifyComponent {
   getCurrentUser() {
     this.userService.getCurrentUser()
       .subscribe((objUserResponse) => { 
-        console.log(objUserResponse)
         this.error = objUserResponse.error;
         if (!this.error) {
           this.model = {
@@ -118,10 +117,16 @@ export class UserModifyComponent {
     var userPhotoFile = this.userPhotoFile;
     this.userService.getSignedRequestPhoto(userPhotoFile)
       .subscribe((signedRequest) => {
-        this.signedRequest = JSON.parse(signedRequest);
-        this.model.imageURL = this.signedRequest.url;
-        //now we have the signed request. Let's upload this shit
-        this.uploadUserPhoto()
+        if (signedRequest) {
+          this.signedRequest = JSON.parse(signedRequest);
+          this.model.imageURL = this.signedRequest.url;
+          //now we have the signed request. Let's upload this shit
+          this.uploadUserPhoto()
+        } else {
+          this.error = "Parece que hay un problema con la conexion a internet";
+          this.spinnerService.hide();
+        }
+        
       });
   }
 
@@ -132,15 +137,19 @@ export class UserModifyComponent {
       .subscribe((response) => {
         if (response === null) this.updateUser();
         else {
-          var error = new Error(`error: ${response}`);
+          this.error = "Parece que hay un problema con la conexion a internet";
+          this.spinnerService.hide();
         }    
       });
   }
 
   sendUserUpdate() {
+    this.spinnerService.show();
     if (this.userPhotoFile) {
+      //osea, si hemos cambiado la foto
       this.getSignedRequestPhoto();
     } else {
+      //osea, si no hemos cambiado la foto
       this.updateUser();
     }
   }
@@ -148,9 +157,10 @@ export class UserModifyComponent {
   updateUser(): void {
     var user = this.model;
     this.userService.updateUser(user)
-      .subscribe((response) => {
+      .subscribe((response) => {        
         this.error = response.error;
         if (!response.error)this._router.navigate(['/user/'+this.model.userName+'']);
+        else this.spinnerService.hide();
       });
   }
   

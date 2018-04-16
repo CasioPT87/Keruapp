@@ -8,17 +8,17 @@ var moment = require('moment');
 
 /* GET users listing. */
 router.get('/getuser/:username', checkAuthService.checkAuth, function(req, res, next) {
-  var username = req.params.username;
 
+  var username = req.params.username;
   var dataUserResponse = {};
 
   User.findOne({ username: username })
     .exec(function (err, user) {
-      if (err) {
-        console.log(err)
+      if (err || !user) {
+        console.log(err || "usuario no encontrado")
         dataUserResponse.error = true;
         res.json(dataUserResponse);
-      } else if (user) { 
+      } else { 
         var dateCreatedLocale = moment(user.dateCreated);
         moment.locale('es');
         dateCreatedLocale.locale(false);

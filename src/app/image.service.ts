@@ -50,7 +50,6 @@ export class ImageService {
     return new Promise((resolve, reject) => {
       reader.readAsArrayBuffer(fileDataBlob);
       reader.onload = (event: any) => {
-        console.log(event)
         var arrayBufferImage = event.target.result;  
         var orientation = this.getOrientation(arrayBufferImage);
         resolve(orientation);

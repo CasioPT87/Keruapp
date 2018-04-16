@@ -3,7 +3,7 @@
   <div class="container">
     <h1 class="mb-3">Usuario: <strong>{{username}}</strong></h1>
     <p>Usuario creado: <strong>{{dateCreated}}</strong></p>
-    <p>Tus posts han recibido <strong>{{likes}}</strong> "me gusta"</p>
+    <p>Ha recibido <strong>{{likes}}</strong> "me gusta"</p>
 
     <div class="row">
       <div class="col">
@@ -50,13 +50,10 @@
 
 </div>
 
-<div *ngIf="error">
+<div *ngIf="authorised == false || error">
   <div class="row row-centered">
-    <p class="mx-auto mt-3 bg-danger" style="color:white">Se ha producido un error</p>
+    <h5 class="mx-auto mt-3 mb-5">Se ha producido un error recuperando el perfil de usuario</h5>
   </div>  
-  <div class="row row-centered mb-3">
-    <button class="btn btn-success mx-auto" (click)="refresh()">Volver a cargar</button>
-  </div>
   <div class="row row-centered">
     <a class="btn btn-success mx-auto" routerLink="/">Ir a pagina principal</a>
   </div>    

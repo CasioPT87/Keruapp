@@ -28,7 +28,6 @@ export class UserService {
     var response =  this.http.get(path + '/users/getuser/'+name, {
       withCredentials: true  // <=========== important!
     });
-    console.log(response)
     return response;
   }
 
@@ -36,13 +35,11 @@ export class UserService {
     var response =  this.http.get(path + '/users/currentuser', {
       withCredentials: true  // <=========== important!
     });
-    console.log(response)
     return response;
   }
 
   getCurrentUserName(): Observable<any> {
     var response =  this.http.get(path + '/users/currentusername', httpOptions);
-    console.log(response)
     return response;
   }
 
@@ -50,14 +47,12 @@ export class UserService {
     var response =  this.http.get(path + `/file/sign-s3?file-name=${file.name}&file-type=${file.type}`, {
       withCredentials: true  // <=========== important!
     });
-    console.log(response)
     return response;
   }
 
   uploadUserPhoto (file, signedRequest): Observable<any> {
-    var serch = this.http.put<any>(signedRequest.signedRequest, file);
-    console.log(serch)
-    return serch;
+    var response = this.http.put<any>(signedRequest.signedRequest, file);
+    return response;
   }
 
   createUser (user): Observable<User> {

@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 //import 'rxjs/add/operator/map';
 
 import { UserService } from '../user.service';
@@ -33,9 +34,10 @@ export class UserProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private imageService: ImageService,
+    private spinnerService: Ng4LoadingSpinnerService
   ) {
-    this.error = true;
     this.ownProfile = false;
+    this.spinnerService.show();
    }
 
   ngOnInit() {
@@ -49,18 +51,23 @@ export class UserProfileComponent implements OnInit {
     //var name = this.route.snapshot.params.name;
     this.userService.getUser(name)
       .subscribe((dataUserResponse) => {
-        console.log(dataUserResponse)
         this.error = dataUserResponse.error;
-        this.username= dataUserResponse.user.username;
-        this.dateCreated =  dataUserResponse.dateCreated;
-        this.description = dataUserResponse.user.description;
-        this.url = dataUserResponse.user.url;
-        this.likes = dataUserResponse.likes;
-        this.imageURL = dataUserResponse.user.imageURL;
-        this.ownProfile = dataUserResponse.user.ownProfile;
-        this.authorised = dataUserResponse.authorised || false;
-        this.posts = dataUserResponse.posts || null;
-        this.rotateImage(this.imageURL)     
+        if (!this.error && dataUserResponse) {
+          this.username= dataUserResponse.user.username;
+          this.dateCreated =  dataUserResponse.dateCreated;
+          this.description = dataUserResponse.user.description;
+          this.url = dataUserResponse.user.url;
+          this.likes = dataUserResponse.likes;
+          this.imageURL = dataUserResponse.user.imageURL;
+          this.ownProfile = dataUserResponse.user.ownProfile;
+          this.authorised = dataUserResponse.authorised || false;
+          this.posts = dataUserResponse.posts || null;
+          this.spinnerService.hide();
+          this.rotateImage(this.imageURL); 
+        } else {
+          this.spinnerService.hide();
+        }
+            
       });
   }
 
@@ -85,12 +92,7 @@ export class UserProfileComponent implements OnInit {
     }, 0);       
   }
 
-  refresh() {
-    window.location.reload();
-  }
-
   toLink() {
-    console.log(this.url.toString())
     window.location.href = this.url;
   }
 

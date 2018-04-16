@@ -54,8 +54,12 @@
   </div>
 </div>
 
-<div *ngIf="authorised == false">
+<div *ngIf="authorised == false || error">
   <div class="row row-centered">
-    <a class="btn btn-success mx-auto" routerLink="/">Inicia sesion o registrate para iniciar sesion</a>
+    <h5 *ngIf="error === true" class="mx-auto" >Perfil de usuario no encontrado</h5>
+    <h5 *ngIf="error !== true" class="mx-auto" >{{error}}</h5>
+  </div>  
+  <div class="row row-centered">
+    <a class="btn btn-success mx-auto" routerLink="/">Volver a pagina principal</a>
   </div>  
 </div>
