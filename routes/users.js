@@ -94,35 +94,61 @@ router.get('/currentuser', checkAuthService.checkAuth, function(req, res, next) 
       dateModified: dateModifiedLocale.format('LLLL'),
       description: user.description,
       url: user.url,
-      favoritePosts: [],
+      //favoritePosts: [],
       likes: 0,
       imageURL: user.imageURL,
       error: false,
       authorised: authorised
     }
 
-    Post.find({ usersThatLikePost: user._id })
-      .exec(function (err, postsLikedByUser) {
-        if (err) {
-          console.log(err)
-            return err;
-        } else if (postsLikedByUser) {
-          objUserResponse.favoritePosts = postsLikedByUser;
-          // now we calculate how many likes the user has
-          Post.find({ user: user._id }, function(err, postsOfUser) {
-            if (err) console.log(err);
-            var numLikesUser = 0;
-            for (var i = 0; i < postsOfUser.length; i++) {
-              var thisPost = postsOfUser[i];
-              var numBerLikesThisPost = thisPost.usersThatLikePost.length;
-              numLikesUser += numBerLikesThisPost;
-            }
-            objUserResponse.likes = numLikesUser;
-            console.log(objUserResponse)
-            res.json(objUserResponse);
-          }) 
+    //posts de este usuario
+    // now we calculate how many likes the user has
+    Post.find({ user: user._id }, function(err, postsOfUser) {
+      if (err) {
+        console.log(err);
+        objUserResponse.error = "Error recuperando datos del usuario";
+        res.json(objUserResponse);
+      } else {
+        var numLikesUser = 0;
+        for (var i = 0; i < postsOfUser.length; i++) {
+          var thisPost = postsOfUser[i];
+          var numBerLikesThisPost = thisPost.usersThatLikePost.length;
+          numLikesUser += numBerLikesThisPost;
         }
-    });
+        objUserResponse.likes = numLikesUser;
+        res.json(objUserResponse);
+      }     
+    })
+    
+    // esto es para ver que posts le gustan al current user. no sirve, pero lo dejo aqui por si me sirve en futuro
+    // //a ver que post le gustan a este user
+    // Post.find({ usersThatLikePost: user._id })
+    //   .exec(function (err, postsLikedByUser) {
+    //     if (err) {
+    //       console.log(err)
+    //       res.json({
+    //         error: true
+    //       })
+    //     } else if (postsLikedByUser) {
+    //       objUserResponse.favoritePosts = postsLikedByUser;
+    //       // now we calculate how many likes the user has
+    //       Post.find({ user: user._id }, function(err, postsOfUser) {
+    //         if (err) console.log(err);
+    //         var numLikesUser = 0;
+    //         for (var i = 0; i < postsOfUser.length; i++) {
+    //           var thisPost = postsOfUser[i];
+    //           var numBerLikesThisPost = thisPost.usersThatLikePost.length;
+    //           numLikesUser += numBerLikesThisPost;
+    //         }
+    //         objUserResponse.likes = numLikesUser;
+    //         res.json(objUserResponse);
+    //       }) 
+    //     } else if (!postsLikedByUser) {
+    //       // hay usuario pero no sabemos cuantos likes tiene (tiene 0). devolvemos el usuario tal cual, pero con 0 likes
+    //       console.log('el usuario nunca ha recibido un like en un post')
+    //       res.json(objUserResponse);
+    //     }
+    // });
   } else {
     res.json({
       error: true

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 import { UserService } from '../user.service';
 import { ImageService } from '../image.service';
@@ -21,21 +22,22 @@ export class UserModifyComponent {
     description: "",
     url: "",
     likes: 0,
-    favoritePosts: [],
     imageURL: ""
   };
-  error: boolean = false;
+  error: boolean;
   signedRequest: any;
-  userPhotoFile: any = null;
+  userPhotoFile: any;
   authorised: boolean;
   imageURLToDisplay = "";
 
   constructor(
     private userService: UserService,
     private imageService: ImageService,
-    private _router: Router
+    private _router: Router,
+    private spinnerService: Ng4LoadingSpinnerService
   ) { 
-    this.authorised = false;
+    this.spinnerService.show();
+    this.userPhotoFile = null;
   }
 
   ngOnInit() {
@@ -45,7 +47,8 @@ export class UserModifyComponent {
   getCurrentUser() {
     this.userService.getCurrentUser()
       .subscribe((objUserResponse) => { 
-        this.error = objUserResponse.error || null;
+        console.log(objUserResponse)
+        this.error = objUserResponse.error;
         if (!this.error) {
           this.model = {
             userName: objUserResponse.username || "",
@@ -53,14 +56,16 @@ export class UserModifyComponent {
             dateModified: objUserResponse.dateModified || null,
             description: objUserResponse.description || "",
             url: objUserResponse.url || null,
-            likes: objUserResponse.likes,
-            favoritePosts: objUserResponse.favoritePosts || []           
+            likes: objUserResponse.likes,          
           };
           this.authorised = objUserResponse.authorised;
           // this is for rotate correctly the image. it can go wrong if it's done with the camero of a mobile
           var imageURL = objUserResponse.imageURL;   
-          this.imageURLToDisplay = imageURL;       
+          this.imageURLToDisplay = imageURL; 
+          this.spinnerService.hide();      
           this.rotateImage(imageURL)     
+        } else {
+          this.spinnerService.hide(); 
         }
       })          
   }
