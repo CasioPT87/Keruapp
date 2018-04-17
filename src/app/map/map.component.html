@@ -1,6 +1,5 @@
 
-<div *ngIf="error">{{error}}</div>
-<div *ngIf="authorised">
+<div *ngIf="authorised && !error">
   <div class="container">
     <h1>Crear post</h1>
     
@@ -34,7 +33,7 @@
         <label *ngIf="imageURLToDisplay" for="userPhotoId">Cambiar imagen del post</label>
         <input type="file" class="btn btn-primary" id="userPhotoId" accept="image/*" multiple
                 [(ngModel)]="userPhoto" name="userPhotoModel"
-                (change)="setPhotoFile($event)" required>         
+                (change)="setPhotoFile($event)">         
       </div>
 
       <div class="form-group">
@@ -48,16 +47,28 @@
                 [(ngModel)]="url" name="url">
       </div>
 
-      <button type="button" class="btn btn-success" (click)="getSignedRequestPhoto()"
-      >Crear Post</button>
+      <button type="button" class="btn btn-success" (click)="createPost()"
+       [disabled]="!mapForm.form.valid || !imageURLToDisplay">Crear Post</button>
     </form>
   </div>
 </div>
 
-<div *ngIf="!authorised">
+<div *ngIf="authorised == false && !error">
   <div class="row row-centered">
     <a class="btn btn-success mx-auto" routerLink="/">Inicia sesion o registrate para iniciar sesion</a>
   </div>  
+</div>
+
+<div *ngIf="error">
+  <div class="row row-centered">
+    <h5 *ngIf="error && error !== true" class="mx-auto mt-3 mb-5">{{error}}</h5>
+  </div>  
+  <div class="row row-centered mb-3">
+    <button class="btn btn-success mx-auto" (click)="refresh()">Volver a cargar</button>
+  </div>
+  <div class="row row-centered">
+    <a class="btn btn-success mx-auto" routerLink="/">Ir a pagina principal</a>
+  </div>    
 </div>
 
 

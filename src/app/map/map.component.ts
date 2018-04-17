@@ -54,8 +54,8 @@ export class MapComponent implements OnInit {
   }
 
   ngOnInit() {  
-    this.spinnerService.show()  
-    this.checkAuthorization()
+    this.spinnerService.show(); 
+    this.checkAuthorization();
   }
 
   checkAuthorization() {
@@ -99,39 +99,39 @@ export class MapComponent implements OnInit {
       });
   }
 
+  refresh() {
+    window.location.reload();
+  }
+
   //set photo selected
   setPhotoFile(fileData) {
     if (fileData.target.files && fileData.target.files[0]) {
-      console.log(-1)
+      this.spinnerService.show();
       this.userPhotoFile = fileData.target.files[0];
       var nameFile = this.userPhotoFile.name;
       var typeFile = this.userPhotoFile.type;
        // this is for rotate correctly the image. it can go wrong if it's done with the camero of a mobile
         var reader = new FileReader();
         reader.onload = (event: any) => {
-          console.log(0)
           var originalImage = event.target.result;              
           this.imageURLToDisplay = originalImage
           this.imageService.fixImageRotationInput(fileData)
             .then((resetBase64Image) => {
-              console.log(1)
               this.imageURLToDisplay = resetBase64Image;
               new Promise((resolve, reject) => {
                 var photoFile = this.imageService.base64toFile(resetBase64Image, nameFile, typeFile);
-                console.log(2)
-                console.log(photoFile)
                 if (photoFile) resolve(photoFile);
                 else reject();
               })
                 .then((photoFile) => {
-                  console.log(3)
-                  console.log(photoFile)
                   this.userPhotoFile = photoFile;
+                  this.spinnerService.hide();
                 })
             }) 
             .catch((err) => {
               console.log('error cargando o modificando rotacion de la imagen: '+err);
               this.imageURLToDisplay = '';
+              this.spinnerService.hide(); 
             }) 
         }
         reader.readAsDataURL(fileData.target.files[0]);     
@@ -143,9 +143,14 @@ export class MapComponent implements OnInit {
     var userPhotoFile = this.userPhotoFile;
     this.userService.getSignedRequestPhoto(userPhotoFile)
       .subscribe((signedRequest) => {
-        this.signedRequest = JSON.parse(signedRequest);
-        this.imageURL = this.signedRequest.url;
-        this.uploadUserPhoto()
+        if (signedRequest) {
+          this.signedRequest = JSON.parse(signedRequest);
+          this.imageURL = this.signedRequest.url;
+          this.uploadUserPhoto()
+        } else {
+          this.error = "Error de conexion";
+          this.spinnerService.hide(); 
+        }   
       });
   }
 
@@ -154,16 +159,15 @@ export class MapComponent implements OnInit {
     var signedRequest = this.signedRequest;
     return this.userService.uploadUserPhoto(file, signedRequest)
       .subscribe((response) => {
-        if (response === null) this.createPost();
+        if (response === null) this.uploadPost();
         else {
-          var error = new Error(`error: ${response}`);
-          console.log(error)
+          this.error = "Error de conexion";
+          this.spinnerService.hide(); 
         }    
       });
   }
   
-
-  createPost(): any {
+  uploadPost(): any {
     var post = {
       title: this.title,
       description: this.description,
@@ -178,7 +182,31 @@ export class MapComponent implements OnInit {
       .subscribe((response) => {
         this.error =  response.error;
         if (!this.error) this._router.navigate(['']);
+        else this.spinnerService.hide(); 
       });     
+  }
+
+  createPost() {
+    if (this.locationName) {
+      this.spinnerService.show(); 
+      if (!this.latitude || !this.longitude || !this.codeCountry || !this.formatedAddress) {
+        this.mapService.getCoordinates(this.locationName)
+          .subscribe((coord) => {
+            if (coord) {
+              this.latitude = coord.lat;
+              this.longitude = coord.lng;
+              this.codeCountry = coord.codeCountry;
+              this.formatedAddress = coord.formatedAddress;  
+              this.getSignedRequestPhoto();         
+            } else {
+              this.error = 'No se ha podido crear el post';
+              this.spinnerService.show();
+            }                
+          });
+      } else {
+        this.getSignedRequestPhoto();
+      }
+    }
   }
 }
  

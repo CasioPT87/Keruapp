@@ -46,6 +46,7 @@ export class ImageService {
       })   
   }
 
+  // this is not useful anymore. i 'll leave it there, anyway
   fixImageRotationURL(reader, fileDataBlob): any {
     return new Promise((resolve, reject) => {
       reader.readAsArrayBuffer(fileDataBlob);
