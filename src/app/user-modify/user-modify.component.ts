@@ -66,26 +66,26 @@ export class UserModifyComponent {
       })          
   }
 
-  rotateImage(imageURL) {
-    setTimeout(() => {
-      if (imageURL) {
-        this.imageService.getImage(imageURL)
-          .subscribe((fileDataBlob) => {            
-            var reader = new FileReader();
-            this.imageService.fixImageRotationURL(reader, fileDataBlob)
-              .then((resetBase64Image) => {
-                this.imageURL = resetBase64Image;       
-              }) 
-              .catch((err) => {
-                console.log('error cargando o modificando rotacion de la imagen: '+err); 
-                this.imageURL = null;               
-              })
-          });
-      } else {
-        this.imageURL = null; 
-      }
-    }, 0);       
-  }
+  // rotateImage(imageURL) {
+  //   setTimeout(() => {
+  //     if (imageURL) {
+  //       this.imageService.getImage(imageURL)
+  //         .subscribe((fileDataBlob) => {            
+  //           var reader = new FileReader();
+  //           this.imageService.fixImageRotationURL(reader, fileDataBlob)
+  //             .then((resetBase64Image) => {
+  //               this.imageURL = resetBase64Image;       
+  //             }) 
+  //             .catch((err) => {
+  //               console.log('error cargando o modificando rotacion de la imagen: '+err); 
+  //               this.imageURL = null;               
+  //             })
+  //         });
+  //     } else {
+  //       this.imageURL = null; 
+  //     }
+  //   }, 0);       
+  // }
 
   //set photo selected
   setPhotoFile(fileData) {
