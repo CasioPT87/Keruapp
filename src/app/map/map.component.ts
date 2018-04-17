@@ -112,13 +112,18 @@ export class MapComponent implements OnInit {
           this.imageURLToDisplay = originalImage
           this.imageService.fixImageRotationInput(fileData)
             .then((resetBase64Image) => {
+              console.log(1)
               this.imageURLToDisplay = resetBase64Image;
               new Promise((resolve, reject) => {
                 var photoFile = this.imageService.base64toFile(resetBase64Image, nameFile, typeFile);
+                console.log(2)
+                console.log(photoFile)
                 if (photoFile) resolve(photoFile);
                 else reject();
               })
                 .then((photoFile) => {
+                  console.log(3)
+                  console.log(photoFile)
                   this.userPhotoFile = photoFile;
                 })
             }) 
