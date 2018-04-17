@@ -102,12 +102,14 @@ export class MapComponent implements OnInit {
   //set photo selected
   setPhotoFile(fileData) {
     if (fileData.target.files && fileData.target.files[0]) {
+      console.log(-1)
       this.userPhotoFile = fileData.target.files[0];
       var nameFile = this.userPhotoFile.name;
       var typeFile = this.userPhotoFile.type;
        // this is for rotate correctly the image. it can go wrong if it's done with the camero of a mobile
         var reader = new FileReader();
         reader.onload = (event: any) => {
+          console.log(0)
           var originalImage = event.target.result;              
           this.imageURLToDisplay = originalImage
           this.imageService.fixImageRotationInput(fileData)
