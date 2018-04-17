@@ -107,6 +107,7 @@ export class MapComponent implements OnInit {
   setPhotoFile(fileData) {
     if (fileData.target.files && fileData.target.files[0]) {
       this.spinnerService.show();
+      console.log('1')
       this.userPhotoFile = fileData.target.files[0];
       var nameFile = this.userPhotoFile.name;
       var typeFile = this.userPhotoFile.type;
@@ -125,6 +126,7 @@ export class MapComponent implements OnInit {
               })
                 .then((photoFile) => {
                   this.userPhotoFile = photoFile;
+                  alert('2')
                   this.spinnerService.hide();
                 })
             }) 
