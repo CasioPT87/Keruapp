@@ -63,7 +63,7 @@ export class UserProfileComponent implements OnInit {
           this.authorised = dataUserResponse.authorised || false;
           this.posts = dataUserResponse.posts || null;
           this.spinnerService.hide();
-          this.rotateImage(this.imageURL); 
+          //this.rotateImage(this.imageURL); 
         } else {
           this.error = "Parece que hay un problema de conexion a internet";
           this.spinnerService.hide();
@@ -71,26 +71,26 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
-  rotateImage(imageURL) {
-    setTimeout(() => {
-      if (imageURL) {
-        this.imageService.getImage(imageURL)
-          .subscribe((fileDataBlob) => {            
-            var reader = new FileReader();
-            this.imageService.fixImageRotationURL(reader, fileDataBlob)
-              .then((resetBase64Image) => {
-                this.imageURL = resetBase64Image;       
-              }) 
-              .catch((err) => {
-                console.log('error cargando o modificando rotacion de la imagen: '+err); 
-                this.imageURL = null;               
-              })
-          });
-      } else {
-        this.imageURL = null; 
-      }
-    }, 0);       
-  }
+  // rotateImage(imageURL) {
+  //   setTimeout(() => {
+  //     if (imageURL) {
+  //       this.imageService.getImage(imageURL)
+  //         .subscribe((fileDataBlob) => {            
+  //           var reader = new FileReader();
+  //           this.imageService.fixImageRotationURL(reader, fileDataBlob)
+  //             .then((resetBase64Image) => {
+  //               this.imageURL = resetBase64Image;       
+  //             }) 
+  //             .catch((err) => {
+  //               console.log('error cargando o modificando rotacion de la imagen: '+err); 
+  //               this.imageURL = null;               
+  //             })
+  //         });
+  //     } else {
+  //       this.imageURL = null; 
+  //     }
+  //   }, 0);       
+  // }
 
   refresh() {
     window.location.reload();

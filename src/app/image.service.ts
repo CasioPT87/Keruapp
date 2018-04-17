@@ -47,30 +47,30 @@ export class ImageService {
   }
 
   // this is not useful anymore. i 'll leave it there, anyway
-  fixImageRotationURL(reader, fileDataBlob): any {
-    return new Promise((resolve, reject) => {
-      reader.readAsArrayBuffer(fileDataBlob);
-      reader.onload = (event: any) => {
-        var arrayBufferImage = event.target.result;  
-        var orientation = this.getOrientation(arrayBufferImage);
-        resolve(orientation);
-      }
-    })
-      .then((orientation) => {
-        var orientation = orientation;
-        return new Promise((resolve, reject) => {
-          var reader2 = new FileReader();
-          reader2.onload = (event: any) => {
-            var originalImage = event.target.result;              
-            resolve( this.resetOrientation(originalImage, orientation) );  
-          }
-          reader2.readAsDataURL(fileDataBlob);
-        })  
-      })
-      .then((resetBase64Image) => {
-        return resetBase64Image;
-      })   
-  }
+  // fixImageRotationURL(reader, fileDataBlob): any {
+  //   return new Promise((resolve, reject) => {
+  //     reader.readAsArrayBuffer(fileDataBlob);
+  //     reader.onload = (event: any) => {
+  //       var arrayBufferImage = event.target.result;  
+  //       var orientation = this.getOrientation(arrayBufferImage);
+  //       resolve(orientation);
+  //     }
+  //   })
+  //     .then((orientation) => {
+  //       var orientation = orientation;
+  //       return new Promise((resolve, reject) => {
+  //         var reader2 = new FileReader();
+  //         reader2.onload = (event: any) => {
+  //           var originalImage = event.target.result;              
+  //           resolve( this.resetOrientation(originalImage, orientation) );  
+  //         }
+  //         reader2.readAsDataURL(fileDataBlob);
+  //       })  
+  //     })
+  //     .then((resetBase64Image) => {
+  //       return resetBase64Image;
+  //     })   
+  // }
 
   getOrientation(arrayBufferImage): any {
   
