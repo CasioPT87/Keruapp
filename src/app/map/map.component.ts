@@ -104,37 +104,37 @@ export class MapComponent implements OnInit {
     if (fileData.target.files && fileData.target.files[0]) {
       console.log(-1)
       this.userPhotoFile = fileData.target.files[0];
-      // var nameFile = this.userPhotoFile.name;
-      // var typeFile = this.userPhotoFile.type;
-      //  // this is for rotate correctly the image. it can go wrong if it's done with the camero of a mobile
-      //   var reader = new FileReader();
-      //   reader.onload = (event: any) => {
-      //     console.log(0)
-      //     var originalImage = event.target.result;              
-      //     this.imageURLToDisplay = originalImage
-      //     this.imageService.fixImageRotationInput(fileData)
-      //       .then((resetBase64Image) => {
-      //         console.log(1)
-      //         this.imageURLToDisplay = resetBase64Image;
-      //         new Promise((resolve, reject) => {
-      //           var photoFile = this.imageService.base64toFile(resetBase64Image, nameFile, typeFile);
-      //           console.log(2)
-      //           console.log(photoFile)
-      //           if (photoFile) resolve(photoFile);
-      //           else reject();
-      //         })
-      //           .then((photoFile) => {
-      //             console.log(3)
-      //             console.log(photoFile)
-      //             this.userPhotoFile = photoFile;
-      //           })
-      //       }) 
-      //       .catch((err) => {
-      //         console.log('error cargando o modificando rotacion de la imagen: '+err);
-      //         this.imageURLToDisplay = '';
-      //       }) 
-      //   }
-      //   reader.readAsDataURL(fileData.target.files[0]);     
+      var nameFile = this.userPhotoFile.name;
+      var typeFile = this.userPhotoFile.type;
+       // this is for rotate correctly the image. it can go wrong if it's done with the camero of a mobile
+        var reader = new FileReader();
+        reader.onload = (event: any) => {
+          console.log(0)
+          var originalImage = event.target.result;              
+          this.imageURLToDisplay = originalImage
+          this.imageService.fixImageRotationInput(fileData)
+            .then((resetBase64Image) => {
+              console.log(1)
+              this.imageURLToDisplay = resetBase64Image;
+              new Promise((resolve, reject) => {
+                var photoFile = this.imageService.base64toFile(resetBase64Image, nameFile, typeFile);
+                console.log(2)
+                console.log(photoFile)
+                if (photoFile) resolve(photoFile);
+                else reject();
+              })
+                .then((photoFile) => {
+                  console.log(3)
+                  console.log(photoFile)
+                  this.userPhotoFile = photoFile;
+                })
+            }) 
+            .catch((err) => {
+              console.log('error cargando o modificando rotacion de la imagen: '+err);
+              this.imageURLToDisplay = '';
+            }) 
+        }
+        reader.readAsDataURL(fileData.target.files[0]);     
     }
   }
   
