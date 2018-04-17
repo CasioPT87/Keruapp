@@ -3,10 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { } from '@types/googlemaps';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-
 import { ActivatedRoute } from '@angular/router';
 
 import { MapService } from '../map.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'post-map',
@@ -31,10 +31,12 @@ export class PostComponent implements OnInit {
   formatedAddress: string;
   mapShown: boolean;
   error: any;
+  authorised: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private mapService: MapService,
+    private userService: UserService,
     private spinnerService: Ng4LoadingSpinnerService
   ) {
     this.mapShown = false;
@@ -57,7 +59,7 @@ export class PostComponent implements OnInit {
           this.codeCountry = post.codeCountry;
           this.formatedAddress = post.formatedAddress;
           this.comments = responsePost.comments;
-          console.log(this.comments)
+          this.checkAuthorization()
           this.spinnerService.hide();
           // var mapProp = {
           //   center: new google.maps.LatLng(this.latitude, this.longitude),
@@ -68,6 +70,13 @@ export class PostComponent implements OnInit {
         } else {
           this.error = "No hemos podido recuperar el post. Por favor asegurate de tener conexion.";
         }      
+      });
+  }
+
+  checkAuthorization(): any {    
+    this.userService.checkAuthorization()
+      .subscribe((authorised) => {
+        this.authorised = authorised;
       });
   }
 

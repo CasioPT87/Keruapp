@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { } from '@types/googlemaps';
 import { Router } from '@angular/router';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { ImageService } from '../image.service';
 
 import { MapService } from '../map.service';
 import { UserService } from '../user.service';
@@ -18,7 +20,7 @@ export class MapComponent implements OnInit {
   map: google.maps.Map;
 
   authorised: boolean;
-  error: boolean = false;
+  error: any;
   mapShown: boolean;
 
   latitude: any;
@@ -39,24 +41,29 @@ export class MapComponent implements OnInit {
   signedRequest: any;
   userPhotoFile: any;
   imageURL: string;
+  imageURLToDisplay: string;
 
   constructor(
     private mapService: MapService,
     private userService: UserService,
-    private _router: Router
+    private _router: Router,
+    private spinnerService: Ng4LoadingSpinnerService,
+    private imageService: ImageService
   ) { 
     this.mapShown = false;
   }
 
-  ngOnInit() {    
+  ngOnInit() {  
+    this.spinnerService.show()  
     this.checkAuthorization()
   }
 
   checkAuthorization() {
     this.userService.checkAuthorization()
-      .subscribe((authorised) => {
-        console.log(authorised)
+      .subscribe((authorised) => {        
         this.authorised = authorised;
+        this.error = false;
+        this.spinnerService.hide();
       });
   }
 
@@ -79,11 +86,16 @@ export class MapComponent implements OnInit {
     var locationName = this.locationName;
     this.mapService.getCoordinates(locationName)
       .subscribe((coord) => {
-        this.latitude = coord.lat;
-        this.longitude = coord.lng;
-        this.codeCountry = coord.codeCountry;
-        this.formatedAddress = coord.formatedAddress;
-        this.setCenter();
+        if (coord) {
+          this.latitude = coord.lat;
+          this.longitude = coord.lng;
+          this.codeCountry = coord.codeCountry;
+          this.formatedAddress = coord.formatedAddress;
+          this.setCenter();
+        } else {
+          this.error = 'Parece que hay problemas de conexion'
+        }    
+        
       });
   }
 
@@ -91,10 +103,31 @@ export class MapComponent implements OnInit {
   setPhotoFile(fileData) {
     if (fileData.target.files && fileData.target.files[0]) {
       this.userPhotoFile = fileData.target.files[0];
-      //now we get the signed request
-      //this.getSignedRequestPhoto()
-    } else {
-      console.log('problem setting the photo selected')
+      var nameFile = this.userPhotoFile.name;
+      var typeFile = this.userPhotoFile.type;
+       // this is for rotate correctly the image. it can go wrong if it's done with the camero of a mobile
+        var reader = new FileReader();
+        reader.onload = (event: any) => {
+          var originalImage = event.target.result;              
+          this.imageURLToDisplay = originalImage
+          this.imageService.fixImageRotationInput(fileData)
+            .then((resetBase64Image) => {
+              this.imageURLToDisplay = resetBase64Image;
+              new Promise((resolve, reject) => {
+                var photoFile = this.imageService.base64toFile(resetBase64Image, nameFile, typeFile);
+                if (photoFile) resolve(photoFile);
+                else reject();
+              })
+                .then((photoFile) => {
+                  this.userPhotoFile = photoFile;
+                })
+            }) 
+            .catch((err) => {
+              console.log('error cargando o modificando rotacion de la imagen: '+err);
+              this.imageURLToDisplay = '';
+            }) 
+        }
+        reader.readAsDataURL(fileData.target.files[0]);     
     }
   }
   
@@ -121,6 +154,7 @@ export class MapComponent implements OnInit {
         }    
       });
   }
+  
 
   createPost(): any {
     var post = {
@@ -138,9 +172,6 @@ export class MapComponent implements OnInit {
         this.error =  response.error;
         if (!this.error) this._router.navigate(['']);
       });     
-  }
-
-  onSubmit(): void {
   }
 }
  
