@@ -50,7 +50,7 @@
 
 </div>
 
-<div *ngIf="authorised == false || error">
+<div *ngIf="error">
   <div class="row row-centered">
     <h5 class="mx-auto mt-3 mb-5">Se ha producido un error recuperando el perfil de usuario</h5>
     <h5 *ngIf="error && error !== true" class="mx-auto mt-3 mb-5">{{error}}</h5>

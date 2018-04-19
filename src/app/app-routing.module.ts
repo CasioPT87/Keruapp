@@ -18,6 +18,7 @@ const routes: Routes = [
   { path: 'postcreate', component: MapComponent },
   { path: 'listposts', component: ListPostsComponent },
   { path: 'post/:postNumber', component: PostComponent },
+  { path: '**', component: ListPostsComponent },
 ];
 
 @NgModule({

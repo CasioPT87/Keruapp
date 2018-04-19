@@ -17,7 +17,6 @@ import { ImageService } from '../image.service';
 })
 export class UserProfileComponent implements OnInit {
 
-  authorised: Object;
   error: any;
 
   username: any;
@@ -37,10 +36,10 @@ export class UserProfileComponent implements OnInit {
     private spinnerService: Ng4LoadingSpinnerService
   ) {
     this.ownProfile = false;
-    this.spinnerService.show();
    }
 
   ngOnInit() {
+    this.spinnerService.show();
     this.getUser();
   }
 
@@ -60,7 +59,6 @@ export class UserProfileComponent implements OnInit {
           this.likes = dataUserResponse.likes;
           this.imageURL = dataUserResponse.user.imageURL;
           this.ownProfile = dataUserResponse.user.ownProfile;
-          this.authorised = dataUserResponse.authorised || false;
           this.posts = dataUserResponse.posts || null;
           this.spinnerService.hide();
           //this.rotateImage(this.imageURL); 
