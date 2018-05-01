@@ -36,8 +36,7 @@ passport.use(
     // profile: la info del usuario que nos da google+
     // done: funcion a llamar cuando hayamos hecho lo q queremos hacer
 
-    // this happens first
-        console.log('holaaaaaaaa')
+        // this happens first
         //check if the user already exists:
         User.findOne({googleId: profile.id}).then((currentUser) => {
             if (currentUser) {

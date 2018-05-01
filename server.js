@@ -56,6 +56,8 @@ var corsOptions = {
 
 app.use(cors(corsOptions))
 
+//cuando estamos utilizando el login normal, creo que aqui es donde se ve si la cookie es la que tiene que ser o no hay cookie
+// y si hay cookie, se meter el numbre del user es req.user y la session en req.session
 app.use(cookieSession({
   name: 'pepito', // mas seguro que esto, impossiball
   keys: [keys.session.cookieKey],
