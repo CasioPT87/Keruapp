@@ -62,9 +62,10 @@ export class UserLoginComponent {
   }
 
   googleLogin(): void {
-    //window.location.href=window.location.protocol+'//'+window.location.hostname+"/auth/signin";
 
-    window.location.href= `http://localhost:3000/auth/signin`
+    window.location.href=window.location.protocol+'//'+window.location.hostname+"/auth/signin";
+
+    //window.location.href= `http://localhost:3000/auth/signin`
 
     // this.spinnerService.show();
     // this.userService.googleLogin()

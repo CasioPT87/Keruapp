@@ -29,8 +29,8 @@ router.get('/google', passport.authenticate('google',
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
     console.log('hasta aqui hemos llegado!!')
 
-    res.redirect('http://localhost:4200');
-    //res.redirect('/');
+    //res.redirect('http://localhost:4200');
+    res.redirect('/');
 });
 
 //POST route for sign in
