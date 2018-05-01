@@ -46,6 +46,8 @@ passport.use(
             } else {
                 // the user is a new one
                 var user = new User();
+                user.dateCreated = Date.now();
+                user.dateModified = Date.now();
                 user.username = profile.displayName;
                 user.googleId = profile.id;
                 user.save().then((userSaved) => {

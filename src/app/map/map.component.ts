@@ -60,8 +60,8 @@ export class MapComponent implements OnInit {
 
   checkAuthorization() {
     this.userService.checkAuthorization()
-      .subscribe((authorised) => {        
-        this.authorised = authorised;
+      .subscribe((authorisedObj) => {        
+        this.authorised = authorisedObj.authorised;
         this.error = false;
         this.spinnerService.hide();
       });

@@ -29,7 +29,7 @@
                   #userPhoto="ngModel" (change)="setPhotoFile($event)">         
         </div>
 
-        <div class="form-group">
+        <div *ngIf="!methodIdent || methodIdent == 'password'" class="form-group">
           <label for="password">Introduce un nuevo password si quieres cambiarlo</label>
           <input type="text" class="form-control" id="password"
                   [(ngModel)]="model.password" name="password"

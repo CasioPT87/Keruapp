@@ -39,8 +39,8 @@ export class UserFormComponent {
 
   checkAuthorization() {
     this.userService.checkAuthorization()
-      .subscribe((authorised) => {       
-        this.authorised = authorised;
+      .subscribe((authorisedObj) => {       
+        this.authorised = authorisedObj.authorised;
         if (this.authorised) {
           this.getUsername();
         }

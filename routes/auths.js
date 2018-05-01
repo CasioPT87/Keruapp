@@ -28,9 +28,9 @@ router.get('/google', passport.authenticate('google',
 // callback route for google to redirect to
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
     console.log('hasta aqui hemos llegado!!')
-    console.log(req)
 
-    res.redirect('/');
+    res.redirect('http://localhost:4200');
+    //res.redirect('/');
 });
 
 //POST route for sign in
@@ -144,7 +144,7 @@ router.get('/logout', function (req, res, next) {
 });
 
 router.get('/checkauth', AuthService.checkAuth, function (req, res, next) {
-  res.send(res.locals.authorised);
+  res.send({ authorised: res.locals.authorised, methodIdent: res.locals.methodIdentification });
 });
 
 module.exports = router;

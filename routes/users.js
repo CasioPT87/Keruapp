@@ -75,7 +75,9 @@ router.get('/currentuser', checkAuthService.checkAuth, function(req, res, next) 
 
   var authorised = res.locals.authorised;
   var user = res.locals.user;
-  if (authorised && user) {
+  var methodIdent = res.locals.methodIdentification;
+
+  if (authorised && user && methodIdent) {
 
     //formatting dates:
     var dateCreated = new Date(user.dateCreated);
@@ -98,7 +100,8 @@ router.get('/currentuser', checkAuthService.checkAuth, function(req, res, next) 
       likes: 0,
       imageURL: user.imageURL,
       error: false,
-      authorised: authorised
+      authorised: authorised,
+      methodIdent: methodIdent
     }
 
     //posts de este usuario

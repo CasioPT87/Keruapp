@@ -28,6 +28,7 @@ export class UserModifyComponent {
   signedRequest: any;
   userPhotoFile: any;
   authorised: boolean;
+  methodIdent: any;
   imageURL: any;
 
   constructor(
@@ -58,6 +59,8 @@ export class UserModifyComponent {
             likes: objUserResponse.likes,          
           };
           this.authorised = objUserResponse.authorised;
+          this.methodIdent = objUserResponse.methodIdent;
+          console.log(this.methodIdent)
           this.imageURL = objUserResponse.imageURL;  
           this.spinnerService.hide();         
         } else {

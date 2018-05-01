@@ -75,8 +75,8 @@ export class PostComponent implements OnInit {
 
   checkAuthorization(): any {    
     this.userService.checkAuthorization()
-      .subscribe((authorised) => {
-        this.authorised = authorised;
+      .subscribe((authorisedObj) => {
+        this.authorised = authorisedObj.authorised;
       });
   }
 
