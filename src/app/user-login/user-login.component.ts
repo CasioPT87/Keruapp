@@ -62,14 +62,15 @@ export class UserLoginComponent {
   }
 
   googleLogin(): void {
-    this.spinnerService.hide();
-    this.userService.googleLogin()
-      .subscribe((authorised) => {
-        console.log(authorised)
-        this.authorised = authorised; 
-        this.spinnerService.hide();
-        // aqui hay que manejar el error. no se ha hecho nada para eso aun
-      });
+    window.location.href="http://localhost:3000/auth/signin"
+    // this.spinnerService.show();
+    // this.userService.googleLogin()
+    //   .subscribe((authorised) => {
+    //     console.log(authorised)
+    //     this.authorised = authorised; 
+    //     this.spinnerService.hide();
+    //     // aqui hay que manejar el error. no se ha hecho nada para eso aun
+    //   });
   }
 
   logout(): void {

@@ -2,7 +2,7 @@
 	<header>
 	</header>
 	<body>
-		<fieldset>
+		<!-- <fieldset>
 			<form action="/auth/createuser" method="post">
 				User Name:<br>
 				<input type="text" name="username" value="">
@@ -16,6 +16,11 @@
 			</form> 
      	</fieldset>
         <h1>Registrate usando Google, vago de mierda.</h1>
-		<a href="/auth/google">Google</a>
+		<a id="googleButton" href="/auth/google">Google</a> -->
 	</body>
+	<script>
+		window.onload = function(){
+	         window.location.href="/auth/google";
+        }
+	</script>
 </html>

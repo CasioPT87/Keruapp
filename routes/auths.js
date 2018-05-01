@@ -10,10 +10,10 @@ var AuthService = require('../services/authService');
 //     res.render('login');
 // });
 
-// /* GET Sigin page. */
-// router.get('/signin', (req, res) => {
-//   res.render('signin');
-// });
+/* GET Sigin page. */
+router.get('/signin', (req, res) => {
+  res.render('signin');
+});
 
 // en el archivo passport-setup le hemos dicho a passport como usar la GoogleStrategy.
 // ahora lo que le decimos a la app es que dada esta ruta,
@@ -27,8 +27,9 @@ router.get('/google', passport.authenticate('google',
 
 // callback route for google to redirect to
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-    console.log(req)
-    res.json(req.user);
+    console.log('hasta aqui hemos llegado!!')
+
+    res.redirect('/');
 });
 
 //POST route for sign in

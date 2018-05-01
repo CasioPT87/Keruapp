@@ -11,7 +11,12 @@ const httpOptions = {
   withCredentials: true
 }
 
-var production = true;
+const httpOptionsHtml = {
+  headers: new HttpHeaders().set('Content-Type', 'text/html'),
+  withCredentials: true
+}
+
+var production = false;
 
 if (!production) {
   var path = 'http://localhost:3000';
@@ -77,9 +82,7 @@ export class UserService {
   }
 
   googleLogin (): Observable<any> {
-    var response =  this.http.get(path + '/auth/google', {
-      withCredentials: true  // <=========== important!
-    });
+    var response =  this.http.get(path + '/auth/google', httpOptionsHtml);
     return response;
   }
 
