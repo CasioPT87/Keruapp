@@ -144,6 +144,7 @@ router.get('/logout', function (req, res, next) {
 });
 
 router.get('/checkauth', AuthService.checkAuth, function (req, res, next) {
+  console.log(res.locals)
   res.send({ authorised: res.locals.authorised, methodIdent: res.locals.methodIdentification });
 });
 

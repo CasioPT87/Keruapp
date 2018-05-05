@@ -31,15 +31,17 @@ function getUser(req) {
   var methodIden = null;
   //if (req.user && req.user.authenticated && req.user.id) userId = req.user.id;
 
+  console.log(!!req.session, !!req.session.userId, !!req.session.passport)
+
   if (req.session && req.session.userId) {
     userId = req.session.userId;
     methodIden = 'password';
-  } else if (req.session && req.session.passport.user) {
+    console.log(methodIden)
+  } else if (req.session && req.session.passport && req.session.passport.user) {
     userId = req.session.passport.user;
     methodIden = 'google';
+    console.log(methodIden)
   }
-
-  console.log(userId)
 
   return new Promise((resolve, reject) => {
 
