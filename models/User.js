@@ -30,7 +30,11 @@ var UserSchema = new mongoose.Schema({
     imageURL: {
       type: String,
       default: ""
-    }
+    },
+    language: {
+      type: String,
+      default: ""
+    }  
   });
 
   //authenticate input against database

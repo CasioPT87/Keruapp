@@ -2,6 +2,9 @@
 
 @import url("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css");
 
+body {
+    background-color: rgb(252, 252, 252);
+}
 
 .default-box{
     border: 1px solid black;
@@ -12,4 +15,9 @@
 .hidden {
     display: none;
 }
+
+h1, h2, h3, h4, h5, h6, p, button {
+    color:#4d4d4d;
+}
+
 

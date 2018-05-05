@@ -26,6 +26,7 @@ export class ListPostsComponent implements OnInit {
   locationName: string;
   listPosts: object[];
   mapHidden: boolean;
+  browserLang: String;
 
   firstSearchNotDoneYet: boolean = true;
 
@@ -48,6 +49,7 @@ export class ListPostsComponent implements OnInit {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+    this.browserLang = navigator.language;
     this.checkAuthorization()
   }
 

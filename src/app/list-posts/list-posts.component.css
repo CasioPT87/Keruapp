@@ -3,3 +3,11 @@
     padding-left: 0px;
     padding-right: 0px;
 }
+
+.card p {
+    line-height: 1;
+}
+
+.card-body {
+    padding-bottom: 0px;
+}
