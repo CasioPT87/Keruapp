@@ -59,15 +59,16 @@
   <div class="row">
     <div *ngIf="listPosts" class="card-columns">
       <div *ngFor="let post of listPosts">
-        <div class="card">
-          <img src="http://www.countryflags.io/{{post.codeCountry}}/flat/32.png" alt={{codeCountry}} style="position: absolute;">
+        
+        <a routerLink="/post/{{post.idNumber}}" class="card" style="overflow: hidden; text-decoration: none">
+          <img src="http://www.countryflags.io/{{post.codeCountry}}/flat/32.png" alt={{codeCountry}} style="position: absolute; top: -7px; left: -4px">
           <img class="card-img-top" src={{post.imageURL}} alt={{post.title}}>
           <div class="card-body">
-            <h4 class="card-title">{{post.title}}  <small>Likes: {{post.likes}}</small></h4>
+            <h4 class="card-title">{{post.title}}</h4>            
             <p class="card-text">{{post.formatedAddress}}</p>
-            <a routerLink="/post/{{post.idNumber}}" class="btn btn-primary">Ir al post</a>
+            <h6>Likes: {{post.likes}}</h6>            
           </div>
-        </div>
+        </a>
       </div>
     </div>
   </div>
