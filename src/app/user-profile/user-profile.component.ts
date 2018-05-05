@@ -95,7 +95,8 @@ export class UserProfileComponent implements OnInit {
   }
 
   toLink() {
-    window.location.href = this.url;
+    console.log(this.url)
+    window.location.href = 'https://'+this.url;
   }
 
 }
