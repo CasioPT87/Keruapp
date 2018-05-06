@@ -54,7 +54,6 @@ export class ListPostsComponent implements OnInit {
   }
 
   checkAuthorization(): any {    
-    alert('check auth aki tron!!')
     this.userService.checkAuthorization()
       .subscribe((authorisedObj) => {
         this.authorised = authorisedObj.authorised;
