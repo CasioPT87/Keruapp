@@ -58,7 +58,7 @@ export class ListPostsComponent implements OnInit {
     this.userService.checkAuthorization()
       .subscribe((authorisedObj) => {
         this.authorised = authorisedObj.authorised;
-        alert(authorisedObj.methodIdent.toString());
+        alert(authorisedObj.methodIdent);
         if (this.authorised) {          
           this.getUsername();
         } else if (!this.authorised) {
