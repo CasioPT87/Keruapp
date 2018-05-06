@@ -134,7 +134,8 @@ router.get('/logout', function (req, res, next) {
   console.log(req.session)
   if (req.session && Object.keys(req.session).length > 0) {
     console.log('hay session!!')
-    delete req.session.userId
+    if (req.session.userId) delete req.session.userId;
+    if (req.session.passport) delete req.session.passport;
     console.log(req.session)
   } else {
     console.log('NO hay session!!')
