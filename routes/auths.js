@@ -136,12 +136,16 @@ router.get('/logout', function (req, res, next) {
     console.log('hay session!!')
     if (req.session.userId) delete req.session.userId;
     if (req.session.passport) delete req.session.passport;
+    req.session.destroy(function (err) {
+        res.send(false); //Inside a callback… bulletproof!
+    });
     console.log(req.session)
   } else {
     console.log('NO hay session!!')
     console.log(req.session)
+    res.send(false);
   }
-  res.send(false);
+  
 });
 
 router.get('/checkauth', AuthService.checkAuth, function (req, res, next) {
