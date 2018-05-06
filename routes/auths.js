@@ -134,12 +134,13 @@ router.get('/logout', function (req, res, next) {
   console.log(req.session)
   if (req.session && Object.keys(req.session).length > 0) {
     console.log('hay session!!')
-    if (req.session.userId) delete req.session.userId;
-    if (req.session.passport) delete req.session.passport;
+    //if (req.session.userId) delete req.session.userId;
+    //if (req.session.passport) delete req.session.passport;
     req.session.destroy(function (err) {
+        console.log(req.session)
         res.send(false); //Inside a callback… bulletproof!
     });
-    console.log(req.session)
+    
   } else {
     console.log('NO hay session!!')
     console.log(req.session)
