@@ -16,8 +16,12 @@ body {
     display: none;
 }
 
-h1, h2, h3, h4, h5, h6, p, button {
+h1, h2, h3, h4, h6, p, button {
     color:#4d4d4d;
+}
+
+h5 {
+    color: #000000;
 }
 
 
