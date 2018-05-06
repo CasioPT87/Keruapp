@@ -21,7 +21,7 @@ function checkAuth(req, res, next) {
       //we write again. useless but just to be clear:
       res.locals.authorised = false;
       res.locals.user = null;
-      res.locals.methodIdentification = null;
+      res.locals.methodIdentification = err;
 	  	next();
 	  })
 }
