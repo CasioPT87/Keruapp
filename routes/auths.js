@@ -136,10 +136,11 @@ router.get('/logout', function (req, res, next) {
     console.log('hay session!!')
     //if (req.session.userId) delete req.session.userId;
     //if (req.session.passport) delete req.session.passport;
-    req.session.destroy(function (err) {
-        console.log(req.session)
-        res.send(false); //Inside a callback… bulletproof!
-    });
+    console.log(req.session)
+    res.send(false);
+    // req.session.destroy(function (err) {
+    //      //Inside a callback… bulletproof!
+    // });
     
   } else {
     console.log('NO hay session!!')
