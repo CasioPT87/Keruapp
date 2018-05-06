@@ -185,7 +185,7 @@ router.get('/findpost/:postNumber', AuthService.checkAuth, function(req, res, ne
       //here we remove the userID and add a username to be displayed;
       User.findById(post.user, function(err, user) {
         if (err) res.json({ error: true });
-        else {
+        else if (user && user.username) {
           var username = user.username;
           objForResponsePost = {
             username: username,
@@ -205,6 +205,9 @@ router.get('/findpost/:postNumber', AuthService.checkAuth, function(req, res, ne
             numLikesInPost: numLikesInPost,
             error: false
           });
+        }
+        else {
+          res.send(null);
         }
       })
     })
