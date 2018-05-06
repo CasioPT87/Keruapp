@@ -22,7 +22,6 @@ function getTexts(lang, stage) {
 
 }
 
-
 module.exports = {
 	getTexts
 };
