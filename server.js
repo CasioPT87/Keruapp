@@ -9,6 +9,7 @@ var logger = require('morgan');
 var mongoose = require('mongoose');
 var cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
+var expressSanitizer = require('express-sanitizer');
 // con este require corremos el codigo del archivo
 var passportSetup = require('./config/passport-setup');
 var passport = require('passport');
@@ -58,7 +59,7 @@ var corsOptions = {
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204 
 }
 
-app.use(cors(corsOptions))
+app.use(cors(corsOptions));
 
 //cuando estamos utilizando el login normal, creo que aqui es donde se ve si la cookie es la que tiene que ser o no hay cookie
 // y si hay cookie, se meter el numbre del user es req.user y la session en req.session
@@ -77,6 +78,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+//aqui llamamos al sanitizer, que usaremos como middleware en todas y cada una de las rutas
+app.use(expressSanitizer());
 
 app.use('/', index);
 app.use('/users', users);

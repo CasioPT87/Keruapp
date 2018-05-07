@@ -39,14 +39,16 @@ router.post('/createuser', AuthService.checkAuth, function (req, res, next) {
   if (!res.locals.authorised) {
     if ( req.body.username && req.body.password ) {
 
-      var username = req.body.username;
-      var password = req.body.password;
+      var username = req.sanitize(req.body.username); 
+      var password = req.sanitize(req.body.password);
+      var description = req.sanitize(req.body.description);
+      var url = req.sanitize(req.body.url);
 
       var userData = {
-        username: req.body.username,
-        password: req.body.password,
-        description: req.body.description,
-        url: req.body.url,
+        username: username,
+        password: password,
+        description: description,
+        url: url,
         dateCreated: Date.now(),
         dateModified: Date.now()
       }
