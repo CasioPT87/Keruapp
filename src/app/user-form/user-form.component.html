@@ -42,8 +42,8 @@
                   [(ngModel)]="model.url" name="url">
         </div>
     
-        <button type="submit" class="btn btn-success" (click)="createUser()" [disabled]="!userForm.form.valid">Crear usuario</button>
-        <button type="button" class="btn btn-default" (click)="createUser(); userForm.reset()">Borrar todo</button>
+        <button type="submit" class="btn btn-success" (click)="createUser()" [disabled]="!userForm.form.valid">Create User</button>
+        <button type="button" class="btn btn-default" (click)="createUser(); userForm.reset()">Clear Fields</button>
       </form>
     </div>
   </div>
