@@ -41,7 +41,7 @@ router.put('/likepost', AuthService.checkAuth, function(req, res, next) {
 
   if (res.locals.authorised && res.locals.user) {
 
-    var postNumber = req.body.postNumber;
+    var postNumber = req.sanitize(req.body.postNumber);
     var likePost = false;
     var numLikesInPost = 0;
     var userId = res.locals.user._id;
@@ -102,7 +102,7 @@ router.put('/likepost', AuthService.checkAuth, function(req, res, next) {
 
 router.get('/findposts/:coords', function(req, res, next) {
 
-  var address = req.params.coords;
+  var address = req.sanitize(req.params.coords);
 
   if (address) {
     MapService.getCoordinates(address)
@@ -154,7 +154,7 @@ router.get('/findposts/:coords', function(req, res, next) {
 router.get('/findpost/:postNumber', AuthService.checkAuth, function(req, res, next) {
 
   var like = false;
-  var postNumber = req.params.postNumber;
+  var postNumber = req.sanitize(req.params.postNumber);
   var numLikesInPost = 0;
 
   var objForResponse = {};
@@ -241,16 +241,25 @@ router.get('/findlastsposts', AuthService.checkAuth, function(req, res, next) {
 
 function createNewPost(req, userId) {
 
+  var title = req.sanitize(req.body.title);
+  var description = req.sanitize(req.body.description);
+  var longitude = req.sanitize(req.body.longitude);
+  var latitude = req.sanitize(req.body.latitude);
+  var url = req.sanitize(req.body.url);
+  var codeCountry = req.sanitize(req.body.codeCountry);
+  var formatedAddress = req.sanitize(req.body.formatedAddress);
+  var imageURL = req.sanitize(req.body.imageURL);
+
   var post = {
     user: userId,
-    title: req.body.title,
-    description: req.body.description,
-    location: [ req.body.longitude, req.body.latitude ],
-    url: req.body.url,
+    title: title,
+    description: description,
+    location: [ longitude, latitude ],
+    url: url,
     dateCreated: Date.now(),
-    codeCountry:  req.body.codeCountry,
-    formatedAddress:  req.body.formatedAddress,
-    imageURL: req.body.imageURL,
+    codeCountry:  codeCountry,
+    formatedAddress:  formatedAddress,
+    imageURL: imageURL
   }
 
   return new Promise((resolve, reject) => {
@@ -340,7 +349,6 @@ function treatPostsToRemoveUserId(posts) {
 
   return new Promise((resolve, reject) => {
     var postTreated = posts.map((post) => {
-      console.log(post)
       return {
         idNumber: post.idNumber,
         title: post.title,

@@ -9,7 +9,7 @@ var moment = require('moment');
 /* GET users listing. */
 router.get('/getuser/:username', checkAuthService.checkAuth, function(req, res, next) {
 
-  var username = req.params.username;
+  var username = req.sanitize(req.params.username);
   var dataUserResponse = {};
 
   User.findOne({ username: username })
@@ -185,11 +185,11 @@ router.put('/update', checkAuthService.checkAuth, function(req, res, next) {
 
   if (authorised && user) {
 
-    var usernameUpdateUser = req.body.userName;
-    var passwordUpdateUser = req.body.password;
-    var descriptionUpdateUser = req.body.description;
-    var urlUpdateUser = req.body.url;
-    var imageURLUser = req.body.imageURL;
+    var usernameUpdateUser = req.sanitize(req.body.userName);
+    var passwordUpdateUser = req.sanitize(req.body.password);
+    var descriptionUpdateUser = req.sanitize(req.body.description);
+    var urlUpdateUser = req.sanitize(req.body.url);
+    var imageURLUser = req.sanitize(req.body.imageURL);
 
     User.findById(user._id, function(err, oldUser) {
       if (err) console.log(err);
