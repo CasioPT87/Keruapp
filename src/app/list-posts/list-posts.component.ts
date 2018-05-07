@@ -41,8 +41,8 @@ export class ListPostsComponent implements OnInit {
 
   ngOnInit() {
     this.listPosts = null;
-    this.latitude = 18.5793;
-    this.longitude = 73.8143;
+    this.latitude = -1.2153982;
+    this.longitude = 50.5937982;
     var mapProp = {
       center: new google.maps.LatLng(this.latitude, this.longitude),
       zoom: 15,

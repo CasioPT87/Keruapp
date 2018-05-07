@@ -4,8 +4,8 @@ var MapService = require('../services/mapService');
 
 //coordenadas de los cagnos de meca
 const defaultCoord = {
-  lat: 36.1852056,
-  lng: -6.0186061
+  lat: 50.5937982,
+  lng: -1.2153982
 }
 
 /* GET users listing. */

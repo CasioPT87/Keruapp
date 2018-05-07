@@ -98,9 +98,11 @@ router.post('/createuser', AuthService.checkAuth, function (req, res, next) {
 
 //POST route for sign in
 router.post('/login', function (req, res, next) {
-  if (req.body.username && req.body.password) {
-    console.log(req.body.username, req.body.password )
-    User.authenticate(req.body.username, req.body.password, function (error, user) {
+  var username = req.sanitize(req.body.username);
+  var password = req.sanitize(req.body.password);
+  if (username && password) {
+    console.log(username, password )
+    User.authenticate(username, password, function (error, user) {
       if (error) {
         console.log('error:'+ error)
         res.send({

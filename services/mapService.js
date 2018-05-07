@@ -5,9 +5,13 @@ var googleMapsClient = require('@google/maps').createClient({
     key: 'AIzaSyDkXF-JzYDHB0M8Wwth0xRarNyUTDSQfA8'
 });
 
-function getCoordinates(address) {
+const defaultAddress = 'castle road ventnor';
 
+function getCoordinates(address) {
+    
     return new Promise((resolve, reject) => {
+
+      if (address == 'undefined') address = defaultAddress;
 
     	googleMapsClient.geocode({ address: address }, function(err, response) {
     		if (err || !response) reject(new Error('Problema recogiendo coordenadas desde GoogleMaps')); 

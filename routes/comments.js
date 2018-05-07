@@ -11,8 +11,8 @@ router.post('/addcomment', AuthService.checkAuth, function(req, res, next) {
 
   if (res.locals.authorised && res.locals.user && res.locals.user._id ) {
     var userId = res.locals.user._id; // el user id del cliente, no del autor del post
-    var commentString = req.body.comment;
-    var postNumber = req.body.postNumber;
+    var commentString = req.sanitize(req.body.comment);
+    var postNumber = req.sanitize(req.body.postNumber);
     
     Post.findOne({idNumber: postNumber}).exec(function(err, post) {
       if (err) {

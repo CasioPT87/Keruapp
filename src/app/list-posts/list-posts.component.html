@@ -24,7 +24,7 @@
       <nav class="navbar navbar-expand-sm col-12">
         <form #listPostForm="ngForm" class="form-inline mx-auto w-100">
           <div class="input-group w-100">
-            <input type="text" class="form-control" placeholder="ej: plaza quevedo madrid" 
+            <input type="text" class="form-control" placeholder="e.g. castle road ventnor" 
               [(ngModel)]="locationName" name="location">
             <div class="input-group-prepend">
               <button class="btn input-group-text rounded-right" (click)="closestPosts()">Buscar</button>
@@ -35,7 +35,7 @@
     </div> 
   </div>
 
-  <div #gmapListPosts class="mb-3" [class.hidden]="mapHidden" style=" width:100%; padding-bottom:50%;"></div>    
+  <div #gmapListPosts class="mb-3 mx-auto" [class.hidden]="mapHidden" style=" width:90%;padding-bottom:50%;"></div>    
 
   <h5 *ngIf="firstSearchNotDoneYet" class="text-center mb-3">Ultimos posts publicados</h5>
   <h5 *ngIf="!firstSearchNotDoneYet" class="text-center mb-3">Posts ordenados por proximidad</h5>
