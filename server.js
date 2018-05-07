@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
+var helmet = require('helmet');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var cookieSession = require('cookie-session');
@@ -31,6 +32,9 @@ var app = express();
 app.engine('html', require('ejs').renderFile);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
+
+//usamos helmet que es una coleccion de 9 middlewares de seguridad
+app.use(helmet());
 
 // Create link to Angular build directory
 var distDir = __dirname + "/dist/";
@@ -62,7 +66,9 @@ app.use(cookieSession({
   name: 'pepito', // mas seguro que esto, impossiball
   keys: [keys.session.cookieKey],
   // Cookie Options
-  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  httpOnly: true,
+
 }))
 
 // lets initialize passport (with this middleware) now that we've setted up the cookie
