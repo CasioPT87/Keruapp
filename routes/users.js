@@ -20,7 +20,7 @@ router.get('/getuser/:username', checkAuthService.checkAuth, function(req, res, 
         res.json(dataUserResponse);
       } else { 
         var dateCreatedLocale = moment(user.dateCreated);
-        moment.locale('es');
+        moment.locale('en-gb');
         dateCreatedLocale.locale(false);
 
         dataUserResponse = {
@@ -85,7 +85,7 @@ router.get('/currentuser', checkAuthService.checkAuth, function(req, res, next) 
 
     var dateCreatedLocale = moment(dateCreated);
     var dateModifiedLocale = moment(dateModified);
-    moment.locale('es');
+    moment.locale('en-gb');
     dateCreatedLocale.locale(false);
     dateModifiedLocale.locale(false);
     ///////////////////

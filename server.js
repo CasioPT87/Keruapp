@@ -55,7 +55,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 var corsOptions = {
   credentials: true,
-  origin: 'http://localhost:4200',
+  origin: ['http://localhost:4200', 'https://www.keruapp.com'],
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204 
 }
 
