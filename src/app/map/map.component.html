@@ -6,16 +6,16 @@
     <form #mapForm="ngForm">
       
       <div class="form-group">
-        <label for="titleinput">Titulo</label>
+        <label for="titleinput">Title</label>
         <input type="text" class="form-control" id="titleinput"
                 [(ngModel)]="title" name="title" required>
       </div>
       <div class="form-group">
-        <label for="locationinput">Localizacion</label>
+        <label for="locationinput">Location</label>
         <input type="text" class="form-control" id="locationinput"
                 [(ngModel)]="locationName" name="location"
                 (keyup.enter)="getCoordinates()" on-focusout="getCoordinates()" required>
-        <button type="button" class="btn btn-default mt-3" (click)="getCoordinates()">Encontrar</button>
+        <button type="button" class="btn btn-default mt-3" (click)="getCoordinates()">Find</button>
       </div>
       <div *ngIf="formatedAddress">{{formatedAddress}}</div>
       <img *ngIf="codeCountry" src="http://www.countryflags.io/{{codeCountry}}/flat/32.png">
@@ -29,33 +29,33 @@
       </div>
 
       <div class="form-group">
-        <label *ngIf="!imageURLToDisplay" for="userPhotoId">Anadir fotografia al post</label>
-        <label *ngIf="imageURLToDisplay" for="userPhotoId">Cambiar imagen del post</label>
+        <label *ngIf="!imageURLToDisplay" for="userPhotoId">Add photo to postcard</label>
+        <label *ngIf="imageURLToDisplay" for="userPhotoId">Change postcard's photo</label>
         <input type="file" class="btn btn-primary" id="userPhotoId" accept="image/*" multiple
                 [(ngModel)]="userPhoto" name="userPhotoModel"
                 (change)="setPhotoFile($event)">         
       </div>
 
       <div class="form-group">
-        <label for="descriptioninput">Descripcion</label>
+        <label for="descriptioninput">Description</label>
         <textarea  type="text" class="form-control" id="descriptioninput"
                 [(ngModel)]="description" name="description" required></textarea>
       </div>
       <div class="form-group">
-        <label for="urlinput">Link a articulo</label>
+        <label for="urlinput">More about this in:</label>
         <input type="text" class="form-control" id="urlinput"
                 [(ngModel)]="url" name="url">
       </div>
 
       <button type="button" class="btn btn-success" (click)="createPost()"
-       [disabled]="!mapForm.form.valid || !imageURLToDisplay">Crear Post</button>
+       [disabled]="!mapForm.form.valid || !imageURLToDisplay">Create Postcard</button>
     </form>
   </div>
 </div>
 
 <div *ngIf="authorised == false && !error">
   <div class="row row-centered">
-    <a class="btn btn-success mx-auto" routerLink="/">Inicia sesion o registrate para iniciar sesion</a>
+    <a class="btn btn-success mx-auto" routerLink="/">You need to Log In or Sign Up</a>
   </div>  
 </div>
 
@@ -64,10 +64,10 @@
     <h5 *ngIf="error && error !== true" class="mx-auto mt-3 mb-5">{{error}}</h5>
   </div>  
   <div class="row row-centered mb-3">
-    <button class="btn btn-success mx-auto" (click)="refresh()">Volver a cargar</button>
+    <button class="btn btn-success mx-auto" (click)="refresh()">Reload</button>
   </div>
   <div class="row row-centered">
-    <a class="btn btn-success mx-auto" routerLink="/">Ir a pagina principal</a>
+    <a class="btn btn-success mx-auto" routerLink="/">Home Page</a>
   </div>    
 </div>
 

@@ -2,14 +2,14 @@
 
 <div class="container">
     <div *ngIf="error">
-      <p class="bg-danger" style="color:white">Ha ocurrido un error: {{error}}</p>
+      <p class="bg-danger" style="color:white">Ops!! This happened: {{error}}</p>
     </div>
   <div *ngIf="authorised == false">
     <div>
-      <h3>Entrar usando nombre de usuario y clave</h3>
+      <h3>Log In with Username and Password</h3>
       <form  #userForm="ngForm" (ngSubmit)="login()">
         <div class="form-group">
-          <label for="username">Nombre de usuario</label>
+          <label for="username">Username</label>
           <input type="text" class="form-control" id="username"
                   required
                   [(ngModel)]="username" name="username"
@@ -24,12 +24,12 @@
                   #passwordInput="ngModel">
         </div>
     
-        <button type="submit" class="btn btn-success" [disabled]="!userForm.form.valid">Iniciar sesion</button>
+        <button type="submit" class="btn btn-success" [disabled]="!userForm.form.valid">Let's go!</button>
       </form>
     </div>
 
     <div>
-      <h3 class="mt-4 mb-3">Entrar usando cuenta de Google</h3>
+      <h3 class="mt-4 mb-3">Log In with your Google account</h3>
       <form #oathForm="ngForm">
         <button type="submit" class="btn btn-success" (click)="googleLogin()" [disabled]="!oathForm.form.valid">Log in with google</button>
       </form>

@@ -3,22 +3,22 @@
 
 <div class="container">
 
-  <h3 *ngIf="authorised" class="text-center"><strong>{{username}}</strong>, busca lugares o crea los tuyos propios</h3>
-  <h3 *ngIf="!authorised" class="text-center">Busca lugares o crea los tuyos propios</h3>
+  <h3 *ngIf="authorised" class="text-center"><strong>{{username}}</strong>, look for postcards or create new ones</h3>
+  <h3 *ngIf="!authorised" class="text-center">Look for postcards or create new ones</h3>
 
   <div class="row w-100 mx-auto mt-4">
     <div *ngIf="!authorised" class="row w-100 mx-auto mb-2">
       <div class="float-right">
-        <button  type="button" class="btn" routerLink="/userlogin">Entrar</button>
-        <button  type="button" class="btn ml-2" routerLink="/usercreate">Registrarse</button>
+        <button  type="button" class="btn" routerLink="/userlogin">Log In</button>
+        <button  type="button" class="btn ml-2" routerLink="/usercreate">Sign Up</button>
       </div>
     </div> 
     <div *ngIf="authorised" class="row w-100 mx-auto mb-2">
-      <button  type="button" class="btn col-sm-2" routerLink="/usermodify">Perfil</button>
+      <button  type="button" class="btn col-sm-2" routerLink="/usermodify">Profile</button>
       <div class="col-sm-1"></div>
-      <button  type="button" class="btn col-sm-6" routerLink="/postcreate">Crear nuevo post</button>
+      <button  type="button" class="btn col-sm-6" routerLink="/postcreate">Crear New Postcard</button>
       <div class="col-sm-1"></div>
-      <button  type="button" class="col-sm-2 btn" routerLink="/userlogin">Salir</button>
+      <button  type="button" class="col-sm-2 btn" routerLink="/userlogin">Log Out</button>
     </div>
     <div class="row w-100 mx-auto mb-2">
       <nav class="navbar navbar-expand-sm col-12">
@@ -27,7 +27,7 @@
             <input type="text" class="form-control" placeholder="e.g. castle road ventnor" 
               [(ngModel)]="locationName" name="location">
             <div class="input-group-prepend">
-              <button class="btn input-group-text rounded-right" (click)="closestPosts()">Buscar</button>
+              <button class="btn input-group-text rounded-right" (click)="closestPosts()">Search</button>
             </div>
           </div>    
         </form>
@@ -37,8 +37,8 @@
 
   <div #gmapListPosts class="mb-3 mx-auto" [class.hidden]="mapHidden" style=" width:90%;padding-bottom:50%;"></div>    
 
-  <h5 *ngIf="firstSearchNotDoneYet" class="text-center mb-3">Ultimos posts publicados</h5>
-  <h5 *ngIf="!firstSearchNotDoneYet" class="text-center mb-3">Posts ordenados por proximidad</h5>
+  <h5 *ngIf="firstSearchNotDoneYet" class="text-center mb-3">These are the last postcards created</h5>
+  <h5 *ngIf="!firstSearchNotDoneYet" class="text-center mb-3">Postcards by proximity</h5>
   <h5 *ngIf="errorLoadingPosts" class="text-center mb-3">{{errorLoadingPosts}}</h5>
 
   <!-- <div *ngIf="listPosts" class="card-columns">

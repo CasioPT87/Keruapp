@@ -3,14 +3,14 @@
 <div *ngIf="!error && authorised">
   <div class="container">
     <div>
-      <h1 class="mb-3">Modificar perfil</h1>
-      <p>Usuario creado: <strong>{{model.dateCreated}}</strong></p>
-      <p>Ultima vez modificado el: <strong>{{model.dateModified}}</strong></p>
-      <p>Tus posts han recibido <strong>{{model.likes}}</strong> "me gusta"</p>
+      <h1 class="mb-3">Modify Profile</h1>
+      <p>Created at: <strong>{{model.dateCreated}}</strong></p>
+      <p>Last modified at: <strong>{{model.dateModified}}</strong></p>
+      <p>Likes: <strong>{{model.likes}}</strong></p>
       
       <form #userForm="ngForm">
         <div class="form-group">
-          <label for="username">Nombre</label>
+          <label for="username">Username</label>
           <input type="text" class="form-control" id="username"
                   [(ngModel)]="model.userName" name="username"
                   #username="ngModel">
@@ -23,32 +23,32 @@
         </div>   
       
         <div class="form-group">
-          <label for="userPhoto">Foto de perfil</label>
+          <label for="userPhoto">Photo</label>
           <input type="file" id="userPhoto" accept="image/*" multiple
                   [(ngModel)]="model.userPhoto" name="userPhoto"
                   #userPhoto="ngModel" (change)="setPhotoFile($event)">         
         </div>
 
         <div *ngIf="!methodIdent || methodIdent == 'password'" class="form-group">
-          <label for="password">Introduce un nuevo password si quieres cambiarlo</label>
+          <label for="password">Change password (if you feel like)</label>
           <input type="text" class="form-control" id="password"
                   [(ngModel)]="model.password" name="password"
                   #password="ngModel">
         </div>
     
         <div class="form-group">
-          <label for="description">Tu descripcion</label>
+          <label for="description">Description</label>
           <textarea type="text" class="form-control" id="description"
                   [(ngModel)]="model.description" name="description"></textarea>
         </div>
     
         <div class="form-group">
-          <label for="url">Pagina web</label>
+          <label for="url">Blog or web site</label>
           <input type="text" class="form-control" id="url"
                   [(ngModel)]="model.url" name="url">
         </div>
     
-        <button type="submit" class="btn btn-success" (click)="sendUserUpdate()">Enviar y modificar</button>
+        <button type="submit" class="btn btn-success" (click)="sendUserUpdate()">Send and modify</button>
       </form>
     </div>
   </div>
@@ -56,10 +56,10 @@
 
 <div *ngIf="authorised == false || error">
   <div class="row row-centered">
-    <h5 *ngIf="error === true" class="mx-auto" >Perfil de usuario no encontrado</h5>
+    <h5 *ngIf="error === true" class="mx-auto" >user profile not found</h5>
     <h5 *ngIf="error !== true" class="mx-auto" >{{error}}</h5>
   </div>  
   <div class="row row-centered">
-    <a class="btn btn-success mx-auto" routerLink="/">Volver a pagina principal</a>
+    <a class="btn btn-success mx-auto" routerLink="/">Go to Home Page</a>
   </div>  
 </div>

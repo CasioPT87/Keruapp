@@ -3,41 +3,41 @@
 <div *ngIf="!authorised">
   <div class="container">
     <div [hidden]="submitted">
-      <h1>Crear nuevo usuario</h1>
+      <h1>Create New User</h1>
 
       <form (ngSubmit)="onSubmit()" #userForm="ngForm">
         <div class="form-group">
-          <label for="username">Nombre de usuario <span class="text-danger">*campo necesario</span></label>
+          <label for="username">Name <span class="text-danger">*necessary field</span></label>
           <input type="text" class="form-control" id="username"
                   required
                   [(ngModel)]="model.username" name="username"
                   #username="ngModel">
           <div [hidden]="username.valid || username.pristine"
                 class="alert alert-danger">
-            El nombre de usuario es necesario
+            You need a name for your user :)
           </div>
         </div>
 
         <div class="form-group">
-          <label for="password">Password <span class="text-danger">*campo necesario</span></label>
+          <label for="password">Password <span class="text-danger">*necessary field</span></label>
           <input type="text" class="form-control" id="password"
                   required
                   [(ngModel)]="model.password" name="password"
                   #password="ngModel">
           <div [hidden]="password.valid || password.pristine"
                 class="alert alert-danger">
-            El password necesita un password
+            Please, set a password
           </div>
         </div>
     
         <div class="form-group">
-          <label for="description">Descripcion <span class="text-primary">*campo no necesario</span></label>
+          <label for="description">Description <span class="text-primary"></span></label>
           <input type="text" class="form-control" id="description"
                   [(ngModel)]="model.description" name="description">
         </div>
     
         <div class="form-group">
-          <label for="url">pagina web del usuario <span class="text-primary">*campo no necesario</span></label>
+          <label for="url">User's blog or website <span class="text-primary"></span></label>
           <input type="text" class="form-control" id="url"
                   [(ngModel)]="model.url" name="url">
         </div>
@@ -51,10 +51,10 @@
 
 <div *ngIf="authorised && !error">
   <div class="row row-centered">
-    <a class="btn btn-success mx-auto" routerLink="/">Ir a pagina principal</a>
+    <a class="btn btn-success mx-auto" routerLink="/">Go to Home Page</a>
   </div> 
   <div class="row row-centered">
-    <p class="mx-auto mt-3">Estas en una sesion con el usuario: <strong>{{model.username}}</strong></p>
+    <p class="mx-auto mt-3">You are in a session as: <strong>{{model.username}}</strong></p>
   </div>
 </div>
 
@@ -63,9 +63,9 @@
     <h5 *ngIf="error && error !== true" class="mx-auto mt-3 mb-5">{{error}}</h5>
   </div>  
   <div class="row row-centered mb-3">
-    <button class="btn btn-success mx-auto" (click)="refresh()">Volver a cargar</button>
+    <button class="btn btn-success mx-auto" (click)="refresh()">Reload</button>
   </div>
   <div class="row row-centered">
-    <a class="btn btn-success mx-auto" routerLink="/">Ir a pagina principal</a>
+    <a class="btn btn-success mx-auto" routerLink="/">Go to Home Page</a>
   </div>    
 </div>

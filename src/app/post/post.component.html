@@ -13,13 +13,13 @@
       <img class="mx-auto" src="http://www.countryflags.io/{{codeCountry}}/flat/32.png"> 
     </div>
     <div class="row mt-2">
-      <a class="mx-auto" routerLink="/user/{{post.username}}"><h5>Autor: {{post.username}}</h5></a>  
+        <h5>Autor: {{post.username}}</h5><a class="mx-auto" routerLink="/user/{{post.username}}"></a>  
     </div>
 
     <form #showMap Form="ngForm" (ngSubmit)="toggleMap()">
       <div class="form-group mt-3">
-        <button *ngIf="!mapShown" type="submit" class="btn btn-default">Mostrar mapa</button>
-        <button *ngIf="mapShown" type="submit" class="btn btn-default">Esconder mapa</button>
+        <button *ngIf="!mapShown" type="submit" class="btn btn-default">Show Map</button>
+        <button *ngIf="mapShown" type="submit" class="btn btn-default">Hide Map</button>
       </div>
     </form>
     <div [hidden]="!mapShown" #gmap style="width:100%; padding-bottom:50%" class="mb-3"></div>
@@ -31,7 +31,7 @@
     </div>  
     
     <div *ngIf="post.description" class="row w-100 mt-3 mb-3 mx-auto">
-      <p class="mx-auto m-0">Descripcion del autor:</p>
+      <p class="mx-auto m-0">Something about the author:</p>
     </div>
     <div *ngIf="post.description" class="card mx-auto" style="width: 100%;">
       <div class="card-header">
@@ -41,18 +41,18 @@
 
     <form #likeForm="ngForm" (ngSubmit)="likePost(likeForm.value)">
       <div class="form-group mt-3">
-        <p *ngIf="postLiked && authorised">Te gusta este post</p>
-        <p *ngIf="!postLiked && authorised">Aun no te gusta este post</p>
+        <p *ngIf="postLiked && authorised">I LIKE this</p>
+        <p *ngIf="!postLiked && authorised">I don't like it YET</p>
         <input type="hidden" name="postNumber" ngModel>
-        <button *ngIf="!postLiked && authorised" type="submit" class="btn btn-default">Me gusta</button>
-        <button *ngIf="postLiked && authorised" type="submit" class="btn btn-default">Ya no me gusta</button>
-        <div class="mt-3">A {{numLikesInPost}} usuarios les gusta este post</div>
+        <button *ngIf="!postLiked && authorised" type="submit" class="btn btn-default">Like</button>
+        <button *ngIf="postLiked && authorised" type="submit" class="btn btn-default">Unlike</button>
+        <div class="mt-3">{{numLikesInPost}} users find this interesting</div>
       </div>
     </form>
 
     <div *ngIf="comments">
       <div class="row w-100 mt-3 mb-3 mx-auto">
-        <p  *ngIf="comments.length > 0" class="mx-auto m-0">Comentarios:</p>
+        <p  *ngIf="comments.length > 0" class="mx-auto m-0">Comments:</p>
       </div>
   
       <div class="row mt-3 mb-3">
@@ -72,12 +72,12 @@
       
     <form *ngIf="authorised" #postForm="ngForm">
       <div class="form-group">
-        <label for="commentinput">Deja un comentario</label>
+        <label for="commentinput">Write a comment:</label>
         <textarea type="text" class="form-control" id="commentinput"
           [(ngModel)]="valueComment" name="comment" required></textarea>
       </div>
       <button [disabled]="!postForm.form.valid" 
-      type="button" class="btn btn-default" (click)="addComment(); postForm.reset()" >Add Comment</button>
+      type="button" class="btn btn-default" (click)="addComment(); postForm.reset()" >Send Comment</button>
     </form>
 
   </div>

@@ -1,9 +1,9 @@
 
 <div *ngIf="!error">
   <div class="container">
-    <h1 class="mb-3">Usuario: <strong>{{username}}</strong></h1>
-    <p>Usuario creado: <strong>{{dateCreated}}</strong></p>
-    <p>Ha recibido <strong>{{likes}}</strong> "me gusta"</p>
+    <h1 class="mb-3">Username: <strong>{{username}}</strong></h1>
+    <p>Created at: <strong>{{dateCreated}}</strong></p>
+    <p>Likes: <strong>{{likes}}</strong></p>
 
     <div class="row">
       <div class="col">
@@ -13,7 +13,7 @@
 
     <div class="row row-centered">
       <div class="col">
-        <p><strong>Descripcion</strong></p>  
+        <p><strong>Description</strong></p>  
       </div>     
     </div>
     <div class="row row-centered">
@@ -24,7 +24,7 @@
 
     <div class="row row-centered">
       <div class="col">
-        <p><strong>Pagina web:      </strong><a target="_blank" (click)="toLink()">{{url}}</a></p>  
+        <p><strong>Blog or web site:      </strong><a target="_blank" (click)="toLink()">{{url}}</a></p>  
       </div>          
     </div>
 
@@ -64,14 +64,14 @@
 
 <div *ngIf="error">
   <div class="row row-centered">
-    <h5 class="mx-auto mt-3 mb-5">Se ha producido un error recuperando el perfil de usuario</h5>
+    <h5 class="mx-auto mt-3 mb-5">Ooops!!! we couldn't retrieve this profile</h5>
     <h5 *ngIf="error && error !== true" class="mx-auto mt-3 mb-5">{{error}}</h5>
   </div>  
   <div class="row row-centered mb-3">
-    <button class="btn btn-success mx-auto" (click)="refresh()">Volver a cargar</button>
+    <button class="btn btn-success mx-auto" (click)="refresh()">Reload</button>
   </div>
   <div class="row row-centered">
-    <a class="btn btn-success mx-auto" routerLink="/">Ir a pagina principal</a>
+    <a class="btn btn-success mx-auto" routerLink="/">Go to Home Page</a>
   </div>    
 </div>
 
