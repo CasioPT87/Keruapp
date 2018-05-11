@@ -3,8 +3,8 @@
 
 <div class="container">
 
-  <h3 *ngIf="authorised" class="text-center"><strong>{{username}}</strong>, look for postcards or create new ones</h3>
-  <h3 *ngIf="!authorised" class="text-center">Look for postcards or create new ones</h3>
+  <h5 *ngIf="authorised" class="text-center"><strong>{{username}}</strong>, look for postcards or create new ones</h5>
+  <h5 *ngIf="!authorised" class="text-center">Look for postcards or create new ones</h5>
 
   <div class="row w-100 mx-auto mt-4">
     <div *ngIf="!authorised" class="row w-100 mx-auto mb-2">

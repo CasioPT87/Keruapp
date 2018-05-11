@@ -6,6 +6,7 @@ body {
     background-color: rgb(252, 252, 252);
     background-image: url(./assets/paper2.jpg);
     background-repeat: repeat;
+    color: #262626;
 }
 
 @font-face {
@@ -17,8 +18,15 @@ body {
     font-family: typewriterFont;
 }
 
-.default-box{
+.default-box {
     border: 1px solid black;
+}
+.stripes {
+    top: -32px;
+    height: 20px;
+    background-image: url(./assets/stripes.png);
+    background-repeat: repeat;
+    background-color: white;
 }
 .jumbotron {
     padding:0px;
@@ -29,12 +37,6 @@ body {
     display: none;
 }
 
-h1, h2, h3, h4, h6, p, button {
-    color:#4d4d4d;
-}
 
-h5 {
-    color: #000000;
-}
 
 
