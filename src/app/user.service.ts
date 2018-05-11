@@ -16,7 +16,7 @@ const httpOptionsHtml = {
   withCredentials: true
 }
 
-var production = true;
+var production = false;
 
 if (!production) {
   var path = 'http://localhost:3000';

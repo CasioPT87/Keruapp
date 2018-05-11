@@ -4,8 +4,17 @@
 
 body {
     background-color: rgb(252, 252, 252);
-    background-image: url(./assets/paper2.jpg);
+
     background-repeat: repeat;
+}
+
+@font-face {
+    font-family: typewriterFont;
+    src: url(./assets/Adler.ttf);
+}
+
+*{
+    font-family: typewriterFont;
 }
 
 .default-box{
