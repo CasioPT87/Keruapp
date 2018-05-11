@@ -38,8 +38,8 @@ body {
 }
 
 .stampButton {
-    height: 275px;
-    width: 270px;
+    height: 150px;
+    width: 170px;
     background-repeat: no-repeat;
     background-size: 100% 100%;
     border: 0px;
@@ -50,9 +50,13 @@ body {
     background-image: url(./assets/profile.png);
 }
 .stampButtonCreatePostCard {
+    height: 150px;
+    width: 230px;
     background-image: url(./assets/createpostcard.png);
 }
 .stampButtonLogout {
+    height: 130px;
+    width: 175px;
     background-image: url(./assets/logout.png);
 }
 
