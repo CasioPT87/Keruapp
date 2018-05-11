@@ -13,13 +13,13 @@
       <img class="mx-auto" src="http://www.countryflags.io/{{codeCountry}}/flat/32.png"> 
     </div>
     <div class="row mt-2">
-        <h5>Autor: {{post.username}}</h5><a class="mx-auto" routerLink="/user/{{post.username}}"></a>  
+        <div class="col text-center"><h5>Autor:</h5><a class="mx-auto" routerLink="/user/{{post.username}}">{{post.username}}</a></div>
     </div>
 
     <form #showMap Form="ngForm" (ngSubmit)="toggleMap()">
       <div class="form-group mt-3">
-        <button *ngIf="!mapShown" type="submit" class="btn btn-default">Show Map</button>
-        <button *ngIf="mapShown" type="submit" class="btn btn-default">Hide Map</button>
+        <button *ngIf="!mapShown" type="submit" class="btn btn-default">Hide Map</button>
+        <button *ngIf="mapShown" type="submit" class="btn btn-default">Show Map</button>
       </div>
     </form>
     <div [hidden]="!mapShown" #gmap style="width:100%; padding-bottom:50%" class="mb-3"></div>

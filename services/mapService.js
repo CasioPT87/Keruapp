@@ -8,12 +8,14 @@ var googleMapsClient = require('@google/maps').createClient({
 const defaultAddress = 'castle road ventnor';
 
 function getCoordinates(address) {
-    
     return new Promise((resolve, reject) => {
 
       if (address == 'undefined') address = defaultAddress;
-
+      console.log(address)
     	googleMapsClient.geocode({ address: address }, function(err, response) {
+        console.log('************')
+        console.log(err)
+        console.log('************')
     		if (err || !response) reject(new Error('Problema recogiendo coordenadas desde GoogleMaps')); 
 		    var lat = response.json.results[0].geometry.location.lat;		        
 		    var lng = response.json.results[0].geometry.location.lng; 
@@ -26,9 +28,10 @@ function getCoordinates(address) {
                       formatedAddress: formatedAddress ? formatedAddress : ''
                     });
     	})
-
+    })
+    .catch((err) => {
+      console.log(err)
     });
-
 }
 
 function getCountry(addrComponents) {

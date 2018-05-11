@@ -4,6 +4,8 @@
 
 body {
     background-color: rgb(252, 252, 252);
+    background-image: url(./assets/paper2.jpg);
+    background-repeat: repeat;
 }
 
 .default-box{
@@ -11,6 +13,8 @@ body {
 }
 .jumbotron {
     padding:0px;
+    background-image: url(./assets/paper1.jpg);
+    background-repeat: repeat;  
 }
 .hidden {
     display: none;
