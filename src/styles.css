@@ -37,6 +37,25 @@ body {
     display: none;
 }
 
+.stampButton {
+    height: 275px;
+    width: 270px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    border: 0px;
+    background-color: transparent;
+}
+
+.stampButtonProfile {
+    background-image: url(./assets/profile.png);
+}
+.stampButtonCreatePostCard {
+    background-image: url(./assets/createpostcard.png);
+}
+.stampButtonLogout {
+    background-image: url(./assets/logout.png);
+}
+
 
 
 
