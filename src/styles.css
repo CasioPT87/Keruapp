@@ -23,7 +23,7 @@ body {
 }
 .stripes {
     top: -32px;
-    height: 20px;
+    height: 10px;
     background-image: url(./assets/stripes.png);
     background-repeat: repeat;
     background-color: white;
