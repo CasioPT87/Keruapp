@@ -14,6 +14,11 @@ body {
     src: url(./assets/Adler.ttf);
 }
 
+@font-face {
+    font-family: handtype;
+    src: url(./assets/RockSalt.ttf);
+}
+
 *{
     font-family: typewriterFont;
 }
@@ -59,6 +64,38 @@ body {
     width: 175px;
     background-image: url(./assets/logout.png);
 }
+
+.polaroid {
+    border: 8px solid white; 
+    transform: rotate(2deg);
+    -webkit-box-shadow: 14px 13px 10px -5px rgba(125,125,125,0.95);
+    -moz-box-shadow: 14px 13px 10px -5px rgba(125,125,125,0.95);
+    box-shadow: 14px 13px 10px -5px rgba(125,125,125,0.95);
+}
+
+.polaroid2 {
+    border: 8px solid white; 
+    transform: rotate(-1deg);
+    -webkit-box-shadow: 14px 13px 10px -5px rgba(125,125,125,0.95);
+    -moz-box-shadow: 14px 13px 10px -5px rgba(125,125,125,0.95);
+    box-shadow: 14px 13px 10px -5px rgba(125,125,125,0.95);
+}
+
+.card-body h5 {
+    font-size: 1.6em;
+    font-family: handtype;
+}
+
+.card-body p{
+    color: black;
+}
+
+.wrinkled {
+    background-image: url(./assets/wrinkled.png);
+    background-size: 100% 100%;
+    z-index: 100;
+}
+
 
 
 
