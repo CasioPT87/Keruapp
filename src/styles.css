@@ -102,6 +102,15 @@ body {
     border: 8px solid white;
 }
 
+.homeStamp {
+    display: block;
+    position: absolute; 
+    top: 20px; 
+    right: 10%;
+    height: 90px; 
+    width: 90px;
+}
+
 
 
 
