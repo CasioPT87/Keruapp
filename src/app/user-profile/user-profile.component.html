@@ -43,13 +43,13 @@
               </div>
             </div> -->
 
-            <a routerLink="/post/{{post.idNumber}}" class="card" style="overflow: hidden; text-decoration: none">
-              <img src="http://www.countryflags.io/{{post.codeCountry}}/flat/32.png" alt={{codeCountry}} style="position: absolute; top: -7px; left: -4px">
-              <img class="card-img-top" src={{post.imageURL}} alt={{post.title}}>
+            <a routerLink="/post/{{post.idNumber}}" class="card noBorderRadius" style="overflow: hidden; text-decoration: none">
+              <img class="card-img-top noBorderRadius" src={{post.imageURL}} alt={{post.title}}>
               <div class="card-body">
                 <h5 class="card-title">{{post.title}}</h5>            
                 <p class="card-text">{{post.formatedAddress}}</p>
-                <p>Likes {{post.usersThatLikePost.length}}</p>            
+                <p>Likes {{post.usersThatLikePost.length}}</p>     
+                <img src="http://www.countryflags.io/{{post.codeCountry}}/flat/32.png" alt={{codeCountry}} style="float: right">       
               </div>
             </a>
                          

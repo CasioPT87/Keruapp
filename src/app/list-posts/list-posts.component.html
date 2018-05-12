@@ -15,19 +15,16 @@
     </div> 
     <div *ngIf="authorised" class="row w-100 mx-auto mb-2">
       <div class="col">
-          <button  type="button" class=" stampButton stampButtonProfile" routerLink="/usermodify"></button>
-      </div>
-      
+          <button  type="button" class="stampButton stampButtonProfile" routerLink="/usermodify"></button>
+      </div>     
 
 
       <div class="col text-center">
           <button  type="button mx-auto" class="stampButton stampButtonCreatePostCard" routerLink="/postcreate"></button>
       </div>
 
-
-
       <div class="col  text-right">
-          <button  type="button" class=" stampButton stampButtonLogout" routerLink="/userlogin"></button>
+          <button  type="button" class="stampButton stampButtonLogout" routerLink="/userlogin"></button>
       </div>
 
     
@@ -71,13 +68,13 @@
   <div class="row">
     <div *ngIf="listPosts" class="card-columns">
       <div *ngFor="let post of listPosts">
-        <a routerLink="/post/{{post.idNumber}}" class="card" style="overflow: hidden; text-decoration: none">
-          <img src="http://www.countryflags.io/{{post.codeCountry}}/flat/32.png" alt={{codeCountry}} style="position: absolute; top: -7px; left: -4px">
-          <img class="card-img-top" src={{post.imageURL}} alt={{post.title}}>
+        <a routerLink="/post/{{post.idNumber}}" class="card noBorderRadius" style="overflow: hidden; text-decoration: none; border: 0px">
+          <img class="card-img-top noBorderRadius" src={{post.imageURL}} alt={{post.title}}>
           <div class="card-body">
             <h5 class="card-title">{{post.title}}</h5>            
             <p class="card-text">{{post.formatedAddress}}</p>
             <p>Likes {{post.likes}}</p>            
+            <img src="http://www.countryflags.io/{{post.codeCountry}}/flat/32.png" alt={{codeCountry}} style="float: right;">
           </div>
         </a>
       </div>

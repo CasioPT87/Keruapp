@@ -49,6 +49,7 @@ body {
     background-size: 100% 100%;
     border: 0px;
     background-color: transparent;
+    cursor: pointer;
 }
 
 .stampButtonProfile {
@@ -94,6 +95,11 @@ body {
     background-image: url(./assets/wrinkled.png);
     background-size: 100% 100%;
     z-index: 100;
+}
+
+.noBorderRadius {
+    border-radius: 0px;
+    border: 8px solid white;
 }
 
 
