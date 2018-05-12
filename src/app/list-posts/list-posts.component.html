@@ -13,19 +13,14 @@
         <button  type="button" class="btn ml-2" routerLink="/usercreate">Sign Up</button>
       </div>
     </div> 
-    <div *ngIf="authorised" class="row w-100 mx-auto mb-2">
-      <div class="col">
+    <div *ngIf="authorised  text-center" class="row w-100 mx-auto mb-2">
+   
           <button  type="button" class="stampButton stampButtonProfile" routerLink="/usermodify"></button>
-      </div>     
-
-
-      <div class="col text-center">
+     
           <button  type="button mx-auto" class="stampButton stampButtonCreatePostCard" routerLink="/postcreate"></button>
-      </div>
-
-      <div class="col  text-right">
+   
           <button  type="button" class="stampButton stampButtonLogout" routerLink="/userlogin"></button>
-      </div>
+     
 
     
     </div>
