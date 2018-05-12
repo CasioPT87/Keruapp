@@ -10,17 +10,17 @@ body {
 }
 
 @font-face {
-    font-family: typewriterFont;
-    src: url(./assets/aflfont.ttf);
+    font-family: typewriterFontSerch;
+    src: url(./assets/serch.ttf);
 }
 
 @font-face {
-    font-family: handtype;
+    font-family: handtypeSerch;
     src: url(./assets/uwch.ttf);
 }
 
 *{
-    font-family: typewriterFont;
+    font-family: typewriterFontSerch;
 }
 
 .default-box {
@@ -124,7 +124,7 @@ body {
     font-size: 0.9rem;
     line-height: 1.3;
     font-size: 1.0em;
-    font-family: handtype;
+    font-family: handtypeSerch;
     word-wrap: break-word;
     color: rgb(160, 180, 179);
     
