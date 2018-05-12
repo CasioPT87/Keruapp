@@ -60,23 +60,25 @@
   </div> -->
 
   <!-- Start of Card Columns Layout -->
-  <div class="row">
-    <div *ngIf="listPosts" class="card-columns">
-      <div *ngFor="let post of listPosts">
-        <a routerLink="/post/{{post.idNumber}}" class="card noBorderRadius" style="overflow: hidden; text-decoration: none; border: 0px">
-          <img class="card-img-top noBorderRadius" src={{post.imageURL}} alt={{post.title}}>
-          <div class="card-body">
-            <h5 class="card-title">{{post.title}}</h5>            
-            <p class="card-text">{{post.formatedAddress}}</p>
-            <p>Likes {{post.likes}}</p>            
+</div>
+
+
+  <div *ngIf="listPosts" class="card-columns">
+    <div *ngFor="let post of listPosts">
+      <a routerLink="/post/{{post.idNumber}}" class="card noBorderRadius" style="overflow: hidden; text-decoration: none; border: 0px;">
+        <img class="card-img-top noBorderRadius" src={{post.imageURL}} alt={{post.title}}>
+        <div class="card-body">
+          <div>
             <img src="http://www.countryflags.io/{{post.codeCountry}}/flat/32.png" alt={{codeCountry}} style="float: right;">
-          </div>
-        </a>
-      </div>
+            <h5 class="card-title">{{post.title}}</h5>            
+          </div>         
+          <p class="card-text">{{post.formatedAddress}}</p>
+          <p>Likes {{post.likes}}</p>            
+        </div>
+      </a>
     </div>
   </div>
 
-</div>
 
 
        
