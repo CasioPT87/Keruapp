@@ -17,8 +17,8 @@
 
     <form #showMap Form="ngForm" (ngSubmit)="toggleMap()">
       <div class="form-group mt-3">
-        <button *ngIf="!mapShown" type="submit" class="btn btn-default">Hide Map</button>
-        <button *ngIf="mapShown" type="submit" class="btn btn-default">Show Map</button>
+        <button *ngIf="!mapShown" type="submit" class="btn btn-default">Show Map</button>
+        <button *ngIf="mapShown" type="submit" class="btn btn-default">Hide Map</button>
       </div>
     </form>
     <div [hidden]="!mapShown" #gmap style="width:100%; padding-bottom:30%; max-width: 500px; min-height: 250px; margin-bottom: 20px" class="mb-5 mx-auto"></div>

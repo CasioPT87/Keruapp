@@ -11,12 +11,12 @@ body {
 
 @font-face {
     font-family: typewriterFont;
-    src: url(./assets/Adler.ttf);
+    src: url(./assets/aflfont.ttf);
 }
 
 @font-face {
     font-family: handtype;
-    src: url(./assets/RockSalt.ttf);
+    src: url(./assets/uwch.ttf);
 }
 
 *{
@@ -60,15 +60,15 @@ body {
     background-image: url(./assets/profile.png);
 }
 .stampButtonCreatePostCard {
-    height: 150px;
-    width: 230px;
-    min-width: 230px;
-    background-image: url(./assets/createpostcard.png);
-}
-.stampButtonLogout {
     height: 130px;
     width: 175px;
     min-width: 175px;
+    background-image: url(./assets/createpostcard.png);
+}
+.stampButtonLogout {
+    height: 110px;
+    width: 145px;
+    min-width: 145px;
     background-image: url(./assets/logout.png);
 }
 
@@ -100,12 +100,15 @@ body {
     right: 10%;
     height: 90px; 
     width: 90px;
+    overflow: hidden;
 }
 
 .flagCard {
-   position: absolute;
+   /* position: absolute;
    top: -6px;
-   left: -2px;
+   left: -2px; */
+   float: right;
+   opacity: 0.7;
 }
 
 .card-body p{
@@ -123,6 +126,7 @@ body {
     font-size: 1.0em;
     font-family: handtype;
     word-wrap: break-word;
+    color: rgb(160, 180, 179);
     
 }
 
