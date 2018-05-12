@@ -3,7 +3,7 @@
   <div class="container">
     <h1 class="mb-3">Username: <strong>{{username}}</strong></h1>
     <p>Created at: <strong>{{dateCreated}}</strong></p>
-    <p>Likes: <strong>{{likes}}</strong></p>
+    <p>Total Likes received: <strong>{{likes}}</strong></p>
 
     <div class="row">
       <div class="col">
@@ -11,7 +11,7 @@
       </div>        
     </div>   
 
-    <div class="row row-centered">
+    <div *ngIf="description" class="row row-centered">
       <div class="col">
         <p><strong>Description</strong></p>  
       </div>     
@@ -22,14 +22,15 @@
       </div>       
     </div>
 
-    <div class="row row-centered">
-      <div class="col">
-        <p><strong>Blog or web site:      </strong><a target="_blank" (click)="toLink()">{{url}}</a></p>  
+    <div *ngIf="url" class="row row-centered">
+      <div class="col d-inline">
+        <p>Blog or web site: <a target="_blank" (click)="toLink()" style="text-decoration: underline; cursor: pointer; color: blue">{{url}}</a></p>
       </div>          
     </div>
 
     <div class="row">
       <div class="col">
+        <p>This user's postcards:</p>
         <div *ngIf="posts" class="card-columns">
           <div *ngFor="let post of posts">
             
@@ -43,13 +44,15 @@
               </div>
             </div> -->
 
-            <a routerLink="/post/{{post.idNumber}}" class="card noBorderRadius" style="overflow: hidden; text-decoration: none">
+            <a routerLink="/post/{{post.idNumber}}" class="card noBorderRadius" style="overflow: hidden; text-decoration: none; border: 0px;">
               <img class="card-img-top noBorderRadius" src={{post.imageURL}} alt={{post.title}}>
               <div class="card-body">
-                <h5 class="card-title">{{post.title}}</h5>            
+                <div>
+                  <img src="http://www.countryflags.io/{{post.codeCountry}}/flat/32.png" alt={{codeCountry}} style="float: right;">
+                  <h5 class="card-title">{{post.title}}</h5>            
+                </div>         
                 <p class="card-text">{{post.formatedAddress}}</p>
-                <p>Likes {{post.usersThatLikePost.length}}</p>     
-                <img src="http://www.countryflags.io/{{post.codeCountry}}/flat/32.png" alt={{codeCountry}} style="float: right">       
+                <p>Likes {{post.usersThatLikePost.length}}</p>            
               </div>
             </a>
                          
