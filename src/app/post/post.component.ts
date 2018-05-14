@@ -32,6 +32,7 @@ export class PostComponent implements OnInit {
   mapShown: boolean;
   error: any;
   authorised: boolean;
+  url: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -49,6 +50,7 @@ export class PostComponent implements OnInit {
       .subscribe((responsePost) => {  
         this.error = responsePost.error; 
         if (!this.error) {
+          console.log(responsePost)
           var post = responsePost.post;
           this.post = post;
           this.postLiked = responsePost.like;
@@ -56,6 +58,7 @@ export class PostComponent implements OnInit {
           this.longitude = post.location[0];
           this.latitude = post.location[1];
           this.imageURL = post.imageURL;
+          this.url = post.url;
           this.codeCountry = post.codeCountry;
           this.formatedAddress = post.formatedAddress;
           this.comments = responsePost.comments;
@@ -122,6 +125,10 @@ export class PostComponent implements OnInit {
         this.postLiked = response.likePost; 
         this.numLikesInPost = response.numLikesInPost   ;   
       });
+  }
+
+  toLink() {
+    window.location.href = 'https://'+this.url;
   }
 }
 

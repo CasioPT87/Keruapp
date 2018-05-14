@@ -29,7 +29,8 @@ var PostSchema = Schema({
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
     usersThatLikePost: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     dateCreated: Date,
-    dateModified: Date
+    dateModified: Date,
+    url: String
 });
 
 //this is the model

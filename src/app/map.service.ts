@@ -10,8 +10,6 @@ const httpOptions ={
 
 var production = true;
 
-
-
 if (!production) {
   var path = 'http://localhost:3000';
 } else {

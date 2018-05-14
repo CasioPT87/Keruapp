@@ -12,7 +12,11 @@
       <img class="mx-auto" src="http://www.countryflags.io/{{codeCountry}}/flat/32.png"> 
     </div>
     <div class="row mt-2">
-        <div class="col text-center"><h5>Autor:</h5><a class="mx-auto" routerLink="/user/{{post.username}}">{{post.username}}</a></div>
+        <div class="col text-center"><h5>Author: <a class="mx-auto" routerLink="/user/{{post.username}}">{{post.username}}</a></h5></div>
+    </div>
+
+    <div *ngIf="url" class="row mt-2">
+        <div class="col text-center"><h5><p class="mx-auto fakeLink" (click)="toLink()">Link a articulo</p></h5></div>
     </div>
 
     <form #showMap Form="ngForm" (ngSubmit)="toggleMap()">

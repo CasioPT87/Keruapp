@@ -198,8 +198,11 @@ router.get('/findpost/:postNumber', AuthService.checkAuth, function(req, res, ne
             imageURL: post.imageURL,
             codeCountry: post.codeCountry,
             formatedAddress: post.formatedAddress,
-            comments: post.comments
+            comments: post.comments,
+            url: post.url
           }
+
+          console.log(post)
 
           res.json({
             post: objForResponsePost,
@@ -362,6 +365,7 @@ function treatPostsToRemoveUserId(posts) {
         likes: post.usersThatLikePost.length,
         formatedAddress: post.formatedAddress,
         imageURL: post.imageURL,
+        url: post.url,
         codeCountry: post.codeCountry
       }
     })

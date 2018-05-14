@@ -126,8 +126,12 @@ body {
     font-size: 1.0em;
     font-family: handtypeSerch;
     word-wrap: break-word;
-    color: rgb(160, 180, 179);
-    
+    color: rgb(160, 180, 179); 
+}
+
+.fakeLink {
+    color: #3368ff;
+    cursor: pointer;
 }
 
 
