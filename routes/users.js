@@ -5,11 +5,13 @@ var Post = require('../models/Post');
 var checkAuthService = require('../services/authService');
 var bcrypt = require('bcrypt');
 var moment = require('moment');
+var StringLengthService = require('../services/StringLengthService');
 
 /* GET users listing. */
 router.get('/getuser/:username', checkAuthService.checkAuth, function(req, res, next) {
 
   var username = req.sanitize(req.params.username);
+  username = StringLengthService.stringLenghtControl(username, 100);
   var dataUserResponse = {};
 
   User.findOne({ username: username })

@@ -4,6 +4,7 @@ var router = express.Router();
 const passport = require('passport');
 var User = require('../models/User');
 var AuthService = require('../services/authService');
+var StringLengthService = require('../services/StringLengthService');
 
 // /* GET Login page. */
 // router.get('/login', (req, res) => {
@@ -43,6 +44,11 @@ router.post('/createuser', AuthService.checkAuth, function (req, res, next) {
       var password = req.sanitize(req.body.password);
       var description = req.sanitize(req.body.description);
       var url = req.sanitize(req.body.url);
+
+      var username = StringLengthService.stringLenghtControl(username, 100);
+      var password = StringLengthService.stringLenghtControl(password, 100);
+      var description = StringLengthService.stringLenghtControl(description, 100);
+      var url = StringLengthService.stringLenghtControl(url, 100);
 
       var userData = {
         username: username,
@@ -100,6 +106,9 @@ router.post('/createuser', AuthService.checkAuth, function (req, res, next) {
 router.post('/login', function (req, res, next) {
   var username = req.sanitize(req.body.username);
   var password = req.sanitize(req.body.password);
+  var username = StringLengthService.stringLenghtControl(username, 100);
+  var password = StringLengthService.stringLenghtControl(password, 100);
+
   if (username && password) {
     console.log(username, password )
     User.authenticate(username, password, function (error, user) {

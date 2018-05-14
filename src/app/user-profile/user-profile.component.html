@@ -28,10 +28,10 @@
       </div>          
     </div>
 
-    <div class="row">
+    <div *ngIf="posts.length > 0" class="row">
       <div class="col">
         <p>This user's postcards:</p>
-        <div *ngIf="posts" class="card-columns">
+        <div class="card-columns">
           <div *ngFor="let post of posts">
             
             <!--<div class="card">

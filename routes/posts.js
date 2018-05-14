@@ -5,6 +5,8 @@ var User = require('../models/User');
 var MapService = require('../services/mapService');
 var AuthService = require('../services/authService');
 var CommentService = require('../services/commentService');
+var StringLengthService = require('../services/StringLengthService');
+
 
 /* GET users listing. */
 router.post('/createpost', AuthService.checkAuth, function(req, res, next) {
@@ -103,6 +105,7 @@ router.put('/likepost', AuthService.checkAuth, function(req, res, next) {
 router.get('/findposts/:coords', function(req, res, next) {
 
   var address = req.sanitize(req.params.coords);
+  address = StringLengthService.stringLenghtControl(address, 300);
 
   if (address) {
     MapService.getCoordinates(address)
@@ -242,13 +245,17 @@ router.get('/findlastsposts', AuthService.checkAuth, function(req, res, next) {
 function createNewPost(req, userId) {
 
   var title = req.sanitize(req.body.title);
+  title = StringLengthService.stringLenghtControl(title, 200);
   var description = req.sanitize(req.body.description);
+  description = StringLengthService.stringLenghtControl(description, 1000);
   var longitude = req.sanitize(req.body.longitude);
   var latitude = req.sanitize(req.body.latitude);
   var url = req.sanitize(req.body.url);
+  url = StringLengthService.stringLenghtControl(url, 100);
   var codeCountry = req.sanitize(req.body.codeCountry);
   var formatedAddress = req.sanitize(req.body.formatedAddress);
   var imageURL = req.sanitize(req.body.imageURL);
+  imageURL = StringLengthService.stringLenghtControl(imageURL, 1000);
 
   var post = {
     user: userId,

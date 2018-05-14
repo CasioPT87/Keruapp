@@ -5,6 +5,8 @@ var Post = require('../models/Post');
 var User = require('../models/User');
 var AuthService = require('../services/authService');
 var CommentService = require('../services/commentService');
+var CommentService = require('../services/commentService');
+var StringLengthService = require('../services/StringLengthService');
 
 
 router.post('/addcomment', AuthService.checkAuth, function(req, res, next) {
@@ -13,6 +15,8 @@ router.post('/addcomment', AuthService.checkAuth, function(req, res, next) {
     var userId = res.locals.user._id; // el user id del cliente, no del autor del post
     var commentString = req.sanitize(req.body.comment);
     var postNumber = req.sanitize(req.body.postNumber);
+
+    var commentString = StringLengthService.stringLenghtControl(commentString, 500);
     
     Post.findOne({idNumber: postNumber}).exec(function(err, post) {
       if (err) {
