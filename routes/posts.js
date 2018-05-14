@@ -5,7 +5,7 @@ var User = require('../models/User');
 var MapService = require('../services/mapService');
 var AuthService = require('../services/authService');
 var CommentService = require('../services/commentService');
-var StringLengthService = require('../services/StringLengthService');
+var StringLengthService = require('../services/stringLengthService');
 
 
 /* GET users listing. */

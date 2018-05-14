@@ -6,7 +6,7 @@ var User = require('../models/User');
 var AuthService = require('../services/authService');
 var CommentService = require('../services/commentService');
 var CommentService = require('../services/commentService');
-var StringLengthService = require('../services/StringLengthService');
+var StringLengthService = require('../services/stringLengthService');
 
 
 router.post('/addcomment', AuthService.checkAuth, function(req, res, next) {

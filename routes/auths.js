@@ -4,7 +4,7 @@ var router = express.Router();
 const passport = require('passport');
 var User = require('../models/User');
 var AuthService = require('../services/authService');
-var StringLengthService = require('../services/StringLengthService');
+var StringLengthService = require('../services/stringLengthService');
 
 // /* GET Login page. */
 // router.get('/login', (req, res) => {
