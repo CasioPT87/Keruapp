@@ -7,7 +7,7 @@ module.exports = {
         clientSecret: "NsfjN-xywLgzRBONKp2POQYF"
     },
     mongodb: {
-        dbURI: "mongodb://sergiator:Sergiator80@ds125126.mlab.com:25126/maindb",
+        dbURI: "mongodb://serch:c2kzNpQcbbGxzS0f@clusterkeruapp-shard-00-00-zgdvs.mongodb.net:27017,clusterkeruapp-shard-00-01-zgdvs.mongodb.net:27017,clusterkeruapp-shard-00-02-zgdvs.mongodb.net:27017/keruappdb?ssl=true&replicaSet=ClusterKeruapp-shard-0&authSource=admin&retryWrites=true",
     },
     session: {
         cookieKey: 'thisgottobeanrandomstring'

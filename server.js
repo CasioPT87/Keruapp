@@ -42,7 +42,7 @@ var distDir = __dirname + "/dist/";
 app.use(express.static(distDir));
 
 //connect to mongodb
-mongoose.connect(keys.mongodb.dbURI, (err, connection) => {
+mongoose.connect(keys.mongodb.dbURI, {uri_decode_auth: true}, (err, connection) => {
   if (err) throw Error(err);
   else console.log('db listening!!')
 })
